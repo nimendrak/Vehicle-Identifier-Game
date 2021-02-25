@@ -4,10 +4,23 @@
     <!-- button labels -->
     <string name="identify_car_make_btn_text">Identify the Car Make</string>
     <string name="identify_car_image_btn_text">Identify the Car Image</string>
-    <string name="hint_btn_text">Hint</string>
+    <string name="hint_btn_text">Hints</string>
     <string name="advanced_level_btn_text">Advanced Level</string>
     <string name="bg_image_description">Main background image</string>
     <string name="car_icon_des">Car icon of the main screen</string>
+    <string name="car1_des">Car1 - Audi A4</string>
+    <string name="car_id">01/30</string>
+    <string name="identify_btn_text">Identify</string>
+
+    <string-array name="labels_array">
+        <item>Select a Manufacturer</item>
+        <item>Audi</item>
+        <item>BMW</item>
+        <item>Ford</item>
+        <item>Merc</item>
+        <item>Konig</item>
+        <item>Tesla</item>
+    </string-array>
 
 
 </resources>
