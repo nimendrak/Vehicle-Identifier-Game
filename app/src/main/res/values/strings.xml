@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MAD_CWK</string>
+
+    <!-- button labels -->
+    <string name="identify_car_make_btn_text">Identify the Car Make</string>
+    <string name="identify_car_image_btn_text">Identify the Car Image</string>
+    <string name="hint_btn_text">Hint</string>
+    <string name="advanced_level_btn_text">Advanced Level</string>
+    <string name="bg_image_description">Main background image</string>
+    <string name="car_icon_des">Car icon of the main screen</string>
+
+
 </resources>
