@@ -99,10 +99,12 @@
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/correct_answer_gif"
-            android:layout_width="148dp"
-            android:layout_height="189dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/correct_gif" />
+            android:layout_width="135dp"
+            android:layout_height="175dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/correct_gif"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/answer"
@@ -110,7 +112,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="172dp"
             android:layout_marginTop="20dp"
-            android:text="CORRECT!"
+            android:text="@string/textView_answer_text"
+            app:layout_constraintStart_toStartOf="parent"
             android:textColor="#289995"
             android:textSize="36sp"
             android:textStyle="bold" />
@@ -129,7 +132,8 @@
             android:layout_marginStart="172dp"
             android:layout_marginTop="92dp"
             android:textColor="#ffffff"
-            android:text="Selected car maker is"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/textView_car_maker_text"
             android:textSize="18sp" />
 
         <TextView
@@ -138,7 +142,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="172dp"
             android:layout_marginTop="116dp"
-            android:text="Audi"
+            android:text="@string/textView_correct_car_maker"
+            app:layout_constraintStart_toStartOf="parent"
             android:textColor="#FFC107"
             android:textSize="32sp"
             android:textStyle="bold" />

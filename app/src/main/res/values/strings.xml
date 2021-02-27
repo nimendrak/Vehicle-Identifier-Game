@@ -12,6 +12,9 @@
     <string name="car_id">01/30</string>
     <string name="identify_btn_text">Identify</string>
     <string name="car_logo_des">Car logo</string>
+    <string name="textView_answer_text">CORRECT!</string>
+    <string name="textView_car_maker_text">Selected car maker is</string>
+    <string name="textView_correct_car_maker">Audi</string>
 
     <string-array name="labels_array">
         <item>Select a Manufacturer</item>
