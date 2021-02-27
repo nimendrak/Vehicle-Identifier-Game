@@ -24,8 +24,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         // Create ArrayAdapter using the string array and default spinner layout.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.labels_array,
-                R.layout.spinner_color_layout);
-
+                R.layout.spinner_checked_layout);
         // Specify the layout to use when the list of choices appears.
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         // Apply the adapter to the spinner.

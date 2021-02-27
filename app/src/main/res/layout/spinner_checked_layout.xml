@@ -5,7 +5,6 @@
     android:padding="10dp"
     android:text="Androchunk"
     android:textColor="#ffffff"
-    android:background="#289995"
     android:textSize="18sp"
     android:textStyle="bold">
 </CheckedTextView>

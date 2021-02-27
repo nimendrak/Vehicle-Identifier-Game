@@ -11,14 +11,17 @@
     <string name="car1_des">Car1 - Audi A4</string>
     <string name="car_id">01/30</string>
     <string name="identify_btn_text">Identify</string>
+    <string name="car_logo_des">Car logo</string>
 
     <string-array name="labels_array">
         <item>Select a Manufacturer</item>
         <item>Audi</item>
+        <item>Bugatti</item>
         <item>BMW</item>
-        <item>Ford</item>
-        <item>Merc</item>
-        <item>Konig</item>
+        <item>Ferrari</item>
+        <item>Koenigsegg</item>
+        <item>Mercedes-Benz</item>
+        <item>Porsche</item>
         <item>Tesla</item>
     </string-array>
 

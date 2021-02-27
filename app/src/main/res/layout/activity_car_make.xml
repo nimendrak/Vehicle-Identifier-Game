@@ -2,59 +2,74 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#2B363C"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B363C"
     tools:context=".CarMakeActivity">
 
     <TextView
         android:id="@+id/car_make_title"
+        style="@style/titleHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/titleHolder"
         android:text="@string/identify_car_make_btn_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/image_holder"
         android:layout_width="380dp"
         android:layout_height="297dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:background="#289995"
-        android:contentDescription="@string/car1_des"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/car_make_title"
-        app:srcCompat="@drawable/audi_a4" />
+        app:layout_constraintTop_toBottomOf="@+id/car_make_title">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/car_id"
-        android:textColor="#2B363C"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        <ImageView
+            android:id="@+id/car_image"
+            android:layout_width="380dp"
+            android:layout_height="297dp"
+            android:background="#289995"
+            android:contentDescription="@string/car1_des"
+            app:layout_constraintTop_toBottomOf="@+id/car_make_title"
+            app:srcCompat="@drawable/audi_a4" />
+
+        <TextView
+            android:id="@+id/car_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/car_id"
+            android:textColor="#2B363C"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/car_logo"
+            android:layout_width="97dp"
+            android:layout_height="69dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:contentDescription="@string/car_logo_des"
+            app:srcCompat="@drawable/audi_logo" />
+
+    </androidx.cardview.widget.CardView>
 
     <Spinner
         android:id="@+id/car_make_spinner"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:popupBackground="#ffffff"
+        android:background="@drawable/spinner_color_layout"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/identify_btn"
         app:layout_constraintEnd_toStartOf="@+id/identify_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
 
     <Button
         android:id="@+id/identify_btn"
@@ -65,7 +80,69 @@
         android:layout_marginEnd="16dp"
         android:text="@string/identify_btn_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/answer_prompter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#232C32"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/car_make_spinner">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/correct_answer_gif"
+            android:layout_width="148dp"
+            android:layout_height="189dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/correct_gif" />
+
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:layout_marginTop="20dp"
+            android:text="CORRECT!"
+            android:textColor="#289995"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="172dp"
+            android:layout_marginTop="78dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/correct_car_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:layout_marginTop="92dp"
+            android:textColor="#ffffff"
+            android:text="Selected car maker is"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/correct_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="172dp"
+            android:layout_marginTop="116dp"
+            android:text="Audi"
+            android:textColor="#FFC107"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
