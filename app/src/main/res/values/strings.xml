@@ -15,18 +15,18 @@
     <string name="identify_btn_text">Identify</string>
     <string name="car_logo_des">Car logo</string>
     <string name="textView_answer_text">CORRECT!</string>
-    <string name="textView_wrong_text">CORRECT!</string>
+    <string name="textView_wrong_text">WRONG!</string>
     <string name="textView_car_maker_text">Selected car maker is</string>
     <string name="textView_correct_car_maker">Audi</string>
 
-    <string-array name="labels_array">
+    <string-array name="car_makes_array">
         <item>Select a Manufacturer</item>
         <item>Audi</item>
         <item>Bugatti</item>
         <item>BMW</item>
         <item>Ferrari</item>
         <item>Koenigsegg</item>
-        <item>Mercedes-Benz</item>
+        <item>Mclaren</item>
         <item>Porsche</item>
         <item>Tesla</item>
     </string-array>
