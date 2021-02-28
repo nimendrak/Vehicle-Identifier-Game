@@ -1,18 +1,21 @@
 <resources>
     <string name="app_name">MAD_CWK</string>
 
-    <!-- button labels -->
+    <!-- Main Activity -->
     <string name="identify_car_make_btn_text">Identify the Car Make</string>
     <string name="identify_car_image_btn_text">Identify the Car Image</string>
     <string name="hint_btn_text">Hints</string>
     <string name="advanced_level_btn_text">Advanced Level</string>
     <string name="bg_image_description">Main background image</string>
     <string name="car_icon_des">Car icon of the main screen</string>
+
+    <!-- Car make Activity -->
     <string name="car1_des">Car1 - Audi A4</string>
-    <string name="car_id">01/30</string>
+    <string name="car_id">01/40</string>
     <string name="identify_btn_text">Identify</string>
     <string name="car_logo_des">Car logo</string>
     <string name="textView_answer_text">CORRECT!</string>
+    <string name="textView_wrong_text">CORRECT!</string>
     <string name="textView_car_maker_text">Selected car maker is</string>
     <string name="textView_correct_car_maker">Audi</string>
 

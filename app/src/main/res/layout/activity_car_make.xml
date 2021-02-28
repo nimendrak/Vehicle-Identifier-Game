@@ -35,7 +35,7 @@
             android:background="#289995"
             android:contentDescription="@string/car1_des"
             app:layout_constraintTop_toBottomOf="@+id/car_make_title"
-            app:srcCompat="@drawable/audi_a4" />
+            app:srcCompat="@drawable/car_audi_a4" />
 
         <TextView
             android:id="@+id/car_id"
@@ -54,7 +54,7 @@
             android:layout_height="69dp"
             android:layout_gravity="bottom|center_horizontal"
             android:contentDescription="@string/car_logo_des"
-            app:srcCompat="@drawable/audi_logo" />
+            app:srcCompat="@drawable/logo_audi" />
 
     </androidx.cardview.widget.CardView>
 
@@ -119,6 +119,7 @@
             android:textStyle="bold" />
 
         <View
+            android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="172dp"
