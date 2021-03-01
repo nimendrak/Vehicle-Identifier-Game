@@ -1,7 +1,5 @@
 package com.example.nimendra;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.nimendra.utils.ImageLoader;
+
 import java.lang.reflect.Field;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarMakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -34,12 +37,14 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private TextView carMakeLabel;
     private View separator;
 
-    private TextView carId;
-
     private Button identifyBtn;
 
-    private static Field[] carImagesArray = R.drawable.class.getDeclaredFields();
-    private static Field[] carLogosArray = R.drawable.class.getDeclaredFields();
+    private TextView carId;
+
+    private static Field[] declaredFields = R.drawable.class.getDeclaredFields();
+
+    private static List<Integer> carImagesArray = new ArrayList<>();
+    private static List<Integer> carLogoArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         resetAnswer();
 
+        ImageLoader imageLoader = new ImageLoader(this);
+        System.out.println("audi images - " + imageLoader.getAudiImagesArray());
+
         // create the spinner
         final Spinner spinner = findViewById(R.id.car_make_spinner);
         if (spinner != null) {
@@ -69,7 +77,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         // Create ArrayAdapter using the string array and default spinner layout.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.car_makes_array,
+                R.array.array_car_makes,
                 R.layout.spinner_checked_layout);
         // Specify the layout to use when the list of choices appears.
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
@@ -81,6 +89,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                identifyBtn.setText(R.string.button_identify_text);
+
                 if (spinner != null) {
                     String item = spinner.getSelectedItem().toString();
 
@@ -88,25 +98,25 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                         resetAnswer();
                     } else {
                         id = id - 1;
-                        switch (item) {
-                            case "Audi":
-                                correctAnswer(item);
-                            case "Bugatti":
-                                correctAnswer(item);
-                            case "BMW":
-                                correctAnswer(item);
-                            case "Ferrari":
-                                correctAnswer(item);
-                            case "Koenigsegg":
-                                correctAnswer(item);
-                            case "Mclaren":
-                                correctAnswer(item);
-                            case "Porsche":
-                                correctAnswer(item);
-                            case "Tesla":
-                                correctAnswer(item);
-                            default:
-                                wrongAnswer(item);
+                        if (id > 0) {
+                            switch (item) {
+                                case "Audi":
+                                    validateAnswer(item);
+                                case "Bugatti":
+                                    validateAnswer(item);
+                                case "BMW":
+                                    validateAnswer(item);
+                                case "Ferrari":
+                                    validateAnswer(item);
+                                case "Koenigsegg":
+                                    validateAnswer(item);
+                                case "Mercedes-Benz":
+                                    validateAnswer(item);
+                                case "Porsche":
+                                    validateAnswer(item);
+                                case "Tesla":
+                                    validateAnswer(item);
+                            }
                         }
                     }
                 }
@@ -125,10 +135,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     }
 
-    public void identifyAction() {
-        Random random = new Random();
-    }
-
     public void resetAnswer() {
         gif.setVisibility(View.INVISIBLE);
         carMake.setVisibility(View.INVISIBLE);
@@ -137,10 +143,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         separator.setVisibility(View.INVISIBLE);
     }
 
-
     public void wrongAnswer(String selectedCar) {
         answer.setText(R.string.textView_wrong_text);
-        answer.setTextColor(Color.parseColor("#FF0000"));
+        answer.setTextColor(Color.parseColor("#ff0024"));
         answer.setVisibility(View.VISIBLE);
 
         separator.setVisibility(View.VISIBLE);
@@ -154,27 +159,16 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         gif.setVisibility(View.VISIBLE);
 
         carMakeLabel.setVisibility(View.VISIBLE);
-
-        carImage.getId();
-        System.out.println(carImage.getId());
-
-        selectedCar = selectedCar.toLowerCase();
-        for (Field f : carImagesArray) {
-            try {
-                if (f.getName().contains(selectedCar))
-                    System.out.println("R.drawable." + f.getName());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void correctAnswer(String selectedCar) {
-        answer.setText(R.string.textView_answer_text);
+        answer.setText(R.string.textView_correct_text);
         answer.setTextColor(Color.parseColor("#289995"));
         answer.setVisibility(View.VISIBLE);
 
         separator.setVisibility(View.VISIBLE);
+
+        carId.setText(String.valueOf(id));
 
         carMake.setText(selectedCar);
         carMake.setVisibility(View.VISIBLE);
@@ -183,22 +177,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         gif.setVisibility(View.VISIBLE);
 
         carMakeLabel.setVisibility(View.VISIBLE);
-
-        carImage.getId();
-        System.out.println(carImage.getId());
-
-        carId.setText(String.valueOf(id));
-
-        selectedCar = selectedCar.toLowerCase();
-        for (Field f : carImagesArray) {
-            try {
-                if (f.getName().contains(selectedCar))
-                    System.out.println("R.drawable." + f.getName());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
+    public void validateAnswer(String selectedCar) {
 
+    }
 }

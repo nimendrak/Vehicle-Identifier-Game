@@ -12,7 +12,7 @@
         style="@style/titleHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/identify_car_make_btn_text"
+        android:text="@string/button_identify_car_make_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,9 +33,9 @@
             android:layout_width="380dp"
             android:layout_height="297dp"
             android:background="#289995"
-            android:contentDescription="@string/car1_des"
+            android:contentDescription="@string/imageView_car_description"
             app:layout_constraintTop_toBottomOf="@+id/car_make_title"
-            app:srcCompat="@drawable/car_audi_a4" />
+            app:srcCompat="@drawable/car_audi_1" />
 
         <TextView
             android:id="@+id/car_id"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/car_id"
+            android:text="@string/textView_car_id"
             android:textColor="#2B363C"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -53,7 +53,7 @@
             android:layout_width="97dp"
             android:layout_height="69dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:contentDescription="@string/car_logo_des"
+            android:contentDescription="@string/textView_car_logo_description"
             app:srcCompat="@drawable/logo_audi" />
 
     </androidx.cardview.widget.CardView>
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/identify_btn_text"
+        android:text="@string/button_identify_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_holder" />
 
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="172dp"
             android:layout_marginTop="20dp"
-            android:text="@string/textView_answer_text"
+            android:text="@string/textView_correct_text"
             app:layout_constraintStart_toStartOf="parent"
             android:textColor="#289995"
             android:textSize="36sp"
