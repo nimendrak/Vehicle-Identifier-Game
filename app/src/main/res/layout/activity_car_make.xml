@@ -35,7 +35,7 @@
             android:background="#289995"
             android:contentDescription="@string/imageView_car_description"
             app:layout_constraintTop_toBottomOf="@+id/car_make_title"
-            app:srcCompat="@drawable/car_audi_1" />
+            app:srcCompat="@drawable/car_audi_5" />
 
         <TextView
             android:id="@+id/car_id"

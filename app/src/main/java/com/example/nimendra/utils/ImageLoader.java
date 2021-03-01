@@ -24,7 +24,7 @@ public class ImageLoader {
 
     public void loadData() {
         try {
-            for (int i = 1; i < 9; i++) {
+            for (int i = 1; i < 6; i++) {
                 int audiImages = context.getResources().getIdentifier(("car_audi_" + i), "drawable", context.getPackageName());
                 audiImagesArray.add(audiImages);
 
@@ -49,6 +49,7 @@ public class ImageLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(audiImagesArray);
     }
 
     public List<Integer> getAudiImagesArray() {

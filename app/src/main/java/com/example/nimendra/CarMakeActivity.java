@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.ValidateImages;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -41,10 +42,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     private TextView carId;
 
-    private static Field[] declaredFields = R.drawable.class.getDeclaredFields();
-
-    private static List<Integer> carImagesArray = new ArrayList<>();
-    private static List<Integer> carLogoArray = new ArrayList<>();
+    private ImageLoader imageLoader;
+    private ValidateImages validateImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         resetAnswer();
 
-        ImageLoader imageLoader = new ImageLoader(this);
+        imageLoader = new ImageLoader(this);
         System.out.println("audi images - " + imageLoader.getAudiImagesArray());
 
         // create the spinner
@@ -101,21 +100,15 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                         if (id > 0) {
                             switch (item) {
                                 case "Audi":
-                                    validateAnswer(item);
                                 case "Bugatti":
-                                    validateAnswer(item);
                                 case "BMW":
-                                    validateAnswer(item);
                                 case "Ferrari":
-                                    validateAnswer(item);
                                 case "Koenigsegg":
-                                    validateAnswer(item);
                                 case "Mercedes-Benz":
-                                    validateAnswer(item);
                                 case "Porsche":
-                                    validateAnswer(item);
                                 case "Tesla":
                                     validateAnswer(item);
+                                    break;
                             }
                         }
                     }
@@ -180,6 +173,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void validateAnswer(String selectedCar) {
-
+        ValidateImages validateImages = new ValidateImages(this, selectedCar, imageLoader);
+        System.out.println(validateImages.validation());
     }
 }
