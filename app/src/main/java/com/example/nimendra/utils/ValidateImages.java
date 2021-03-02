@@ -36,11 +36,13 @@ public class ValidateImages {
         ImageView currentImg = (ImageView) activity.findViewById(R.id.car_image);
         String currentImgResourceName = (String) currentImg.getTag();
 
+        int correctCarMakeIndex = 0;
         if (imageLoader.getCarImagesArray().size() > 0) {
             try {
                 for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
                     if (currentImgResourceName.contains(selectedCar.toLowerCase())) {
-                        imageLoader.getCarImagesArray().remove(i);
+                        correctCarMakeIndex = i;
+                        imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
                         Log.d(LOG_TAG, "Images Array size - " + imageLoader.getCarImagesArray().size());
                         return true;
                     }
@@ -48,8 +50,8 @@ public class ValidateImages {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
+        imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
         Log.d(LOG_TAG, "Images Array size - " + imageLoader.getCarImagesArray().size());
         return false;
     }

@@ -22,9 +22,6 @@
     <string name="textView_car_maker_text">Correct car maker is</string>
     <string name="textView_correct_car_maker">Audi</string>
 
-    <string name="imageView_car_description">Car1 - Audi A4</string>
-    <string name="imageView_random_car_image_des">Random car image</string>
-    <string name="textView_car_maker">TextView</string>
 
     <string-array name="array_car_makes">
         <item>Select a Manufacturer</item>
@@ -38,5 +35,12 @@
         <item>Tesla</item>
     </string-array>
 
+    <!-- Car image Activity -->
+    <string name="imageView_car_description">Car1 - Audi A4</string>
+    <string name="imageView_random_car_image_des">Random car image</string>
+    <string name="textView_car_maker">TextView</string>
+    <string name="textView_img1_index">01</string>
+    <string name="textView_img2_index">02</string>
+    <string name="textView_img3_index">03</string>
 
 </resources>
