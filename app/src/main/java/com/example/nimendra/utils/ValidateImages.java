@@ -3,12 +3,10 @@ package com.example.nimendra.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.example.nimendra.R;
 
-import java.lang.reflect.Field;
 import java.util.Random;
 
 public class ValidateImages {
@@ -16,32 +14,23 @@ public class ValidateImages {
     // Class name for Log tag
     private static final String LOG_TAG = ValidateImages.class.getSimpleName();
 
-    private static Field[] carImagesArray = R.drawable.class.getDeclaredFields();
-
     private Activity activity;
     private Context context;
-    private String selectedCar;
     private ImageLoader imageLoader;
 
-    public ValidateImages(Activity activity, Context context, String selectedCar, ImageLoader imageLoader) {
-        this.selectedCar = selectedCar;
-        this.imageLoader = imageLoader;
-        this.context = context;
-        this.activity = activity;
-    }
-
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
-        this.activity = activity;
-        this.context = context;
         this.imageLoader = imageLoader;
+        this.context = context;
+        this.activity = activity;
     }
 
     public boolean validation() {
+        ImageView currentImg = (ImageView) activity.findViewById(R.id.car_image);
+        String currentCar = (String) currentImg.getTag();
+
         if (imageLoader.getCarImagesArray().size() > 0) {
             try {
                 for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
-
-                    String currentCar = "car_" + selectedCar.toLowerCase() + "_" + (i + 1);
                     String carFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
 
                     if (currentCar.equalsIgnoreCase(carFromArr)) {
@@ -70,34 +59,18 @@ public class ValidateImages {
     }
 
     public String getCorrectCarMake() {
-
+        String correctCarMake;
         ImageView imageView = activity.findViewById(R.id.car_image);
-        int text = (int) imageView.getTag();
-        Log.d(LOG_TAG, "imageView.getTag - " + text);
+        String imageTag = (String) imageView.getTag();
+        String[] words = imageTag.split("[_]");
+        correctCarMake = words[1];
+        correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
 
-
-        String correctCarMake = null;
-        for (Field f : carImagesArray) {
-            try {
-                if (text == f.getInt(null)) {
-                    Log.d(LOG_TAG, "f.getInt - " + f.getInt(null));
-                    Log.d(LOG_TAG, "f.getName - " + f.getName());
-                    String[] words = f.getName().split("[_]");
-                    correctCarMake = words[1];
-                    correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
-                }
-            }  catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (correctCarMake.equalsIgnoreCase("bmw")) {
+            correctCarMake = correctCarMake.toUpperCase();
         }
-
-        if (correctCarMake != null) {
-            if (correctCarMake.equalsIgnoreCase("bmw")) {
-                correctCarMake = correctCarMake.toUpperCase();
-            }
-            if (correctCarMake.equalsIgnoreCase("benz")) {
-                correctCarMake = "Mercedes-Benz";
-            }
+        if (correctCarMake.equalsIgnoreCase("benz")) {
+            correctCarMake = "Mercedes-Benz";
         }
 
         Log.d(LOG_TAG, "correct car - " + correctCarMake);

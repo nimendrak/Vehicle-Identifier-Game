@@ -44,7 +44,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="@string/textView_car_id"
+            android:text="@string/textView_car_id_1"
+            android:textColor="#2B363C"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/car_id_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/textView_car_id_2"
             android:textColor="#2B363C"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -55,7 +66,7 @@
             android:layout_height="69dp"
             android:layout_gravity="bottom|center_horizontal"
             android:contentDescription="@string/textView_car_logo_description"
-            app:srcCompat="@drawable/logo_audi" />
+            app:srcCompat="@drawable/car_bmw" />
 
     </androidx.cardview.widget.CardView>
 

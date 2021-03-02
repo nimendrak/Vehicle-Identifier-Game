@@ -1,10 +1,6 @@
 package com.example.nimendra.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.widget.ImageView;
-
-import com.example.nimendra.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,27 +9,21 @@ public class ImageLoader {
     private List<Integer> carImagesArray = new ArrayList<>();
     private List<Integer> carLogosArray = new ArrayList<>();
 
-    private Activity activity;
     private Context context;
 
-    public ImageLoader(Activity activity, Context current){
+    public ImageLoader(Context current) {
         this.context = current;
-        this.activity = activity;
         loadData();
     }
 
     public void loadData() {
         try {
             for (int i = 0; i < 5; i++) {
-                int audiImages = context.getResources().getIdentifier(("car_audi_" + (i+1)), "drawable", context.getPackageName());
-                int audiLogo = context.getResources().getIdentifier("logo_audi", "drawable", context.getPackageName());
+                int audiImages = context.getResources().getIdentifier(("car_audi_" + (i + 1)), "drawable", context.getPackageName());
                 carImagesArray.add(audiImages);
-                carLogosArray.add(audiLogo);
 
-                int bmwImages = context.getResources().getIdentifier(("car_bmw_" + (i+1)), "drawable", context.getPackageName());
-                int bmwLogo = context.getResources().getIdentifier("logo_bmw", "drawable", context.getPackageName());
+                int bmwImages = context.getResources().getIdentifier(("car_bmw_" + (i + 1)), "drawable", context.getPackageName());
                 carImagesArray.add(bmwImages);
-                carLogosArray.add(bmwLogo);
 
 //                int bugattiImages = context.getResources().getIdentifier(("car_bugatti_" + i), "drawable", context.getPackageName());
 //                carImagesArray.add(bugattiImages);
@@ -50,14 +40,26 @@ public class ImageLoader {
 //                int teslaImages = context.getResources().getIdentifier(("car_tesla_" + i), "drawable", context.getPackageName());
 //                carImagesArray.add(teslaImages);
             }
+            int audiLogo = context.getResources().getIdentifier("car_audi", "drawable", context.getPackageName());
+            carLogosArray.add(audiLogo);
+
+            int bmwLogo = context.getResources().getIdentifier("car_bmw", "drawable", context.getPackageName());
+            carLogosArray.add(bmwLogo);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(carImagesArray);
-        System.out.println("Loaded Image Array Size - " + carImagesArray.size());
+        System.out.println("images arr - " + carImagesArray);
+        System.out.println("logos arr size  - " + carImagesArray.size());
+        System.out.println("logos arr - " + carLogosArray);
+        System.out.println("images arr size - " + carLogosArray.size());
     }
 
     public List<Integer> getCarImagesArray() {
         return carImagesArray;
+    }
+
+    public List<Integer> getCarLogosArray() {
+        return carLogosArray;
     }
 }

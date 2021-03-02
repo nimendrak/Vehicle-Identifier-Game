@@ -1,7 +1,7 @@
 package com.example.nimendra;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,17 +49,15 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_make);
 
-        imageLoader = new ImageLoader(CarMakeActivity.this,this);
+        imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
 
         carMake = (TextView) findViewById(R.id.correct_car);
+
         carMakeLogo = (ImageView) findViewById(R.id.car_logo);
-
         carImage = (ImageView) findViewById(R.id.car_image);
-        Integer currentImageResource = imageLoader.getCarImagesArray().get(validateImages.getRandom());
 
-        carImage.setImageResource(currentImageResource);
-        carImage.setTag(currentImageResource);
+        setImages();
 
         carId = (TextView) findViewById(R.id.car_id);
 
@@ -111,7 +109,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Porsche":
                                 case "Tesla":
                                     Log.d(LOG_TAG, "in onclick() -> switch");
-                                    validateAnswer(item);
+                                    validateAnswer();
                                     spinner.setEnabled(false);
                                     spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
                                     break;
@@ -160,6 +158,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         carMakeLabel.setVisibility(View.VISIBLE);
     }
 
+    @SuppressLint("DefaultLocale")
     public void correctAnswer(String selectedCar) {
         answer.setText(R.string.textView_correct_text);
         answer.setTextColor(Color.parseColor("#289995"));
@@ -167,7 +166,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         separator.setVisibility(View.VISIBLE);
 
-        carId.setText(String.valueOf(imageLoader.getCarImagesArray().size()));
+        int id = imageLoader.getCarImagesArray().size();
+        carId.setText(String.format("%02d", id));
 
         carMake.setText(selectedCar);
         carMake.setVisibility(View.VISIBLE);
@@ -178,8 +178,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         carMakeLabel.setVisibility(View.VISIBLE);
     }
 
-    public void validateAnswer(String selectedCar) {
-        validateImages = new ValidateImages( CarMakeActivity.this,this, selectedCar, imageLoader);
+    public void validateAnswer() {
+        validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
 
         if (validateImages.validation()) {
             correctAnswer(validateImages.getCorrectCarMake());
@@ -197,13 +197,37 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 spinner.setSelection(0);
                 spinner.setEnabled(true);
 
-                Integer nextImageResource = imageLoader.getCarImagesArray().get(validateImages.getRandom());
-                carImage.setImageResource(nextImageResource);
-                carImage.setTag(nextImageResource);
+                setImages();
 
                 spinner.setBackgroundResource(R.drawable.spinner_color_layout);
                 resetAnswer();
             }
         });
+    }
+
+    public void setImages() {
+        // car
+        Integer currentImageResource = imageLoader.getCarImagesArray().get(validateImages.getRandom());
+        String currentImgResourceName = getResources().getResourceEntryName(currentImageResource);
+
+        carImage.setImageResource(currentImageResource);
+        carImage.setTag(currentImgResourceName);
+
+        // car logo
+        try {
+            for (int i = 0; i < imageLoader.getCarLogosArray().size(); i++) {
+                Integer currentLogoResource = imageLoader.getCarLogosArray().get(i);
+                String currentLogoResourceName = getResources().getResourceEntryName(currentLogoResource);
+
+                if (currentImgResourceName.contains(currentLogoResourceName)) {
+                    carMakeLogo.setImageResource(currentLogoResource);
+                    carMakeLogo.setTag(currentLogoResourceName);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
