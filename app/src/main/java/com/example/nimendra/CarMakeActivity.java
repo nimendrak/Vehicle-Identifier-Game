@@ -2,6 +2,7 @@ package com.example.nimendra;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,16 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.ValidateImages;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 public class CarMakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // Class name for Log tag
     private static final String LOG_TAG = CarMakeActivity.class.getSimpleName();
-
-    private static int id = 40;
 
     // TextView for correct car make
     private TextView carMake;
@@ -44,6 +39,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     private ImageLoader imageLoader;
     private ValidateImages validateImages;
+
+    private Spinner spinner = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +63,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         resetAnswer();
 
         imageLoader = new ImageLoader(this);
-        System.out.println("audi images - " + imageLoader.getAudiImagesArray());
 
         // create the spinner
-        final Spinner spinner = findViewById(R.id.car_make_spinner);
+        spinner = findViewById(R.id.car_make_spinner);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(this);
         }
@@ -88,16 +84,13 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                identifyBtn.setText(R.string.button_identify_text);
-
                 if (spinner != null) {
                     String item = spinner.getSelectedItem().toString();
 
                     if (item.equals("Select a Manufacturer")) {
                         resetAnswer();
                     } else {
-                        id = id - 1;
-                        if (id > 0) {
+                        if (imageLoader.getCarImagesArray().size() > 0) {
                             switch (item) {
                                 case "Audi":
                                 case "Bugatti":
@@ -108,6 +101,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Porsche":
                                 case "Tesla":
                                     validateAnswer(item);
+                                    identifyBtn.setText(R.string.button_identify_text_2);
+                                    spinner.setEnabled(false);
+                                    spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
                                     break;
                             }
                         }
@@ -119,8 +115,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
-        Log.d(LOG_TAG, "Selected item - " + item);
+
     }
 
     @Override
@@ -143,7 +138,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         separator.setVisibility(View.VISIBLE);
 
-        carId.setText(String.valueOf(id));
+        carId.setText(String.valueOf(imageLoader.getCarImagesArray().size()));
 
         carMake.setText(selectedCar);
         carMake.setVisibility(View.VISIBLE);
@@ -161,7 +156,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         separator.setVisibility(View.VISIBLE);
 
-        carId.setText(String.valueOf(id));
+        carId.setText(String.valueOf(imageLoader.getCarImagesArray().size()));
 
         carMake.setText(selectedCar);
         carMake.setVisibility(View.VISIBLE);
@@ -173,7 +168,23 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void validateAnswer(String selectedCar) {
-        ValidateImages validateImages = new ValidateImages(this, selectedCar, imageLoader);
-        System.out.println(validateImages.validation());
+        validateImages = new ValidateImages(this, selectedCar, imageLoader);
+
+        if (validateImages.validation()) {
+            correctAnswer(selectedCar);
+
+            identifyBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    spinner.setEnabled(true);
+                    spinner.setSelection(0);
+                    spinner.setBackgroundResource(R.drawable.spinner_color_layout);
+                    carImage.setImageResource(imageLoader.getCarImagesArray().get(validateImages.getRandom()));
+                }
+            });
+
+        } else {
+            wrongAnswer(selectedCar);
+        }
     }
 }

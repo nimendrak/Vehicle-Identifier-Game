@@ -6,15 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageLoader {
-    private List<Integer> audiImagesArray = new ArrayList<>();
-    private List<Integer> bmwImagesArray = new ArrayList<>();
-    private List<Integer> bugattiImagesArray = new ArrayList<>();
-    private List<Integer> ferrariImagesArray = new ArrayList<>();
-    private List<Integer> koenigseggImagesArray = new ArrayList<>();
-    private List<Integer> mercImagesArray = new ArrayList<>();
-    private List<Integer> porscheImagesArray = new ArrayList<>();
-    private List<Integer> teslaImagesArray = new ArrayList<>();
-
+    private List<Integer> carImagesArray = new ArrayList<>();
     private Context context;
 
     public ImageLoader(Context current){
@@ -24,63 +16,35 @@ public class ImageLoader {
 
     public void loadData() {
         try {
-            for (int i = 1; i < 6; i++) {
-                int audiImages = context.getResources().getIdentifier(("car_audi_" + i), "drawable", context.getPackageName());
-                audiImagesArray.add(audiImages);
+            for (int i = 0; i < 5; i++) {
+                int audiImages = context.getResources().getIdentifier(("car_audi_" + (i+1)), "drawable", context.getPackageName());
+                carImagesArray.add(audiImages);
 
-                int bugattiImages = context.getResources().getIdentifier(("car_bugatti_" + i), "drawable", context.getPackageName());
-                bugattiImagesArray.add(bugattiImages);
+                int bmwImages = context.getResources().getIdentifier(("car_bmw_" + (i+1)), "drawable", context.getPackageName());
+                carImagesArray.add(bmwImages);
 
-                int bmwImages = context.getResources().getIdentifier(("car_bmw_" + i), "drawable", context.getPackageName());
-                bmwImagesArray.add(bmwImages);
+//                int bugattiImages = context.getResources().getIdentifier(("car_bugatti_" + i), "drawable", context.getPackageName());
+//                carImagesArray.add(bugattiImages);
 
-                int ferrariImages = context.getResources().getIdentifier(("car_ferrari_" + i), "drawable", context.getPackageName());
-                ferrariImagesArray.add(ferrariImages);
+//                int ferrariImages = context.getResources().getIdentifier(("car_ferrari_" + i), "drawable", context.getPackageName());
+//                carImagesArray.add(ferrariImages);
 
-                int koenigseggImages = context.getResources().getIdentifier(("car_koenigsegg_" + i), "drawable", context.getPackageName());
-                koenigseggImagesArray.add(koenigseggImages);
-
-                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + i), "drawable", context.getPackageName());
-                porscheImagesArray.add(porscheImages);
-
-                int teslaImages = context.getResources().getIdentifier(("car_tesla_" + i), "drawable", context.getPackageName());
-                teslaImagesArray.add(teslaImages);
+//                int koenigseggImages = context.getResources().getIdentifier(("car_koenigsegg_" + i), "drawable", context.getPackageName());
+//                carImagesArray.add(koenigseggImages);
+//
+//                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + i), "drawable", context.getPackageName());
+//                carImagesArray.add(porscheImages);
+//
+//                int teslaImages = context.getResources().getIdentifier(("car_tesla_" + i), "drawable", context.getPackageName());
+//                carImagesArray.add(teslaImages);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(audiImagesArray);
+        System.out.println("Loaded Image Array Size - " + carImagesArray.size());
     }
 
-    public List<Integer> getAudiImagesArray() {
-        return audiImagesArray;
-    }
-
-    public List<Integer> getBugattiImagesArray() {
-        return bugattiImagesArray;
-    }
-
-    public List<Integer> getBmwImagesArray() {
-        return bmwImagesArray;
-    }
-
-    public List<Integer> getFerrariImagesArray() {
-        return ferrariImagesArray;
-    }
-
-    public List<Integer> getKoenigseggImagesArray() {
-        return koenigseggImagesArray;
-    }
-
-    public List<Integer> getMercImagesArray() {
-        return mercImagesArray;
-    }
-
-    public List<Integer> getPorscheImagesArray() {
-        return porscheImagesArray;
-    }
-
-    public List<Integer> getTeslaImagesArray() {
-        return teslaImagesArray;
+    public List<Integer> getCarImagesArray() {
+        return carImagesArray;
     }
 }
