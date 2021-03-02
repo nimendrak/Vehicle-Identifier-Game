@@ -1,8 +1,8 @@
 package com.example.nimendra;
 
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +26,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private TextView carMake;
     // ImageView for correct car make
     private ImageView carImage;
+
     private TextView answer;
 
     private ImageView gif;
@@ -34,6 +35,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private View separator;
 
     private Button identifyBtn;
+    private Button nextBtn;
 
     private TextView carId;
 
@@ -47,9 +49,18 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_make);
 
+        imageLoader = new ImageLoader(CarMakeActivity.this,this);
+        validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
+
         carMake = (TextView) findViewById(R.id.correct_car);
         carMakeLogo = (ImageView) findViewById(R.id.car_logo);
+
         carImage = (ImageView) findViewById(R.id.car_image);
+        Integer currentImageResource = imageLoader.getCarImagesArray().get(validateImages.getRandom());
+
+        carImage.setImageResource(currentImageResource);
+        carImage.setTag(currentImageResource);
+
         carId = (TextView) findViewById(R.id.car_id);
 
         answer = (TextView) findViewById(R.id.answer);
@@ -59,10 +70,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         separator = (View) findViewById(R.id.separator);
 
         identifyBtn = (Button) findViewById(R.id.identify_btn);
+        nextBtn = (Button) findViewById(R.id.next_btn);
 
         resetAnswer();
-
-        imageLoader = new ImageLoader(this);
 
         // create the spinner
         spinner = findViewById(R.id.car_make_spinner);
@@ -100,8 +110,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Mercedes-Benz":
                                 case "Porsche":
                                 case "Tesla":
+                                    Log.d(LOG_TAG, "in onclick() -> switch");
                                     validateAnswer(item);
-                                    identifyBtn.setText(R.string.button_identify_text_2);
                                     spinner.setEnabled(false);
                                     spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
                                     break;
@@ -129,6 +139,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         carMakeLabel.setVisibility(View.INVISIBLE);
         answer.setVisibility(View.INVISIBLE);
         separator.setVisibility(View.INVISIBLE);
+        nextBtn.setVisibility(View.INVISIBLE);
     }
 
     public void wrongAnswer(String selectedCar) {
@@ -168,23 +179,31 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void validateAnswer(String selectedCar) {
-        validateImages = new ValidateImages(this, selectedCar, imageLoader);
+        validateImages = new ValidateImages( CarMakeActivity.this,this, selectedCar, imageLoader);
 
         if (validateImages.validation()) {
-            correctAnswer(selectedCar);
-
-            identifyBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    spinner.setEnabled(true);
-                    spinner.setSelection(0);
-                    spinner.setBackgroundResource(R.drawable.spinner_color_layout);
-                    carImage.setImageResource(imageLoader.getCarImagesArray().get(validateImages.getRandom()));
-                }
-            });
-
+            correctAnswer(validateImages.getCorrectCarMake());
+            Log.d(LOG_TAG, "in validate() -> correct");
         } else {
-            wrongAnswer(selectedCar);
+            wrongAnswer(validateImages.getCorrectCarMake());
+            Log.d(LOG_TAG, "in validate() -> wrong");
         }
+
+        nextBtn.setVisibility(View.VISIBLE);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "in validate() -> nextBtn");
+                spinner.setSelection(0);
+                spinner.setEnabled(true);
+
+                Integer nextImageResource = imageLoader.getCarImagesArray().get(validateImages.getRandom());
+                carImage.setImageResource(nextImageResource);
+                carImage.setTag(nextImageResource);
+
+                spinner.setBackgroundResource(R.drawable.spinner_color_layout);
+                resetAnswer();
+            }
+        });
     }
 }
