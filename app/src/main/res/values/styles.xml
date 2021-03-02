@@ -24,4 +24,9 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="carImageHolder" >
+        <item name="android:background">#289995</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
 </resources>

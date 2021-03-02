@@ -34,9 +34,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private TextView carMakeLabel;
     private View separator;
 
-    private Button identifyBtn;
     private Button nextBtn;
-
     private TextView carId;
 
     private ImageLoader imageLoader;
@@ -67,7 +65,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         separator = (View) findViewById(R.id.separator);
 
-        identifyBtn = (Button) findViewById(R.id.identify_btn);
+        Button identifyBtn = (Button) findViewById(R.id.identify_btn);
         nextBtn = (Button) findViewById(R.id.next_btn);
 
         resetAnswer();
@@ -109,7 +107,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Porsche":
                                 case "Tesla":
                                     Log.d(LOG_TAG, "in onclick() -> switch");
-                                    validateAnswer();
+                                    validateAnswer(item);
                                     spinner.setEnabled(false);
                                     spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
                                     break;
@@ -140,6 +138,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         nextBtn.setVisibility(View.INVISIBLE);
     }
 
+    @SuppressLint("DefaultLocale")
     public void wrongAnswer(String selectedCar) {
         answer.setText(R.string.textView_wrong_text);
         answer.setTextColor(Color.parseColor("#ff0024"));
@@ -147,7 +146,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         separator.setVisibility(View.VISIBLE);
 
-        carId.setText(String.valueOf(imageLoader.getCarImagesArray().size()));
+        int id = imageLoader.getCarImagesArray().size();
+        carId.setText(String.format("%02d", id));
 
         carMake.setText(selectedCar);
         carMake.setVisibility(View.VISIBLE);
@@ -178,8 +178,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         carMakeLabel.setVisibility(View.VISIBLE);
     }
 
-    public void validateAnswer() {
-        validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
+    public void validateAnswer(String selectedCar) {
+        validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader, selectedCar);
 
         if (validateImages.validation()) {
             correctAnswer(validateImages.getCorrectCarMake());

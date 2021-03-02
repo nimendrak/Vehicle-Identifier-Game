@@ -38,6 +38,7 @@
 
     <Button
         android:id="@+id/car_image_btn"
+        android:onClick="launchCarImage"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

@@ -16,27 +16,30 @@ public class ValidateImages {
 
     private Activity activity;
     private Context context;
+    private String selectedCar;
     private ImageLoader imageLoader;
 
-    public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
+    public ValidateImages(Activity activity, Context context, ImageLoader imageLoader, String selectedCar) {
+        this.selectedCar = selectedCar;
         this.imageLoader = imageLoader;
         this.context = context;
         this.activity = activity;
     }
 
+    public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
+        this.activity = activity;
+        this.context = context;
+        this.imageLoader = imageLoader;
+    }
+
     public boolean validation() {
         ImageView currentImg = (ImageView) activity.findViewById(R.id.car_image);
-        String currentCar = (String) currentImg.getTag();
+        String currentImgResourceName = (String) currentImg.getTag();
 
         if (imageLoader.getCarImagesArray().size() > 0) {
             try {
                 for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
-                    String carFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
-
-                    if (currentCar.equalsIgnoreCase(carFromArr)) {
-                        Log.d(LOG_TAG, "current car - " + currentCar);
-                        Log.d(LOG_TAG, "from arr - " + carFromArr);
-
+                    if (currentImgResourceName.contains(selectedCar.toLowerCase())) {
                         imageLoader.getCarImagesArray().remove(i);
                         Log.d(LOG_TAG, "Images Array size - " + imageLoader.getCarImagesArray().size());
                         return true;
@@ -45,6 +48,7 @@ public class ValidateImages {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
         Log.d(LOG_TAG, "Images Array size - " + imageLoader.getCarImagesArray().size());
         return false;

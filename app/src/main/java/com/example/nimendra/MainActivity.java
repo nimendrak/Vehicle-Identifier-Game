@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,8 +20,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchCarMake(View view) {
-        Log.d(LOG_TAG, "CarMakeBtn clicked!");
         Intent intent = new Intent(this, CarMakeActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchCarImage(View view) {
+        Intent intent = new Intent(this, CarImageActivity.class);
         startActivity(intent);
     }
 }
