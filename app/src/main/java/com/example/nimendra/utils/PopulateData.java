@@ -1,10 +1,8 @@
 package com.example.nimendra.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +20,8 @@ public class PopulateData {
     private List<Integer> imageHolders;
     private List<Integer> logoArr;
     private Styles styles;
+
+    private String correctCarMake;
 
     public PopulateData(Context context, ImageLoader imageLoader, Styles styles) {
         if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
@@ -47,7 +47,6 @@ public class PopulateData {
 
     @SuppressLint("DefaultLocale")
     public void setImagesTaskOne() {
-        System.out.println(imgArr);
         // car
         Integer currentImageResource = imgArr.get(getRandomIndex(imgArr));
         String currentImgResourceName = context.getResources().getResourceEntryName(currentImageResource);
@@ -130,7 +129,7 @@ public class PopulateData {
         String randomCarMakeStr = context.getResources().getResourceEntryName(randomCarMakeInt);
 
         String[] words = randomCarMakeStr.split("[_]");
-        String correctCarMake = words[1];
+        correctCarMake = words[1];
         correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
 
         if (correctCarMake.equalsIgnoreCase("bmw")) {
@@ -152,7 +151,6 @@ public class PopulateData {
                 Log.d(LOG_TAG, "! shuffling ! ");
                 Collections.shuffle(imageArr);
             }
-
             return random.nextInt(imageArr.size());
         }
         return -1;
@@ -160,5 +158,9 @@ public class PopulateData {
 
     public List<Integer> getImageHolders() {
         return imageHolders;
+    }
+
+    public String getCorrectCarMake() {
+        return correctCarMake;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.nimendra;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,20 +31,20 @@ public class CarImageActivity extends AppCompatActivity {
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarImageActivity.this, this, imageLoader);
-        styles = new Styles(CarImageActivity.this, this, imageLoader, validateImages);
+        styles = new Styles(CarImageActivity.this, this);
         populateData = new PopulateData( this, imageLoader, styles);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "in validate() -> nextBtn");
                 populateData.setImagesTaskThree();
                 styles.resetAnswer();
             }
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void validateAnswer(View view) {
         TextView randomCarMake = styles.getRandomCarMake();
         String randomCarMakeStr = (String) randomCarMake.getText();
@@ -55,9 +56,11 @@ public class CarImageActivity extends AppCompatActivity {
             case R.id.car_img3:
                 if (validateImages.validation(id, randomCarMakeStr, populateData)) {
                     styles.correctAnswer(randomCarMakeStr, id);
+                    styles.markCorrectAnswer(validateImages.getCorrectCarMake(populateData));
                     Log.d(LOG_TAG, "in validate() -> correct");
                 } else {
                     styles.wrongAnswer(randomCarMakeStr, id);
+                    styles.markCorrectAnswer(validateImages.getCorrectCarMake(populateData));
                     Log.d(LOG_TAG, "in validate() -> wrong");
                 }
                 break;

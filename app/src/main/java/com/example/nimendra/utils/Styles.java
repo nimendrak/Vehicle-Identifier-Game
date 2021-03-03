@@ -1,5 +1,6 @@
 package com.example.nimendra.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -13,7 +14,7 @@ import com.example.nimendra.R;
 
 public class Styles {
 
-    private static final String LOG_TAG = PopulateData.class.getSimpleName();
+    private static final String LOG_TAG = Styles.class.getSimpleName();
 
     // CarMakeActivity
     private ImageView carMakeLogo;
@@ -35,17 +36,10 @@ public class Styles {
 
     private Button nextBtn;
 
-    private ImageLoader imageLoader;
-    private ValidateImages validateImages;
-
     private Context context;
-    private Activity activity;
 
-    public Styles(Activity activity, Context context, ImageLoader imageLoader, ValidateImages validateImages) {
-        this.imageLoader = imageLoader;
-        this.validateImages = validateImages;
+    public Styles(Activity activity, Context context) {
         this.context = context;
-        this.activity = activity;
 
         answer = activity.findViewById(R.id.answer);
         gif = activity.findViewById(R.id.correct_answer_gif);
@@ -56,9 +50,6 @@ public class Styles {
 
         if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
             this.context = context;
-            this.activity = activity;
-            this.imageLoader = imageLoader;
-            this.validateImages = validateImages;
 
             carMakeLogo = activity.findViewById(R.id.car_logo);
             carImage = activity.findViewById(R.id.car_image);
@@ -68,9 +59,6 @@ public class Styles {
         }
         if (context.getClass().getSimpleName().equals("CarImageActivity")) {
             this.context = context;
-            this.activity = activity;
-            this.imageLoader = imageLoader;
-            this.validateImages = validateImages;
 
             nextBtn = activity.findViewById(R.id.next_btn);
             randomImageOne = activity.findViewById(R.id.car_img1);
@@ -113,26 +101,29 @@ public class Styles {
         carMakeLabel.setVisibility(View.VISIBLE);
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void correctAnswer(String selectedCar, Integer imageHolder) {
         correctAnswer(selectedCar);
         Log.d(LOG_TAG, "Correct Answer -> " + imageHolder);
 
         switch (imageHolder) {
             case R.id.car_img1:
-                randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
+                randomImageOne.setBackgroundColor(Color.parseColor("#FFC107"));
+                randomImageOne.setBackgroundColor(Color.BLACK);
                 carMake.setText(R.string.textView_image1);
                 break;
             case R.id.car_img2:
-                randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));
+                randomImageTwo.setBackgroundColor(Color.parseColor("#FFC107"));
                 carMake.setText(R.string.textView_image2);
                 break;
             case R.id.car_img3:
-                randomImageThree.setBackgroundColor(Color.parseColor("#289995"));
+                randomImageThree.setBackgroundColor(Color.parseColor("#FFC107"));
                 carMake.setText(R.string.textView_image3);
                 break;
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void wrongAnswer(String selectedCar, Integer imageHolder) {
         Log.d(LOG_TAG, "Wrong Answer -> " + imageHolder);
         wrongAnswer(selectedCar);
@@ -152,6 +143,26 @@ public class Styles {
                 carMake.setText(R.string.textView_image3);
                 break;
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    public void markCorrectAnswer(Integer imageHolder) {
+        Log.d(LOG_TAG, "Mrk Correct Answer -> " + imageHolder);
+        switch (imageHolder) {
+            case R.id.car_img1:
+                randomImageOne.setBackgroundColor(Color.parseColor("#FFC107"));
+                carMake.setText(R.string.textView_image1);
+                break;
+            case R.id.car_img2:
+                randomImageTwo.setBackgroundColor(Color.parseColor("#FFC107"));
+                carMake.setText(R.string.textView_image2);
+                break;
+            case R.id.car_img3:
+                randomImageThree.setBackgroundColor(Color.parseColor("#FFC107"));
+                carMake.setText(R.string.textView_image3);
+                break;
+        }
+
     }
 
     public void resetAnswer() {
@@ -205,4 +216,5 @@ public class Styles {
     public TextView getCarId() {
         return carId;
     }
+
 }

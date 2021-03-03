@@ -1,11 +1,16 @@
 package com.example.nimendra.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImageLoader {
+
+    // Class name for Log tag
+    private static final String LOG_TAG = ImageLoader.class.getSimpleName();
+
     private List<Integer> carImagesArray = new ArrayList<>();
     private List<Integer> carLogosArray = new ArrayList<>();
 
@@ -52,8 +57,8 @@ public class ImageLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("logos arr size  - " + carImagesArray.size());
-        System.out.println("images arr size - " + carLogosArray.size());
+        Log.d(LOG_TAG, "Logos arr size  - " + carImagesArray.size());
+        Log.d(LOG_TAG, "Images arr size - " + carLogosArray.size());
     }
 
     public List<Integer> getCarImagesArray() {

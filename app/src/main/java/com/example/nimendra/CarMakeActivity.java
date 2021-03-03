@@ -35,7 +35,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
-        styles = new Styles(CarMakeActivity.this,this, imageLoader, validateImages);
+        styles = new Styles(CarMakeActivity.this,this);
         populateData = new PopulateData(this, imageLoader, styles);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
@@ -77,7 +77,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Mercedes-Benz":
                                 case "Porsche":
                                 case "Tesla":
-                                    Log.d(LOG_TAG, "in onclick() -> switch");
                                     validateAnswer(item);
                                     spinner.setEnabled(false);
                                     spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
@@ -115,7 +114,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LOG_TAG, "in validate() -> nextBtn");
                 spinner.setSelection(0);
                 spinner.setEnabled(true);
 
