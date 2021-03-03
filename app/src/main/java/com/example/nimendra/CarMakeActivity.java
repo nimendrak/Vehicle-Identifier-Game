@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.Styles;
 import com.example.nimendra.utils.ValidateImages;
 
 public class CarMakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -22,6 +23,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private ImageLoader imageLoader;
     private ValidateImages validateImages;
     private PopulateData populateData;
+    private Styles styles;
 
     private Button nextBtn;
     private Spinner spinner = null;
@@ -33,7 +35,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
-        populateData = new PopulateData(CarMakeActivity.this, this, imageLoader, validateImages);
+        styles = new Styles(CarMakeActivity.this,this, imageLoader, validateImages);
+        populateData = new PopulateData(this, imageLoader, styles);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         nextBtn = findViewById(R.id.next_btn);
@@ -62,7 +65,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                     String item = spinner.getSelectedItem().toString();
 
                     if (item.equals("Select a Manufacturer")) {
-                        populateData.resetAnswer();
+                        styles.resetAnswer();
                     } else {
                         if (imageLoader.getCarImagesArray().size() > 0) {
                             switch (item) {
@@ -101,10 +104,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader, selectedCar);
 
         if (validateImages.validation()) {
-            populateData.correctAnswer(validateImages.getCorrectCarMake());
+            styles.correctAnswer(validateImages.getCorrectCarMake());
             Log.d(LOG_TAG, "in validate() -> correct");
         } else {
-            populateData.wrongAnswer(validateImages.getCorrectCarMake());
+            styles.wrongAnswer(validateImages.getCorrectCarMake());
             Log.d(LOG_TAG, "in validate() -> wrong");
         }
 
@@ -119,7 +122,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 populateData.setImagesTaskOne();
 
                 spinner.setBackgroundResource(R.drawable.spinner_color_layout);
-                populateData.resetAnswer();
+                styles.resetAnswer();
             }
         });
     }

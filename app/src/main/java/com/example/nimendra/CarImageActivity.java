@@ -1,17 +1,16 @@
 package com.example.nimendra;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.PopulateData;
+import com.example.nimendra.utils.Styles;
 import com.example.nimendra.utils.ValidateImages;
 
 public class CarImageActivity extends AppCompatActivity {
@@ -22,6 +21,7 @@ public class CarImageActivity extends AppCompatActivity {
     private ValidateImages validateImages;
     private ImageLoader imageLoader;
     private PopulateData populateData;
+    private Styles styles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,8 @@ public class CarImageActivity extends AppCompatActivity {
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarImageActivity.this, this, imageLoader);
-        populateData = new PopulateData(CarImageActivity.this, this, imageLoader, validateImages);
+        styles = new Styles(CarImageActivity.this, this, imageLoader, validateImages);
+        populateData = new PopulateData( this, imageLoader, styles);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         identifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -38,13 +39,13 @@ public class CarImageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "in validate() -> nextBtn");
                 populateData.setImagesTaskThree();
-                populateData.resetAnswer();
+                styles.resetAnswer();
             }
         });
     }
 
     public void validateAnswer(View view) {
-        TextView randomCarMake = populateData.getRandomCarMake();
+        TextView randomCarMake = styles.getRandomCarMake();
         String randomCarMakeStr = (String) randomCarMake.getText();
 
         int id = view.getId();
@@ -53,10 +54,10 @@ public class CarImageActivity extends AppCompatActivity {
             case R.id.car_img2:
             case R.id.car_img3:
                 if (validateImages.validation(id, randomCarMakeStr, populateData)) {
-                    populateData.correctAnswer(randomCarMakeStr, id);
+                    styles.correctAnswer(randomCarMakeStr, id);
                     Log.d(LOG_TAG, "in validate() -> correct");
                 } else {
-                    populateData.wrongAnswer(randomCarMakeStr, id);
+                    styles.wrongAnswer(randomCarMakeStr, id);
                     Log.d(LOG_TAG, "in validate() -> wrong");
                 }
                 break;

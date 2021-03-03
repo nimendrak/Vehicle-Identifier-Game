@@ -42,5 +42,8 @@
     <string name="textView_img1_index">01</string>
     <string name="textView_img2_index">02</string>
     <string name="textView_img3_index">03</string>
+    <string name="textView_image1">Image - 01</string>
+    <string name="textView_image2">Image - 02</string>
+    <string name="textView_image3">Image - 03</string>
 
 </resources>

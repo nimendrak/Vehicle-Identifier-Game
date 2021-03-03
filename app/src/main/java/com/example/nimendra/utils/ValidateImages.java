@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.nimendra.R;
-
-import java.util.List;
 
 public class ValidateImages {
 
@@ -21,7 +18,6 @@ public class ValidateImages {
     private ImageLoader imageLoader;
 
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader, String selectedCar) {
-        super();
         this.selectedCar = selectedCar;
         this.imageLoader = imageLoader;
         this.context = context;
@@ -29,7 +25,6 @@ public class ValidateImages {
     }
 
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
-        super();
         this.activity = activity;
         this.context = context;
         this.imageLoader = imageLoader;
