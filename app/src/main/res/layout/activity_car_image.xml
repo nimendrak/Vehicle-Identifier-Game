@@ -118,7 +118,7 @@
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/button_identify_text_1"
+        android:text="@string/button_identify_text_2"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="232dp"
         android:layout_marginTop="16dp"
@@ -126,7 +126,7 @@
         />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/random_car_make"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
