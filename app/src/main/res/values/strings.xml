@@ -14,8 +14,8 @@
     <string name="button_identify_text_1">Identify</string>
     <string name="button_identify_text_2">Next</string>
 
-    <string name="textView_car_id_1">10</string>
-    <string name="textView_car_id_2">/10</string>
+    <string name="textView_car_id_1">15</string>
+    <string name="textView_car_id_2">/15</string>
     <string name="textView_car_logo_description">Car logo</string>
     <string name="textView_correct_text">CORRECT!</string>
     <string name="textView_wrong_text">WRONG!</string>

@@ -10,7 +10,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nimendra.utils.CommonComp;
+import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.ValidateImages;
 
@@ -21,10 +21,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     private ImageLoader imageLoader;
     private ValidateImages validateImages;
-    private CommonComp commonComp;
+    private PopulateData populateData;
 
     private Button nextBtn;
-
     private Spinner spinner = null;
 
     @Override
@@ -34,13 +33,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
-        commonComp = new CommonComp(CarMakeActivity.this, this);
+        populateData = new PopulateData(CarMakeActivity.this, this, imageLoader, validateImages);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         nextBtn = findViewById(R.id.next_btn);
-
-        commonComp.setImagesTaskOne();
-        commonComp.resetAnswer();
 
         // create the spinner
         spinner = findViewById(R.id.car_make_spinner);
@@ -66,7 +62,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                     String item = spinner.getSelectedItem().toString();
 
                     if (item.equals("Select a Manufacturer")) {
-                        commonComp.resetAnswer();
+                        populateData.resetAnswer();
                     } else {
                         if (imageLoader.getCarImagesArray().size() > 0) {
                             switch (item) {
@@ -105,10 +101,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader, selectedCar);
 
         if (validateImages.validation()) {
-            commonComp.correctAnswer(validateImages.getCorrectCarMake());
+            populateData.correctAnswer(validateImages.getCorrectCarMake());
             Log.d(LOG_TAG, "in validate() -> correct");
         } else {
-            commonComp.wrongAnswer(validateImages.getCorrectCarMake());
+            populateData.wrongAnswer(validateImages.getCorrectCarMake());
             Log.d(LOG_TAG, "in validate() -> wrong");
         }
 
@@ -120,10 +116,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 spinner.setSelection(0);
                 spinner.setEnabled(true);
 
-                commonComp.setImagesTaskOne();
+                populateData.setImagesTaskOne();
 
                 spinner.setBackgroundResource(R.drawable.spinner_color_layout);
-                commonComp.resetAnswer();
+                populateData.resetAnswer();
             }
         });
     }

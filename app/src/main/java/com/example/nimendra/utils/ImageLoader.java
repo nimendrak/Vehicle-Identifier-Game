@@ -11,8 +11,8 @@ public class ImageLoader {
 
     private Context context;
 
-    public ImageLoader(Context current) {
-        this.context = current;
+    public ImageLoader(Context context) {
+        this.context = context;
         loadData();
     }
 
@@ -37,8 +37,8 @@ public class ImageLoader {
 //                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + i), "drawable", context.getPackageName());
 //                carImagesArray.add(porscheImages);
 //
-//                int teslaImages = context.getResources().getIdentifier(("car_tesla_" + i), "drawable", context.getPackageName());
-//                carImagesArray.add(teslaImages);
+                int teslaImages = context.getResources().getIdentifier(("car_tesla_" + (i + 1)), "drawable", context.getPackageName());
+                carImagesArray.add(teslaImages);
             }
             int audiLogo = context.getResources().getIdentifier("car_audi", "drawable", context.getPackageName());
             carLogosArray.add(audiLogo);
@@ -46,12 +46,13 @@ public class ImageLoader {
             int bmwLogo = context.getResources().getIdentifier("car_bmw", "drawable", context.getPackageName());
             carLogosArray.add(bmwLogo);
 
+            int teslaLogo = context.getResources().getIdentifier("car_tesla", "drawable", context.getPackageName());
+            carLogosArray.add(teslaLogo);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("images arr - " + carImagesArray);
         System.out.println("logos arr size  - " + carImagesArray.size());
-        System.out.println("logos arr - " + carLogosArray);
         System.out.println("images arr size - " + carLogosArray.size());
     }
 

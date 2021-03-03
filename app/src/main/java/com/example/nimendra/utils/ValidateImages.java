@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.nimendra.R;
 
-import java.util.Random;
+import java.util.List;
 
 public class ValidateImages {
 
@@ -20,6 +21,7 @@ public class ValidateImages {
     private ImageLoader imageLoader;
 
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader, String selectedCar) {
+        super();
         this.selectedCar = selectedCar;
         this.imageLoader = imageLoader;
         this.context = context;
@@ -27,6 +29,7 @@ public class ValidateImages {
     }
 
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
+        super();
         this.activity = activity;
         this.context = context;
         this.imageLoader = imageLoader;
@@ -56,18 +59,53 @@ public class ValidateImages {
         return false;
     }
 
-    public int getRandom() {
-        if (imageLoader.getCarImagesArray().size() > 0) {
-            Random random = new Random();
-            return random.nextInt(imageLoader.getCarImagesArray().size());
+    public boolean validation(Integer clickedImageId, String randomCarMakeStr, PopulateData populateData) {
+
+        String r1 = context.getResources().getResourceEntryName(populateData.getImageHolders().get(0));
+        String r2 = context.getResources().getResourceEntryName(populateData.getImageHolders().get(1));
+        String r3 = context.getResources().getResourceEntryName(populateData.getImageHolders().get(2));
+
+        Log.d(LOG_TAG, "arr - " + r1 + ", " + r2 + " ," + r3);
+
+        String imageTag;
+        ImageView clickedImage = activity.findViewById(clickedImageId);
+        imageTag = (String) clickedImage.getTag();
+
+        switch (clickedImageId) {
+            case R.id.car_img1:
+                Log.d(LOG_TAG, "tag - " + imageTag);
+                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
+                Log.d(LOG_TAG, "r1 - " + r1);
+                if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
+                    return true;
+                }
+                break;
+            case R.id.car_img2:
+                Log.d(LOG_TAG, "tag - " + imageTag);
+                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
+                Log.d(LOG_TAG, "r2 - " + r2);
+                if (imageTag.contains(randomCarMakeStr.toLowerCase())  & imageTag.contains(r2)) {
+                    return true;
+                }
+                break;
+            case R.id.car_img3:
+                Log.d(LOG_TAG, "tag - " + imageTag);
+                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
+                Log.d(LOG_TAG, "r3 - " + r3);
+                if (imageTag.contains(randomCarMakeStr.toLowerCase())  & imageTag.contains(r3)) {
+                    return true;
+                }
+                break;
         }
-        return -1;
+
+        return false;
     }
 
     public String getCorrectCarMake() {
-        String correctCarMake;
         ImageView imageView = activity.findViewById(R.id.car_image);
         String imageTag = (String) imageView.getTag();
+
+        String correctCarMake;
         String[] words = imageTag.split("[_]");
         correctCarMake = words[1];
         correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
