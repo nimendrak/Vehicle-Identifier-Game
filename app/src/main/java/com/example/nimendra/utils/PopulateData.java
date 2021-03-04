@@ -17,14 +17,18 @@ public class PopulateData {
     private Context context;
 
     private List<Integer> imgArr;
-    private List<Integer> imageHolders;
     private List<Integer> logoArr;
+    private List<Integer> randomImgArr;
+
     private Styles styles;
 
+    private String activityName;
     private String correctCarMake;
 
     public PopulateData(Context context, ImageLoader imageLoader, Styles styles) {
-        if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
+        activityName = context.getClass().getSimpleName();
+
+        if (activityName.equals("CarMakeActivity")) {
             this.context = context;
             this.imageLoader = imageLoader;
             this.imgArr = imageLoader.getCarImagesArray();
@@ -33,7 +37,16 @@ public class PopulateData {
 
             setImagesTaskOne();
         }
-        if (context.getClass().getSimpleName().equals("CarImageActivity")) {
+        if (activityName.equals("CarHintActivity")) {
+            this.context = context;
+            this.imageLoader = imageLoader;
+            this.imgArr = imageLoader.getCarImagesArray();
+            this.logoArr = imageLoader.getCarLogosArray();
+            this.styles = styles;
+
+            setImagesTaskTwo();
+        }
+        if (activityName.equals("CarImageActivity")) {
             this.context = context;
             this.imageLoader = imageLoader;
             this.imgArr = imageLoader.getCarImagesArray();
@@ -75,7 +88,16 @@ public class PopulateData {
     }
 
     public void setImagesTaskTwo() {
+        setImagesTaskOne();
 
+        if (activityName.equals("CarHintActivity")) {
+            String carMakeStr = (String) styles.getCarImage().getTag();
+            String[] words = carMakeStr.split("[_]");
+            correctCarMake = words[1].toUpperCase();
+
+            String dashStr = correctCarMake.replaceAll("[a-zA-Z]", "_");
+            styles.getRandomCarMake().setText(dashStr);
+        }
     }
 
     public void setImagesTaskThree() {
@@ -118,14 +140,14 @@ public class PopulateData {
         styles.getRandomImageThree().setImageResource(randomImgThreeResource);
         styles.getRandomImageThree().setTag(randomImgThreeResourceName);
 
-        imageHolders = new ArrayList<>();
-        imageHolders.add(randomImgOneResource);
-        imageHolders.add(randomImgTwoResource);
-        imageHolders.add(randomImgThreeResource);
+        randomImgArr = new ArrayList<>();
+        randomImgArr.add(randomImgOneResource);
+        randomImgArr.add(randomImgTwoResource);
+        randomImgArr.add(randomImgThreeResource);
 
-        Log.i(LOG_TAG, imageHolders.get(0) + " " + imageHolders.get(1) + " " + imageHolders.get(2));
+        Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));
 
-        Integer randomCarMakeInt = imageHolders.get(getRandomIndex(imageHolders));
+        Integer randomCarMakeInt = randomImgArr.get(getRandomIndex(randomImgArr));
         String randomCarMakeStr = context.getResources().getResourceEntryName(randomCarMakeInt);
 
         String[] words = randomCarMakeStr.split("[_]");
@@ -139,7 +161,7 @@ public class PopulateData {
             correctCarMake = "Mercedes-Benz";
         }
 
-        Log.i(LOG_TAG, imageHolders.get(0) + " " + imageHolders.get(1) + " " + imageHolders.get(2));
+        Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));
 
         styles.getRandomCarMake().setText(correctCarMake);
     }
@@ -147,7 +169,8 @@ public class PopulateData {
     public int getRandomIndex(List<Integer> imageArr) {
         Random random = new Random();
         if (imageArr.size() > 0) {
-            if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
+            if (context.getClass().getSimpleName().equals("CarMakeActivity") |
+                    context.getClass().getSimpleName().equals("CarHintActivity")) {
                 Log.d(LOG_TAG, "! shuffling ! ");
                 Collections.shuffle(imageArr);
             }
@@ -156,8 +179,8 @@ public class PopulateData {
         return -1;
     }
 
-    public List<Integer> getImageHolders() {
-        return imageHolders;
+    public List<Integer> getRandomImgArr() {
+        return randomImgArr;
     }
 
     public String getCorrectCarMake() {

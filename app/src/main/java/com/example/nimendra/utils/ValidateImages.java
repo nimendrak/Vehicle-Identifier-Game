@@ -17,27 +17,19 @@ public class ValidateImages {
     // Class name for Log tag
     private static final String LOG_TAG = ValidateImages.class.getSimpleName();
 
-    private Activity activity;
-    private Context context;
-    private String selectedCar;
-    private ImageLoader imageLoader;
-
-    public ValidateImages(Activity activity, Context context, ImageLoader imageLoader, String selectedCar) {
-        this.selectedCar = selectedCar;
-        this.imageLoader = imageLoader;
-        this.context = context;
-        this.activity = activity;
-    }
+    private final Activity activity;
+    private final Context context;
+    private final ImageLoader imageLoader;
 
     public ValidateImages(Activity activity, Context context, ImageLoader imageLoader) {
-        this.activity = activity;
-        this.context = context;
         this.imageLoader = imageLoader;
+        this.context = context;
+        this.activity = activity;
     }
 
     // CarMakeActivity image validations
-    public boolean validation() {
-        ImageView currentImg = (ImageView) activity.findViewById(R.id.car_image);
+    public boolean validation(String selectedCar) {
+        ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgResourceName = (String) currentImg.getTag();
 
         int correctCarMakeIndex = 0;
@@ -86,7 +78,7 @@ public class ValidateImages {
     @SuppressLint("NonConstantResourceId")
     public boolean validation(Integer clickedImageId, String randomCarMakeStr, PopulateData populateData) {
 
-        List<Integer> randomImgArr = populateData.getImageHolders();
+        List<Integer> randomImgArr = populateData.getRandomImgArr();
 
         String r1 = context.getResources().getResourceEntryName(randomImgArr.get(0));
         String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
@@ -130,14 +122,14 @@ public class ValidateImages {
 
     // CarImageActivity get correct car make
     public Integer getCorrectCarMake(PopulateData populateData) {
-        List<Integer> randomImgArr = populateData.getImageHolders();
+        List<Integer> randomImgArr = populateData.getRandomImgArr();
         List<Integer> populatedImgArr = Arrays.asList(R.id.car_img1, R.id.car_img2, R.id.car_img3);
 
         TextView currentTextView = activity.findViewById(R.id.random_car_make);
         String clickedImgStr = (String) currentTextView.getText();
 
         Integer correctImgId = null;
-        for (int i = 0; i < populateData.getImageHolders().size(); i++) {
+        for (int i = 0; i < populateData.getRandomImgArr().size(); i++) {
             String randomImgStr = context.getResources().getResourceEntryName(randomImgArr.get(i));
             if (randomImgStr.contains(clickedImgStr.toLowerCase())) {
                 correctImgId = populatedImgArr.get(i);
@@ -146,4 +138,7 @@ public class ValidateImages {
         }
         return correctImgId;
     }
+
+    // CarHintActivity input validations
+
 }

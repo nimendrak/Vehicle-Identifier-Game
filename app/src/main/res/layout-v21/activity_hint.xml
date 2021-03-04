@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2B363C"
-    tools:context=".CarMakeActivity">
+    tools:context=".CarHintActivity">
 
     <TextView
         android:id="@+id/car_make_title"
@@ -78,44 +78,78 @@
             android:layout_marginTop="250dp"
             android:layout_marginStart="210dp"
             android:contentDescription="@string/textView_car_logo_description"
-            app:srcCompat="@drawable/car_audi" />
+            app:srcCompat="@drawable/car_bmw" />
 
     </androidx.cardview.widget.CardView>
-
-    <Spinner
-        android:id="@+id/car_make_spinner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/spinner_color_layout"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/identify_btn"
-        app:layout_constraintEnd_toStartOf="@+id/identify_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
-
-    <Button
-        android:id="@+id/identify_btn"
-        style="@style/submitButton"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/button_identify_text_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
 
     <Button
         android:id="@+id/next_btn"
         style="@style/submitButton"
-        android:layout_width="125dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/button_identify_text_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/random_car_make" />
+
+    <Button
+        android:id="@+id/submit_btn"
+        style="@style/submitButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/button_submit_text"
+        android:onClick="submitAnswer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/random_car_make" />
+
+    <TextView
+        android:id="@+id/random_car_make"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_textview"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.75"
+        android:paddingTop="15dp"
+        android:paddingBottom="10dp"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/input_char"
+        app:layout_constraintTop_toBottomOf="@+id/image_holder"
+        tools:text="@tools:sample/first_names" />
+
+    <EditText
+        android:id="@+id/input_char"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints=""
+        android:gravity="center_horizontal"
+        android:hint=""
+        android:imeOptions="actionSend"
+        android:inputType="textPersonName"
+        android:maxLength="1"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:backgroundTint="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_holder"
+        tools:ignore="LabelFor" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/answer_prompter"
@@ -124,22 +158,22 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="82dp"
+        android:layout_marginBottom="16dp"
         app:cardBackgroundColor="#232C32"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/car_make_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/submit_btn"
         app:layout_constraintVertical_bias="0.0">
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/correct_answer_gif"
-            android:layout_width="135dp"
-            android:layout_height="175dp"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="115dp"
+            android:layout_height="155dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="-5dp"
             android:src="@drawable/correct_gif"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -148,7 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="167dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="@string/textView_correct_text"
             android:textColor="#289995"
             android:textSize="36sp"
@@ -160,7 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="168dp"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="65dp"
             android:background="@android:color/darker_gray" />
 
         <TextView
@@ -168,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="168dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             android:text="@string/textView_car_maker_text"
             android:textColor="#ffffff"
             android:textSize="18sp"
@@ -179,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="168dp"
-            android:layout_marginTop="125dp"
+            android:layout_marginTop="90dp"
             android:text="@string/textView_correct_car_maker"
             android:textColor="#FFC107"
             android:textSize="28sp"

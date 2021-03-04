@@ -35,7 +35,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
-        styles = new Styles(CarMakeActivity.this,this);
+        styles = new Styles(CarMakeActivity.this, this);
         populateData = new PopulateData(this, imageLoader, styles);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
@@ -100,9 +100,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void validateAnswer(String selectedCar) {
-        validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader, selectedCar);
-
-        if (validateImages.validation()) {
+        if (validateImages.validation(selectedCar)) {
             styles.correctAnswer(validateImages.getCorrectCarMake());
             Log.d(LOG_TAG, "in validate() -> correct");
         } else {

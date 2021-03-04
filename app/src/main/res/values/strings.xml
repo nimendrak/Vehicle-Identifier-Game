@@ -22,7 +22,6 @@
     <string name="textView_car_maker_text">Correct car maker is</string>
     <string name="textView_correct_car_maker">Audi</string>
 
-
     <string-array name="array_car_makes">
         <item>Select a Manufacturer</item>
         <item>Audi</item>
@@ -30,7 +29,7 @@
         <item>BMW</item>
         <item>Ferrari</item>
         <item>Koenigsegg</item>
-        <item>Mercedes-Benz</item>
+        <item>Mercedes</item>
         <item>Porsche</item>
         <item>Tesla</item>
     </string-array>
@@ -45,5 +44,8 @@
     <string name="textView_image1">Image - 01</string>
     <string name="textView_image2">Image - 02</string>
     <string name="textView_image3">Image - 03</string>
+    <string name="car_make_emblem_text">Car Make Emblem</string>
+    <string name="button_submit_text">Submit</string>
+    <string name="editText_input_char_text">Input char</string>
 
 </resources>

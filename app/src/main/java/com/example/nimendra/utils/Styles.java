@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import com.example.nimendra.R;
 
 public class Styles {
@@ -36,10 +38,17 @@ public class Styles {
 
     private Button nextBtn;
 
+    private CardView answerPrompter;
+
     private Context context;
+
+    private String activityName;
 
     public Styles(Activity activity, Context context) {
         this.context = context;
+        activityName = context.getClass().getSimpleName();
+
+        answerPrompter = activity.findViewById(R.id.answer_prompter);
 
         answer = activity.findViewById(R.id.answer);
         gif = activity.findViewById(R.id.correct_answer_gif);
@@ -48,7 +57,7 @@ public class Styles {
         separator = activity.findViewById(R.id.separator);
         carMake = activity.findViewById(R.id.correct_car);
 
-        if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
+        if (activityName.equals("CarMakeActivity")) {
             this.context = context;
 
             carMakeLogo = activity.findViewById(R.id.car_logo);
@@ -57,7 +66,7 @@ public class Styles {
             carId = activity.findViewById(R.id.car_id);
 
         }
-        if (context.getClass().getSimpleName().equals("CarImageActivity")) {
+        if (activityName.equals("CarImageActivity")) {
             this.context = context;
 
             nextBtn = activity.findViewById(R.id.next_btn);
@@ -67,60 +76,34 @@ public class Styles {
 
             randomCarMake = activity.findViewById(R.id.random_car_make);
         }
+        if (activityName.equals("CarHintActivity")) {
+            this.context = context;
+
+            carMakeLogo = activity.findViewById(R.id.car_logo);
+            carImage = activity.findViewById(R.id.car_image);
+            nextBtn = activity.findViewById(R.id.next_btn);
+            carId = activity.findViewById(R.id.car_id);
+
+            randomCarMake = activity.findViewById(R.id.random_car_make);
+        }
     }
 
     public void wrongAnswer(String selectedCar) {
         answer.setText(R.string.textView_wrong_text);
-        answer.setTextColor(Color.parseColor("#ff0024"));
-        answer.setVisibility(View.VISIBLE);
-
-        separator.setVisibility(View.VISIBLE);
-
         carMake.setText(selectedCar);
-        carMake.setVisibility(View.VISIBLE);
-
+        answer.setTextColor(Color.parseColor("#ff0024"));
         gif.setImageResource(R.drawable.wrong_gif);
-        gif.setVisibility(View.VISIBLE);
 
-        carMakeLabel.setVisibility(View.VISIBLE);
+        answerPrompter.setVisibility(View.VISIBLE);
     }
 
     public void correctAnswer(String selectedCar) {
         answer.setText(R.string.textView_correct_text);
         answer.setTextColor(Color.parseColor("#289995"));
-        answer.setVisibility(View.VISIBLE);
-
-        separator.setVisibility(View.VISIBLE);
-
         carMake.setText(selectedCar);
-        carMake.setVisibility(View.VISIBLE);
-
         gif.setImageResource(R.drawable.correct_gif);
-        gif.setVisibility(View.VISIBLE);
 
-        carMakeLabel.setVisibility(View.VISIBLE);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    public void correctAnswer(String selectedCar, Integer imageHolder) {
-        correctAnswer(selectedCar);
-        Log.d(LOG_TAG, "Correct Answer -> " + imageHolder);
-
-        switch (imageHolder) {
-            case R.id.car_img1:
-                randomImageOne.setBackgroundColor(Color.parseColor("#FFC107"));
-                randomImageOne.setBackgroundColor(Color.BLACK);
-                carMake.setText(R.string.textView_image1);
-                break;
-            case R.id.car_img2:
-                randomImageTwo.setBackgroundColor(Color.parseColor("#FFC107"));
-                carMake.setText(R.string.textView_image2);
-                break;
-            case R.id.car_img3:
-                randomImageThree.setBackgroundColor(Color.parseColor("#FFC107"));
-                carMake.setText(R.string.textView_image3);
-                break;
-        }
+        answerPrompter.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -166,21 +149,16 @@ public class Styles {
     }
 
     public void resetAnswer() {
-        if (context.getClass().getSimpleName().equals("CarMakeActivity")) {
-            gif.setVisibility(View.INVISIBLE);
-            carMake.setVisibility(View.INVISIBLE);
-            carMakeLabel.setVisibility(View.INVISIBLE);
-            answer.setVisibility(View.INVISIBLE);
-            separator.setVisibility(View.INVISIBLE);
+        if (activityName.equals("CarMakeActivity") |
+                activityName.equals("CarHintActivity")) {
+            answerPrompter.setVisibility(View.INVISIBLE);
+
             nextBtn.setVisibility(View.INVISIBLE);
         }
 
-        if (context.getClass().getSimpleName().equals("CarImageActivity")) {
-            gif.setVisibility(View.INVISIBLE);
-            carMake.setVisibility(View.INVISIBLE);
-            carMakeLabel.setVisibility(View.INVISIBLE);
-            answer.setVisibility(View.INVISIBLE);
-            separator.setVisibility(View.INVISIBLE);
+        if (activityName.equals("CarImageActivity")) {
+            answerPrompter.setVisibility(View.INVISIBLE);
+
             nextBtn.setVisibility(View.INVISIBLE);
 
             randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
