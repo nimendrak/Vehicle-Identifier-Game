@@ -30,16 +30,16 @@ public class ImageLoader {
                 int bmwImages = context.getResources().getIdentifier(("car_bmw_" + (i + 1)), "drawable", context.getPackageName());
                 carImagesArray.add(bmwImages);
 
-//                int bugattiImages = context.getResources().getIdentifier(("car_bugatti_" + i), "drawable", context.getPackageName());
+//                int bugattiImages = context.getResources().getIdentifier(("car_bugatti_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(bugattiImages);
 
-//                int ferrariImages = context.getResources().getIdentifier(("car_ferrari_" + i), "drawable", context.getPackageName());
+//                int ferrariImages = context.getResources().getIdentifier(("car_ferrari_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(ferrariImages);
 
-//                int koenigseggImages = context.getResources().getIdentifier(("car_koenigsegg_" + i), "drawable", context.getPackageName());
+//                int koenigseggImages = context.getResources().getIdentifier(("car_koenigsegg_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(koenigseggImages);
 //
-//                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + i), "drawable", context.getPackageName());
+//                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(porscheImages);
 //
                 int teslaImages = context.getResources().getIdentifier(("car_tesla_" + (i + 1)), "drawable", context.getPackageName());

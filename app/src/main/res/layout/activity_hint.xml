@@ -64,7 +64,7 @@
             android:id="@+id/car_logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="70dp"
             android:layout_marginTop="270dp"
             android:text="@string/car_make_emblem_text"
             android:textColor="#2B363C"

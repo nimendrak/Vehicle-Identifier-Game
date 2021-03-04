@@ -22,8 +22,7 @@ public class PopulateData {
 
     private Styles styles;
 
-    private String activityName;
-    private String correctCarMake;
+    private final String activityName;
 
     public PopulateData(Context context, ImageLoader imageLoader, Styles styles) {
         activityName = context.getClass().getSimpleName();
@@ -90,6 +89,7 @@ public class PopulateData {
     public void setImagesTaskTwo() {
         setImagesTaskOne();
 
+        String correctCarMake;
         if (activityName.equals("CarHintActivity")) {
             String carMakeStr = (String) styles.getCarImage().getTag();
             String[] words = carMakeStr.split("[_]");
@@ -101,6 +101,7 @@ public class PopulateData {
     }
 
     public void setImagesTaskThree() {
+        String correctCarMake;
 
         Integer randomImgOneResource, randomImgTwoResource, randomImgThreeResource;
         String randomImgOneResourceName, randomImgTwoResourceName, randomImgThreeResourceName;
@@ -166,6 +167,8 @@ public class PopulateData {
         styles.getRandomCarMake().setText(correctCarMake);
     }
 
+    public void setImagesTaskFour() {}
+
     public int getRandomIndex(List<Integer> imageArr) {
         Random random = new Random();
         if (imageArr.size() > 0) {
@@ -181,9 +184,5 @@ public class PopulateData {
 
     public List<Integer> getRandomImgArr() {
         return randomImgArr;
-    }
-
-    public String getCorrectCarMake() {
-        return correctCarMake;
     }
 }

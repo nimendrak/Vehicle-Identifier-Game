@@ -43,29 +43,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/textView_car_id_1"
+            android:layout_marginTop="8dp"
+            android:letterSpacing="-0.1"
+            android:text="@string/textview_attempts"
             android:textColor="#2B363C"
-            android:textSize="24sp"
+            android:textSize="36sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/car_id_rest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="46dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/textView_car_id_2"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="24dp"
+            android:letterSpacing="-0.025"
+            android:text="@string/textview_attempts_left_text"
             android:textColor="#2B363C"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/car_logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="270dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="275dp"
             android:text="@string/car_make_emblem_text"
             android:textColor="#2B363C"
             android:textSize="18sp"
@@ -76,11 +78,25 @@
             android:layout_width="97dp"
             android:layout_height="69dp"
             android:layout_marginTop="250dp"
-            android:layout_marginStart="210dp"
+            android:layout_marginStart="205dp"
             android:contentDescription="@string/textView_car_logo_description"
             app:srcCompat="@drawable/car_bmw" />
 
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/submit_btn"
+        style="@style/submitButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="submitAnswer"
+        android:text="@string/button_submit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/random_car_make" />
 
     <Button
         android:id="@+id/next_btn"
@@ -96,20 +112,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/random_car_make" />
 
-    <Button
-        android:id="@+id/submit_btn"
-        style="@style/submitButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/button_submit_text"
-        android:onClick="submitAnswer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/random_car_make" />
-
     <TextView
         android:id="@+id/random_car_make"
         android:layout_width="0dp"
@@ -119,7 +121,7 @@
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center_horizontal"
-        android:letterSpacing="0.75"
+        android:letterSpacing="0.5"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
         android:textAllCaps="false"

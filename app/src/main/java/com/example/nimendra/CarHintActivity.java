@@ -2,8 +2,9 @@ package com.example.nimendra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,8 +29,10 @@ public class CarHintActivity extends AppCompatActivity {
     private PopulateData populateData;
     private Styles styles;
 
-    private Button nextBtn;
     private EditText inputChar;
+    private Editable inputCharStr;
+
+    private int attempts = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +42,11 @@ public class CarHintActivity extends AppCompatActivity {
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarHintActivity.this, this, imageLoader);
         styles = new Styles(CarHintActivity.this, this);
-
         populateData = new PopulateData(this, imageLoader, styles);
 
-        nextBtn = findViewById(R.id.next_btn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "submit btn -> on click");
-                populateData.setImagesTaskTwo();
-                styles.resetAnswer();
-            }
-        });
+        final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 
-        final EditText inputChar = findViewById(R.id.input_char);
+        inputChar = findViewById(R.id.input_char);
         if (inputChar != null) {
             inputChar.setOnEditorActionListener
                     (new TextView.OnEditorActionListener() {
@@ -60,33 +54,44 @@ public class CarHintActivity extends AppCompatActivity {
                         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                             boolean handled = false;
                             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                                Log.d(LOG_TAG, "input char should come here");
+                                inputCharStr = inputChar.getText();
+                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                                 handled = true;
                             }
                             return handled;
                         }
-                        // If view is found, set the listener for editText.
                     });
 
         }
     }
 
     public void submitAnswer(View view) {
-        TextView randomCarMake = styles.getRandomCarMake();
-        String randomCarMakeStr = (String) randomCarMake.getText();
+        String correctAnswer = validateImages.getCorrectCarMakeTaskThree();
 
-        String inputCharStr = inputChar.getText().toString();
-
-        Log.d(LOG_TAG, "input char -> " + inputCharStr);
-
-        nextBtn.setVisibility(View.VISIBLE);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                populateData.setImagesTaskTwo();
-                styles.resetAnswer();
+        if (attempts > 0) {
+            Log.d(LOG_TAG, "attempts -> " + attempts);
+            if (validateImages.validation(inputCharStr)) {
+                if (correctAnswer != null)
+                    styles.correctAnswer(correctAnswer);
+            } else {
+                attempts = attempts - 1;
             }
-        });
+        } else {
+            styles.wrongAnswer(validateImages.getCorrectCarMake());
+        }
+        Log.d(LOG_TAG, "correct car -> " + correctAnswer);
+        inputChar.setText("");
 
+
+
+//        Button nextBtn = findViewById(R.id.next_btn);
+//        nextBtn.setVisibility(View.VISIBLE);
+//        nextBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                populateData.setImagesTaskTwo();
+//                styles.resetAnswer();
+//            }
+//        });
     }
 }
