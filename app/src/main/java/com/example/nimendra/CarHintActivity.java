@@ -2,6 +2,7 @@ package com.example.nimendra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,10 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.nimendra.utils.ImageLoader;
-import com.example.nimendra.utils.PopulateData;
-import com.example.nimendra.utils.Styles;
 import com.example.nimendra.utils.ValidateImages;
+import com.example.nimendra.utils.PopulateData;
+import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.Styles;
 
 public class CarHintActivity extends AppCompatActivity {
 
@@ -25,8 +26,8 @@ public class CarHintActivity extends AppCompatActivity {
     private static final String LOG_TAG = CarHintActivity.class.getSimpleName();
 
     private ValidateImages validateImages;
-    private ImageLoader imageLoader;
     private PopulateData populateData;
+    private ImageLoader imageLoader;
     private Styles styles;
 
     private EditText inputChar;
@@ -65,33 +66,44 @@ public class CarHintActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public void submitAnswer(View view) {
         String correctAnswer = validateImages.getCorrectCarMakeTaskThree();
+        TextView attemptCount = findViewById(R.id.car_id);
+        Button nextBtn = findViewById(R.id.next_btn);
 
         if (attempts > 0) {
             Log.d(LOG_TAG, "attempts -> " + attempts);
             if (validateImages.validation(inputCharStr)) {
-                if (correctAnswer != null)
+                if (correctAnswer != null) {
                     styles.correctAnswer(correctAnswer);
+
+                    nextBtn.setVisibility(View.VISIBLE);
+                    nextBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            populateData.setImagesTaskTwo();
+                            styles.resetAnswer();
+                        }
+                    });
+                }
             } else {
                 attempts = attempts - 1;
             }
         } else {
             styles.wrongAnswer(validateImages.getCorrectCarMake());
+
+            nextBtn.setVisibility(View.VISIBLE);
+            nextBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    populateData.setImagesTaskTwo();
+                    styles.resetAnswer();
+                }
+            });
         }
-        Log.d(LOG_TAG, "correct car -> " + correctAnswer);
+        attemptCount.setText(String.format("%02d", attempts));
         inputChar.setText("");
 
-
-
-//        Button nextBtn = findViewById(R.id.next_btn);
-//        nextBtn.setVisibility(View.VISIBLE);
-//        nextBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                populateData.setImagesTaskTwo();
-//                styles.resetAnswer();
-//            }
-//        });
     }
 }

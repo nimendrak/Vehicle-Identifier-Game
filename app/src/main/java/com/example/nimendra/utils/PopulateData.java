@@ -86,9 +86,11 @@ public class PopulateData {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public void setImagesTaskTwo() {
         setImagesTaskOne();
 
+        styles.getCarId().setText(String.format("%02d", 3));
         String correctCarMake;
         if (activityName.equals("CarHintActivity")) {
             String carMakeStr = (String) styles.getCarImage().getTag();
@@ -159,7 +161,7 @@ public class PopulateData {
             correctCarMake = correctCarMake.toUpperCase();
         }
         if (correctCarMake.equalsIgnoreCase("benz")) {
-            correctCarMake = "Mercedes-Benz";
+            correctCarMake = "Mercedes";
         }
 
         Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));

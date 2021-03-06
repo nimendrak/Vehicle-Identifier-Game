@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nimendra.utils.ImageLoader;
-import com.example.nimendra.utils.PopulateData;
-import com.example.nimendra.utils.Styles;
 import com.example.nimendra.utils.ValidateImages;
+import com.example.nimendra.utils.PopulateData;
+import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.Styles;
 
 public class CarImageActivity extends AppCompatActivity {
 
@@ -20,8 +20,8 @@ public class CarImageActivity extends AppCompatActivity {
     private static final String LOG_TAG = CarMakeActivity.class.getSimpleName();
 
     private ValidateImages validateImages;
-    private ImageLoader imageLoader;
     private PopulateData populateData;
+    private ImageLoader imageLoader;
     private Styles styles;
 
     @Override
