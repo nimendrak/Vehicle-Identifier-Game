@@ -8,9 +8,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Class name for Log tag
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchHintsActivity(View view) {
         Intent intent = new Intent(this, CarHintActivity.class);
+        startActivity(intent);
+    }
+
+    public void launchAdvancedLevelActivity(View view) {
+        Intent intent = new Intent(this, AdvancedActivity.class);
         startActivity(intent);
     }
 }

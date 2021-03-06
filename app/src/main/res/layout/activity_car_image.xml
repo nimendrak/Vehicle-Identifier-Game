@@ -8,7 +8,7 @@
     tools:context=".CarImageActivity">
 
     <TextView
-        android:id="@+id/car_img_title"
+        android:id="@+id/activity4_title"
         style="@style/titleHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/car_img_title" >
+        app:layout_constraintTop_toBottomOf="@+id/activity4_title" >
 
         <ImageView
             android:id="@+id/car_img1"

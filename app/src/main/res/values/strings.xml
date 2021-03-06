@@ -49,5 +49,6 @@
     <string name="editText_input_char_text">Input char</string>
     <string name="textview_attempts_left_text">Attempt(s) Left</string>
     <string name="textview_attempts">03</string>
+    <string name="textview_advanced_level_title">Advanced Level</string>
 
 </resources>
