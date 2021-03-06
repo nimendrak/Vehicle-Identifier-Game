@@ -113,7 +113,6 @@ public class Styles {
 
         switch (imageHolder) {
             case R.id.car_img1:
-                System.out.println("came here");
                 randomImageOne.setBackgroundColor(Color.parseColor("#ff9995"));
                 carMake.setText(R.string.textView_image1);
                 break;
@@ -131,6 +130,7 @@ public class Styles {
     @SuppressLint("NonConstantResourceId")
     public void markCorrectAnswer(Integer imageHolder) {
         Log.d(LOG_TAG, "Mrk Correct Answer -> " + imageHolder);
+
         switch (imageHolder) {
             case R.id.car_img1:
                 randomImageOne.setBackgroundColor(Color.parseColor("#FFC107"));

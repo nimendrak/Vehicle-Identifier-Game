@@ -19,6 +19,8 @@ import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.Styles;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class CarHintActivity extends AppCompatActivity {
 
@@ -72,38 +74,51 @@ public class CarHintActivity extends AppCompatActivity {
         TextView attemptCount = findViewById(R.id.car_id);
         Button nextBtn = findViewById(R.id.next_btn);
 
-        if (attempts > 0) {
-            Log.d(LOG_TAG, "attempts -> " + attempts);
-            if (validateImages.validation(inputCharStr)) {
-                if (correctAnswer != null) {
-                    styles.correctAnswer(correctAnswer);
-
-                    nextBtn.setVisibility(View.VISIBLE);
-                    nextBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            populateData.setImagesTaskTwo();
-                            styles.resetAnswer();
-                        }
-                    });
+        try {
+            if (attempts > 0) {
+                Log.d(LOG_TAG, "attempts -> " + attempts);
+                if (validateImages.validation(inputCharStr)) {
+                    if (correctAnswer != null) {
+                        styles.correctAnswer(correctAnswer);
+                        nextBtn.setVisibility(View.VISIBLE);
+                        nextBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                populateData.setImagesTaskTwo();
+                                styles.resetAnswer();
+                            }
+                        });
+                    }
+                } else {
+                    attempts = attempts - 1;
                 }
             } else {
-                attempts = attempts - 1;
+                styles.wrongAnswer(validateImages.getCorrectCarMake());
+                nextBtn.setVisibility(View.VISIBLE);
+                nextBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        populateData.setImagesTaskTwo();
+                        styles.resetAnswer();
+                        attempts = 3;
+                    }
+                });
             }
-        } else {
-            styles.wrongAnswer(validateImages.getCorrectCarMake());
+            attemptCount.setText(String.format("%02d", attempts));
+            inputChar.setText("");
 
-            nextBtn.setVisibility(View.VISIBLE);
-            nextBtn.setOnClickListener(new View.OnClickListener() {
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar snackbar = Snackbar.make(view, "Please Prompt a Letter to Proceed!", Snackbar.LENGTH_LONG);
+            snackbar.setDuration(2500);
+            snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+            snackbar.setAction("OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    populateData.setImagesTaskTwo();
-                    styles.resetAnswer();
                 }
             });
+            snackbar.show();
         }
-        attemptCount.setText(String.format("%02d", attempts));
-        inputChar.setText("");
-
     }
+
 }

@@ -40,7 +40,6 @@ public class ValidateImages {
                     if (currentImgResourceName.contains(selectedCar.toLowerCase())) {
                         correctCarMakeIndex = i;
                         imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
-                        Log.d(LOG_TAG, "Task 01 img arr size - " + imageLoader.getCarImagesArray().size());
                         return true;
                     }
                 }
@@ -49,7 +48,6 @@ public class ValidateImages {
             }
         }
         imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
-        Log.d(LOG_TAG, "Task 01 img arr size - " + imageLoader.getCarImagesArray().size());
         return false;
     }
 
@@ -67,10 +65,8 @@ public class ValidateImages {
             correctCarMake = correctCarMake.toUpperCase();
         }
         if (correctCarMake.equalsIgnoreCase("benz")) {
-            correctCarMake = "Mercedes-Benz";
+            correctCarMake = "Mercedes";
         }
-
-        Log.d(LOG_TAG, "correct car - " + correctCarMake);
 
         return correctCarMake;
     }
@@ -78,40 +74,30 @@ public class ValidateImages {
     // CarImageActivity image validations
     @SuppressLint("NonConstantResourceId")
     public boolean validation(Integer clickedImageId, String randomCarMakeStr, PopulateData populateData) {
-
+        // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
 
+        // r1, r2, r3 respectively placed in the UI image placeholders
         String r1 = context.getResources().getResourceEntryName(randomImgArr.get(0));
         String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
         String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
 
-        Log.d(LOG_TAG, "arr - " + r1 + ", " + r2 + " ," + r3);
-
-        String imageTag;
+        // Get the clicked image tag which returns the resource name
         ImageView clickedImage = activity.findViewById(clickedImageId);
-        imageTag = (String) clickedImage.getTag();
+        String imageTag = (String) clickedImage.getTag();
 
         switch (clickedImageId) {
             case R.id.car_img1:
-                Log.d(LOG_TAG, "tag - " + imageTag);
-                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
-                Log.d(LOG_TAG, "r1 - " + r1);
                 if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
                     return true;
                 }
                 break;
             case R.id.car_img2:
-                Log.d(LOG_TAG, "tag - " + imageTag);
-                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
-                Log.d(LOG_TAG, "r2 - " + r2);
                 if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r2)) {
                     return true;
                 }
                 break;
             case R.id.car_img3:
-                Log.d(LOG_TAG, "tag - " + imageTag);
-                Log.d(LOG_TAG, "random car make - " + randomCarMakeStr);
-                Log.d(LOG_TAG, "r3 - " + r3);
                 if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r3)) {
                     return true;
                 }
@@ -142,26 +128,31 @@ public class ValidateImages {
 
     // CarHintActivity input validations
     public boolean validation(Editable inputChar) {
+        // Declare a boolean flag to indicate whether input is correct or wrong
         boolean isCorrect = false;
 
-        String[] wordFrmImg;
-        String[] lettersFrmImg, lettersFrmText;
+        String[] wordFrmImg, lettersFrmImg, lettersFrmText;
 
-        // get current image tag and put it to an arr -> lettersFrmImg
+        // Get current image tag and put it to an arr -> lettersFrmImg
         ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgText = (String) currentImg.getTag();
+        // Image tag is like -> car_audi_1
+        // So, it need to split by _
         wordFrmImg = currentImgText.split("[_]");
+        // Then, put only the car make letters into another arr -> lettersFrmImg
+        // By splitting word by ""
         lettersFrmImg = wordFrmImg[1].split("");
 
-        // get current car make text and put it to an arr -> lettersFrmText
-        // basically this contains "-" only!
+        // Get current car make text and put it to an arr -> lettersFrmText
+        // Basically this contains "-" only!
         TextView imgText = activity.findViewById(R.id.random_car_make);
         String imgTextStr = (String) imgText.getText();
         lettersFrmText = imgTextStr.split("");
 
-        // get user input -> single character
+        // Get user input -> single character
         String inputStr = inputChar.toString().toLowerCase();
-
+        // Only the correct letter's index replaced with the specific letter
+        // And, rest of the letters stay as "-"
         for (int i = 0; i < lettersFrmImg.length; i++) {
             if (inputStr.equals(lettersFrmImg[i])) {
                 lettersFrmText[i] = inputStr;
@@ -169,18 +160,17 @@ public class ValidateImages {
             }
         }
         StringBuilder builder = new StringBuilder();
-
+        // Build the current text of the car make with letters and "-"
         for (String string : lettersFrmText) {
             if (builder.length() > 0) {
                 builder.append("");
             }
             builder.append(string);
         }
-
         String string = builder.toString().toUpperCase();
-        Log.d(LOG_TAG, "set text -> " + string);
-
+        // Set the current string
         imgText.setText(string);
+        Log.d(LOG_TAG, "set text -> " + string);
 
         return isCorrect;
     }

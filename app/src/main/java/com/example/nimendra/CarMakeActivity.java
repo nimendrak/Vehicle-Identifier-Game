@@ -14,6 +14,8 @@ import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.Styles;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 public class CarMakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -41,7 +43,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         Button identifyBtn = findViewById(R.id.identify_btn);
         nextBtn = findViewById(R.id.next_btn);
 
-        // create the spinner
+        // Create the spinner
         spinner = findViewById(R.id.car_make_spinner);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(this);
@@ -65,7 +67,19 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                     String item = spinner.getSelectedItem().toString();
 
                     if (item.equals("Select a Manufacturer")) {
+                        // item returns array_car_makes[0] answer prompter will stay in its reset state
                         styles.resetAnswer();
+
+                        // And shows a SnackBar to the consumer with a proper message
+                        Snackbar snackbar = Snackbar.make(v, "Please Select a Car Make!", Snackbar.LENGTH_LONG);
+                        snackbar.setDuration(2500);
+                        snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+                        snackbar.setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            }
+                        });
+                        snackbar.show();
                     } else {
                         if (imageLoader.getCarImagesArray().size() > 0) {
                             switch (item) {
@@ -74,7 +88,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "BMW":
                                 case "Ferrari":
                                 case "Koenigsegg":
-                                case "Mercedes-Benz":
+                                case "Mercedes":
                                 case "Porsche":
                                 case "Tesla":
                                     validateAnswer(item);
