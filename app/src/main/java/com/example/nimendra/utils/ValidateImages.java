@@ -64,9 +64,6 @@ public class ValidateImages {
         if (correctCarMake.equalsIgnoreCase("bmw")) {
             correctCarMake = correctCarMake.toUpperCase();
         }
-        if (correctCarMake.equalsIgnoreCase("benz")) {
-            correctCarMake = "Mercedes";
-        }
 
         return correctCarMake;
     }
@@ -188,9 +185,6 @@ public class ValidateImages {
             imgTextStr = imgTextStr.substring(0, 1).toUpperCase() + imgTextStr.substring(1).toLowerCase();
             if (imgTextStr.equalsIgnoreCase("bmw")) {
                 imgTextStr = imgTextStr.toUpperCase();
-            }
-            if (imgTextStr.equalsIgnoreCase("benz")) {
-                imgTextStr = "Mercedes";
             }
             return imgTextStr;
         }

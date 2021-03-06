@@ -160,9 +160,6 @@ public class PopulateData {
         if (correctCarMake.equalsIgnoreCase("bmw")) {
             correctCarMake = correctCarMake.toUpperCase();
         }
-        if (correctCarMake.equalsIgnoreCase("benz")) {
-            correctCarMake = "Mercedes";
-        }
 
         Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));
 

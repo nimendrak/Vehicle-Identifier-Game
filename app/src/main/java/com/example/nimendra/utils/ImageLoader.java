@@ -38,10 +38,13 @@ public class ImageLoader {
 
 //                int koenigseggImages = context.getResources().getIdentifier(("car_koenigsegg_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(koenigseggImages);
-//
+
+                int mercedesImages = context.getResources().getIdentifier(("car_mercedes_" + (i + 1)), "drawable", context.getPackageName());
+                carImagesArray.add(mercedesImages);
+
 //                int porscheImages = context.getResources().getIdentifier(("car_porsche_" + (i + 1)), "drawable", context.getPackageName());
 //                carImagesArray.add(porscheImages);
-//
+
                 int teslaImages = context.getResources().getIdentifier(("car_tesla_" + (i + 1)), "drawable", context.getPackageName());
                 carImagesArray.add(teslaImages);
             }
@@ -50,6 +53,9 @@ public class ImageLoader {
 
             int bmwLogo = context.getResources().getIdentifier("car_bmw", "drawable", context.getPackageName());
             carLogosArray.add(bmwLogo);
+
+            int mercedesLogo = context.getResources().getIdentifier("car_mercedes", "drawable", context.getPackageName());
+            carLogosArray.add(mercedesLogo);
 
             int teslaLogo = context.getResources().getIdentifier("car_tesla", "drawable", context.getPackageName());
             carLogosArray.add(teslaLogo);
