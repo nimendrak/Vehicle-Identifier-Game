@@ -20,6 +20,9 @@ public class AdvancedActivity extends AppCompatActivity {
     private ImageLoader imageLoader;
     private Styles styles;
 
+    private int attempts = 3;
+    private int score = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

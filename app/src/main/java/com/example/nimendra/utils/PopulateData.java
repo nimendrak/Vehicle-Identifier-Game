@@ -54,6 +54,15 @@ public class PopulateData {
 
             setImagesTaskThree();
         }
+        if (activityName.equals("AdvancedActivity")) {
+            this.context = context;
+            this.imageLoader = imageLoader;
+            this.imgArr = imageLoader.getCarImagesArray();
+            this.logoArr = imageLoader.getCarLogosArray();
+            this.styles = styles;
+
+            setImagesTaskFour();
+        }
         styles.resetAnswer();
     }
 
@@ -105,6 +114,25 @@ public class PopulateData {
     public void setImagesTaskThree() {
         String correctCarMake;
 
+        randomImgArr = setImagesTaskFour();
+
+        Integer randomCarMakeInt = randomImgArr.get(getRandomIndex(randomImgArr));
+        String randomCarMakeStr = context.getResources().getResourceEntryName(randomCarMakeInt);
+
+        String[] words = randomCarMakeStr.split("[_]");
+        correctCarMake = words[1];
+        correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
+
+        if (correctCarMake.equalsIgnoreCase("bmw")) {
+            correctCarMake = correctCarMake.toUpperCase();
+        }
+
+        styles.getRandomCarMake().setText(correctCarMake);
+    }
+
+    public List<Integer> setImagesTaskFour() {
+        randomImgArr = new ArrayList<>();
+
         Integer randomImgOneResource, randomImgTwoResource, randomImgThreeResource;
         String randomImgOneResourceName, randomImgTwoResourceName, randomImgThreeResourceName;
         String[] carOne, carTwo, carThree;
@@ -129,6 +157,9 @@ public class PopulateData {
 
             if (!carOne[1].equals(carTwo[1]) & !carTwo[1].equals(carThree[1]) & !carOne[1].equals(carThree[1])) {
                 if (!carOne[2].equals(carTwo[2]) & !carTwo[2].equals(carThree[2]) & !carOne[2].equals(carThree[2])) {
+                    randomImgArr.add(randomImgOneResource);
+                    randomImgArr.add(randomImgTwoResource);
+                    randomImgArr.add(randomImgThreeResource);
                     isCorrect = false;
                 }
             }
@@ -143,26 +174,8 @@ public class PopulateData {
         styles.getRandomImageThree().setImageResource(randomImgThreeResource);
         styles.getRandomImageThree().setTag(randomImgThreeResourceName);
 
-        randomImgArr = new ArrayList<>();
-        randomImgArr.add(randomImgOneResource);
-        randomImgArr.add(randomImgTwoResource);
-        randomImgArr.add(randomImgThreeResource);
-
-        Integer randomCarMakeInt = randomImgArr.get(getRandomIndex(randomImgArr));
-        String randomCarMakeStr = context.getResources().getResourceEntryName(randomCarMakeInt);
-
-        String[] words = randomCarMakeStr.split("[_]");
-        correctCarMake = words[1];
-        correctCarMake = correctCarMake.substring(0, 1).toUpperCase() + correctCarMake.substring(1).toLowerCase();
-
-        if (correctCarMake.equalsIgnoreCase("bmw")) {
-            correctCarMake = correctCarMake.toUpperCase();
-        }
-
-        styles.getRandomCarMake().setText(correctCarMake);
+        return randomImgArr;
     }
-
-    public void setImagesTaskFour() {}
 
     public int getRandomIndex(List<Integer> imageArr) {
         Random random = new Random();

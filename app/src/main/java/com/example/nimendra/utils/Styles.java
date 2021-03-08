@@ -86,6 +86,14 @@ public class Styles {
 
             randomCarMake = activity.findViewById(R.id.random_car_make);
         }
+        if (activityName.equals("AdvancedActivity")) {
+            this.context = context;
+
+            nextBtn = activity.findViewById(R.id.next_btn);
+            randomImageOne = activity.findViewById(R.id.car_img1);
+            randomImageTwo = activity.findViewById(R.id.car_img2);
+            randomImageThree = activity.findViewById(R.id.car_img3);
+        }
     }
 
     public void wrongAnswer(String selectedCar) {
@@ -156,7 +164,8 @@ public class Styles {
             nextBtn.setVisibility(View.INVISIBLE);
         }
 
-        if (activityName.equals("CarImageActivity")) {
+        if (activityName.equals("CarImageActivity") |
+                activityName.equals("AdvancedActivity")) {
             answerPrompter.setVisibility(View.INVISIBLE);
 
             nextBtn.setVisibility(View.INVISIBLE);
