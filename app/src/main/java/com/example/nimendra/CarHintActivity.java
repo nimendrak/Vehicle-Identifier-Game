@@ -75,23 +75,23 @@ public class CarHintActivity extends AppCompatActivity {
         TextView attemptCount = findViewById(R.id.car_id);
         Button nextBtn = findViewById(R.id.next_btn);
 
+
         try {
             if (attempts > 0) {
-                Log.d(LOG_TAG, "attempts -> " + attempts);
-                if (validateImages.validation(inputCharStr)) {
-                    if (correctAnswer != null) {
-                        styles.correctAnswer(correctAnswer);
-                        nextBtn.setVisibility(View.VISIBLE);
-                        nextBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                populateData.setImagesTaskTwo();
-                                styles.resetAnswer();
-                            }
-                        });
-                    }
-                } else {
+                if (!validateImages.validation(inputCharStr)) {
                     attempts = attempts - 1;
+                }
+                Log.d(LOG_TAG, "correct answer -> " + correctAnswer);
+                if (correctAnswer != null) {
+                    styles.correctAnswer(correctAnswer);
+                    nextBtn.setVisibility(View.VISIBLE);
+                    nextBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            populateData.setImagesTaskTwo();
+                            styles.resetAnswer();
+                        }
+                    });
                 }
             } else {
                 styles.wrongAnswer(validateImages.getCorrectCarMake());

@@ -3,6 +3,7 @@ package com.example.nimendra;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.PopulateData;
@@ -28,5 +29,8 @@ public class AdvancedActivity extends AppCompatActivity {
         validateImages = new ValidateImages(AdvancedActivity.this, this, imageLoader);
         styles = new Styles(AdvancedActivity.this, this);
         populateData = new PopulateData( this, imageLoader, styles);
+    }
+
+    public void validateAnswer(View view) {
     }
 }

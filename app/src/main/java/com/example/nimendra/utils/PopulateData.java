@@ -148,8 +148,6 @@ public class PopulateData {
         randomImgArr.add(randomImgTwoResource);
         randomImgArr.add(randomImgThreeResource);
 
-        Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));
-
         Integer randomCarMakeInt = randomImgArr.get(getRandomIndex(randomImgArr));
         String randomCarMakeStr = context.getResources().getResourceEntryName(randomCarMakeInt);
 
@@ -161,8 +159,6 @@ public class PopulateData {
             correctCarMake = correctCarMake.toUpperCase();
         }
 
-        Log.i(LOG_TAG, randomImgArr.get(0) + " " + randomImgArr.get(1) + " " + randomImgArr.get(2));
-
         styles.getRandomCarMake().setText(correctCarMake);
     }
 
@@ -171,8 +167,7 @@ public class PopulateData {
     public int getRandomIndex(List<Integer> imageArr) {
         Random random = new Random();
         if (imageArr.size() > 0) {
-            if (context.getClass().getSimpleName().equals("CarMakeActivity") |
-                    context.getClass().getSimpleName().equals("CarHintActivity")) {
+            if (!context.getClass().getSimpleName().equals("CarImageActivity")) {
                 Log.d(LOG_TAG, "! shuffling ! ");
                 Collections.shuffle(imageArr);
             }

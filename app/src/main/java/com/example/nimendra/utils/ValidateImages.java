@@ -167,6 +167,7 @@ public class ValidateImages {
         String string = builder.toString().toUpperCase();
         // Set the current string
         imgText.setText(string);
+
         Log.d(LOG_TAG, "set text -> " + string);
 
         return isCorrect;
@@ -179,7 +180,7 @@ public class ValidateImages {
         ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgText = (String) currentImg.getTag();
 
-        Log.d(LOG_TAG, "return value -> " + currentImgText + ", " + imgTextStr);
+        Log.d(LOG_TAG, "getCorrectCarMakeTaskThree() -> " + currentImgText + ", " + imgTextStr);
 
         if (currentImgText.contains(imgTextStr.toLowerCase())) {
             imgTextStr = imgTextStr.substring(0, 1).toUpperCase() + imgTextStr.substring(1).toLowerCase();
