@@ -14,8 +14,8 @@
     <string name="button_identify_text_1">Identify</string>
     <string name="button_identify_text_2">Next</string>
 
-    <string name="textView_car_id_1">15</string>
-    <string name="textView_car_id_2">/15</string>
+    <string name="textView_car_id_1">20</string>
+    <string name="textView_car_id_2">/20</string>
     <string name="textView_car_logo_description">Car logo</string>
     <string name="textView_correct_text">CORRECT!</string>
     <string name="textView_wrong_text">WRONG!</string>
@@ -49,6 +49,15 @@
     <string name="editText_input_char_text">Input char</string>
     <string name="textview_attempts_left_text">Attempt(s) Left</string>
     <string name="textview_attempts">03</string>
+
+
     <string name="textview_advanced_level_title">Advanced Level</string>
+    <string name="textview_answers_label">answer(s) are</string>
+    <string name="textview_correct_answer_count">03/03</string>
+    <string name="score">03</string>
+    <string name="textview_score_label">Score</string>
+    <string name="editext_01_car_make_hint">Car Make - #1</string>
+    <string name="editext_02_car_make_hint">Car Make - #2</string>
+    <string name="editext_03_car_make_hint">Car Make - #3</string>
 
 </resources>
