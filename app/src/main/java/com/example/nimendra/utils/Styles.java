@@ -40,6 +40,8 @@ public class Styles {
     private TextView carMakeLabel;
     private TextView carId;
 
+    private TextView correctAnswerCount;
+
     private ImageView gif;
     private View separator;
 
@@ -97,6 +99,8 @@ public class Styles {
         if (activityName.equals("AdvancedActivity")) {
             this.context = context;
 
+            correctAnswerCount = activity.findViewById(R.id.correct_answers_count);
+
             nextBtn = activity.findViewById(R.id.next_btn);
 
             randomImageOne = activity.findViewById(R.id.car_img1);
@@ -111,7 +115,13 @@ public class Styles {
 
     public void wrongAnswer(String selectedCar) {
         answer.setText(R.string.textView_wrong_text);
-        carMake.setText(selectedCar);
+
+        if (activityName.equals("AdvancedActivity")) {
+            correctAnswerCount.setText(selectedCar);
+        } else {
+            carMake.setText(selectedCar);
+        }
+
         answer.setTextColor(Color.parseColor("#ff0024"));
         gif.setImageResource(R.drawable.wrong_gif);
 
@@ -120,8 +130,14 @@ public class Styles {
 
     public void correctAnswer(String selectedCar) {
         answer.setText(R.string.textView_correct_text);
+
+        if (activityName.equals("AdvancedActivity")) {
+            correctAnswerCount.setText(selectedCar);
+        } else {
+            carMake.setText(selectedCar);
+        }
+
         answer.setTextColor(Color.parseColor("#289995"));
-        carMake.setText(selectedCar);
         gif.setImageResource(R.drawable.correct_gif);
 
         answerPrompter.setVisibility(View.VISIBLE);
@@ -230,4 +246,15 @@ public class Styles {
         return carId;
     }
 
+    public TextView getImageOneAns() {
+        return imageOneAns;
+    }
+
+    public TextView getImageTwoAns() {
+        return imageTwoAns;
+    }
+
+    public TextView getImageThreeAns() {
+        return imageThreeAns;
+    }
 }

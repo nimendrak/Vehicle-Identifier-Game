@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class ValidateImages {
     }
 
     // CarMakeActivity get correct car make
-    public String getCorrectCarMake() {
+    public String getCorrectCarMakeTaskTwo() {
         ImageView imageView = activity.findViewById(R.id.car_image);
         String imageTag = (String) imageView.getTag();
 
@@ -105,7 +106,7 @@ public class ValidateImages {
     }
 
     // CarImageActivity get correct car make
-    public Integer getCorrectCarMake(PopulateData populateData) {
+    public Integer getCorrectCarMakeTaskTwo(PopulateData populateData) {
         List<Integer> randomImgArr = populateData.getRandomImgArr();
         List<Integer> populatedImgArr = Arrays.asList(R.id.car_img1, R.id.car_img2, R.id.car_img3);
 
@@ -192,13 +193,41 @@ public class ValidateImages {
         return null;
     }
 
-    public void validation(List<String> answers, PopulateData populateData) {
+    public int validation(String answer, PopulateData populateData) {
+        // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
 
-        for (int i = 0; i < randomImgArr.size(); i++) {
-            Log.d(LOG_TAG, "Random Arr [" + i + "] -> " + randomImgArr.get(i));
-            Log.d(LOG_TAG, "userInputs [" + i + "] -> " + answers.get(i));
+        // r1, r2, r3 respectively placed in the UI image placeholders
+        String r1 = context.getResources().getResourceEntryName(randomImgArr.get(0));
+        String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
+        String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
+
+        String r1CarMake, r2CarMake, r3CarMake;
+        String[] words;
+
+        try {
+            words = r1.split("[_]");
+            r1CarMake = words[1];
+            if (r1CarMake.equals(answer)) {
+                return 0;
+            }
+
+            words = r2.split("[_]");
+            r2CarMake = words[1];
+            if (r2CarMake.equals(answer)) {
+                return 1;
+            }
+
+            words = r3.split("[_]");
+            r3CarMake = words[1];
+            if (r3CarMake.equals(answer)) {
+                return 2;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        return -1;
     }
 }

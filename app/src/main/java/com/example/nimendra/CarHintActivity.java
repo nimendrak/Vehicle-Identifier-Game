@@ -93,7 +93,7 @@ public class CarHintActivity extends AppCompatActivity {
                     });
                 }
             } else {
-                styles.wrongAnswer(validateImages.getCorrectCarMake());
+                styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
                 nextBtn.setVisibility(View.VISIBLE);
                 nextBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

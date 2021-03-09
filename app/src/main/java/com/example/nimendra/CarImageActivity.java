@@ -56,11 +56,11 @@ public class CarImageActivity extends AppCompatActivity {
             case R.id.car_img3:
                 if (validateImages.validation(id, randomCarMakeStr, populateData)) {
                     styles.correctAnswer(randomCarMakeStr);
-                    styles.markCorrectAnswer(validateImages.getCorrectCarMake(populateData));
+                    styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
                     Log.d(LOG_TAG, "in validate() -> correct");
                 } else {
                     styles.wrongAnswer(randomCarMakeStr, id);
-                    styles.markCorrectAnswer(validateImages.getCorrectCarMake(populateData));
+                    styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
                     Log.d(LOG_TAG, "in validate() -> wrong");
                 }
                 break;

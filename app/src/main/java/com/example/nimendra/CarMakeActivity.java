@@ -115,10 +115,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
     public void validateAnswer(String selectedCar) {
         if (validateImages.validation(selectedCar)) {
-            styles.correctAnswer(validateImages.getCorrectCarMake());
+            styles.correctAnswer(validateImages.getCorrectCarMakeTaskTwo());
             Log.d(LOG_TAG, "in validate() -> correct");
         } else {
-            styles.wrongAnswer(validateImages.getCorrectCarMake());
+            styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
             Log.d(LOG_TAG, "in validate() -> wrong");
         }
 
