@@ -181,8 +181,6 @@ public class ValidateImages {
         ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgText = (String) currentImg.getTag();
 
-        Log.d(LOG_TAG, "getCorrectCarMakeTaskThree() -> " + currentImgText + ", " + imgTextStr);
-
         if (currentImgText.contains(imgTextStr.toLowerCase())) {
             imgTextStr = imgTextStr.substring(0, 1).toUpperCase() + imgTextStr.substring(1).toLowerCase();
             if (imgTextStr.equalsIgnoreCase("bmw")) {
@@ -205,29 +203,53 @@ public class ValidateImages {
         String r1CarMake, r2CarMake, r3CarMake;
         String[] words;
 
-        try {
-            words = r1.split("[_]");
-            r1CarMake = words[1];
-            if (r1CarMake.equals(answer)) {
-                return 0;
-            }
-
-            words = r2.split("[_]");
-            r2CarMake = words[1];
-            if (r2CarMake.equals(answer)) {
-                return 1;
-            }
-
-            words = r3.split("[_]");
-            r3CarMake = words[1];
-            if (r3CarMake.equals(answer)) {
-                return 2;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        words = r1.split("[_]");
+        r1CarMake = words[1];
+        if (r1CarMake.equals(answer)) {
+            return 0;
         }
 
+        words = r2.split("[_]");
+        r2CarMake = words[1];
+        if (r2CarMake.equals(answer)) {
+            return 1;
+        }
+
+        words = r3.split("[_]");
+        r3CarMake = words[1];
+        if (r3CarMake.equals(answer)) {
+            return 2;
+        }
         return -1;
     }
+
+    public String getCorrectCarMakeTaskFour(PopulateData populateData, int index) {
+        // CarImageActivity holds a array of randomly selected 3 different car images
+        List<Integer> randomImgArr = populateData.getRandomImgArr();
+
+        // r1, r2, r3 respectively placed in the UI image placeholders
+        String r1 = context.getResources().getResourceEntryName(randomImgArr.get(0));
+        String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
+        String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
+
+        String [] words;
+        String correctCarMake;
+
+        switch (index) {
+            case 1:
+                words = r1.split("[_]");
+                correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
+                return correctCarMake;
+            case 2:
+                words = r2.split("[_]");
+                correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
+                return correctCarMake;
+            case 3:
+                words = r3.split("[_]");
+                correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
+                return correctCarMake;
+        }
+        return null;
+    }
+
 }

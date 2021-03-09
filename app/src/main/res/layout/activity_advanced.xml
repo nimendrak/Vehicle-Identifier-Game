@@ -131,12 +131,12 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/next_btn"
+        android:id="@+id/submit_btn"
         style="@style/submitButton"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/button_identify_text_2"
+        android:text="@string/button_submit_text"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="232dp"
         android:layout_marginTop="16dp"
@@ -144,12 +144,12 @@
         />
 
     <Button
-        android:id="@+id/submit_btn"
+        android:id="@+id/next_btn"
         style="@style/submitButton"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/button_submit_text"
+        android:text="@string/button_identify_text_2"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="232dp"
         android:layout_marginTop="16dp"

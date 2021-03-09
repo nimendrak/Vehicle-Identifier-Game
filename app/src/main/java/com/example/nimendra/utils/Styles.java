@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +43,10 @@ public class Styles {
 
     private TextView correctAnswerCount;
 
+    private EditText answerOneHolder;
+    private EditText answerTwoHolder;
+    private EditText answerThreeHolder;
+
     private ImageView gif;
     private View separator;
 
@@ -52,6 +57,8 @@ public class Styles {
     private Context context;
 
     private String activityName;
+
+    private Activity activity;
 
     public Styles(Activity activity, Context context) {
         this.context = context;
@@ -110,6 +117,10 @@ public class Styles {
             imageOneAns = activity.findViewById(R.id.img1_index);
             imageTwoAns = activity.findViewById(R.id.img2_index);
             imageThreeAns = activity.findViewById(R.id.img3_index);
+
+            answerOneHolder = activity.findViewById(R.id.answer1_input);
+            answerTwoHolder = activity.findViewById(R.id.answer2_input);
+            answerThreeHolder = activity.findViewById(R.id.answer3_input);
         }
     }
 
@@ -185,6 +196,7 @@ public class Styles {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void resetAnswer() {
         if (activityName.equals("CarMakeActivity") |
                 activityName.equals("CarHintActivity")) {
@@ -211,6 +223,18 @@ public class Styles {
             imageOneAns.setVisibility(View.INVISIBLE);
             imageTwoAns.setVisibility(View.INVISIBLE);
             imageThreeAns.setVisibility(View.INVISIBLE);
+
+            answerOneHolder.setText("");
+            answerTwoHolder.setText("");
+            answerThreeHolder.setText("");
+
+            answerOneHolder.setEnabled(true);
+            answerTwoHolder.setEnabled(true);
+            answerThreeHolder.setEnabled(true);
+
+//            answerOneHolder.setBackgroundResource(0);
+//            answerTwoHolder.setBackgroundResource(0);
+//            answerThreeHolder.setBackgroundResource(0);
 
             randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
             randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));

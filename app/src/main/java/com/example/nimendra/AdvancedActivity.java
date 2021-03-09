@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -39,6 +41,7 @@ public class AdvancedActivity extends AppCompatActivity {
     private Editable answerTwo;
     private Editable answerThree;
 
+    private int correctAns = 0;
     private int attempts = 3;
     private int score = 0;
 
@@ -111,12 +114,9 @@ public class AdvancedActivity extends AppCompatActivity {
 
     @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     public void validateAnswer(View view) {
-//        Log.d(LOG_TAG, "prompted answer 1-> " + answerOne);
-//        Log.d(LOG_TAG, "prompted answer 2-> " + answerTwo);
-//        Log.d(LOG_TAG, "prompted answer 3-> " + answerThree);
-
-        TextView attemptsView = findViewById(R.id.car_id);
+        final TextView attemptsView = findViewById(R.id.car_id);
         TextView scoreView = findViewById(R.id.score);
+        Button nextBtn = findViewById(R.id.next_btn);
 
         try {
             int validatedAnswerOne = validateImages.validation(answerOne.toString(), populateData);
@@ -126,61 +126,98 @@ public class AdvancedActivity extends AppCompatActivity {
             if (attempts > 0) {
                 if (answerOneHolder.isEnabled()) {
                     if (validatedAnswerOne == 0) {
-                        answerOneHolder.setBackground(getResources().getDrawable(R.drawable.correct_answer));
+                        answerOneHolder.setBackgroundResource(R.drawable.correct_answer);
                         answerOneHolder.setEnabled(false);
+                        correctAns++;
                         score++;
                         Log.d(LOG_TAG, "correct answer 1 -> " + answerOne);
                     } else {
                         attempts = attempts - 1;
-                        answerOneHolder.setBackground(getResources().getDrawable(R.drawable.wrong_answer));
+                        answerOneHolder.setBackgroundResource(R.drawable.wrong_answer);
                     }
                 }
 
                 if (answerTwoHolder.isEnabled()) {
                     if (validatedAnswerTwo == 1) {
-                        answerTwoHolder.setBackground(getResources().getDrawable(R.drawable.correct_answer));
+                        answerTwoHolder.setBackgroundResource(R.drawable.correct_answer);
                         answerTwoHolder.setEnabled(false);
+                        correctAns++;
                         score++;
                         Log.d(LOG_TAG, "correct answer 2 -> " + answerTwo);
                     } else {
                         attempts = attempts - 1;
-                        answerTwoHolder.setBackground(getResources().getDrawable(R.drawable.wrong_answer));
+                        answerTwoHolder.setBackgroundResource(R.drawable.wrong_answer);
                     }
                 }
 
                 if (answerThreeHolder.isEnabled()) {
                     if (validatedAnswerThree == 2) {
-                        answerThreeHolder.setBackground(getResources().getDrawable(R.drawable.correct_answer));
+                        answerThreeHolder.setBackgroundResource(R.drawable.correct_answer);
                         answerThreeHolder.setEnabled(false);
+                        correctAns++;
                         score++;
                         Log.d(LOG_TAG, "correct answer 3 -> " + answerThree);
                     } else {
                         attempts = attempts - 1;
-                        answerThreeHolder.setBackground(getResources().getDrawable(R.drawable.wrong_answer));
+                        answerThreeHolder.setBackgroundResource(R.drawable.wrong_answer);
                     }
                 }
-//                answerOneHolder.setText("");
-//                answerTwoHolder.setText("");
-//                answerThreeHolder.setText("");
+
+                if (validatedAnswerOne == 0 & validatedAnswerTwo == 1 & validatedAnswerThree == 2) {
+                    Log.d(LOG_TAG, "all correct");
+                    styles.correctAnswer(String.format("%02d", correctAns) + "/03");
+
+                    nextBtn.setVisibility(View.VISIBLE);
+                    nextBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            attempts = 3;
+                            correctAns = 0;
+                            styles.resetAnswer();
+                            populateData.setImagesTaskFour();
+                            attemptsView.setText(String.format("%02d", attempts));
+                        }
+                    });
+                }
             } else {
+                if (validatedAnswerOne != 0) {
+                    styles.getImageOneAns().setVisibility(View.VISIBLE);
+                    styles.getImageOneAns().setBackgroundResource(R.drawable.mark_correct_answer);
+                    styles.getImageOneAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 1));
+                }
+                if (validatedAnswerOne != 1) {
+                    styles.getImageTwoAns().setVisibility(View.VISIBLE);
+                    styles.getImageTwoAns().setBackgroundResource(R.drawable.mark_correct_answer);
+                    styles.getImageTwoAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 2));
+                }
+                if (validatedAnswerOne != 2) {
+                    styles.getImageThreeAns().setVisibility(View.VISIBLE);
+                    styles.getImageThreeAns().setBackgroundResource(R.drawable.mark_correct_answer);
+                    styles.getImageThreeAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 3));
+                }
+
                 Log.d(LOG_TAG, "attempts -> " + attempts);
+                Log.d(LOG_TAG, "correctAns -> " + correctAns);
+                styles.wrongAnswer(String.format("%02d", correctAns) + "/03");
+
+                nextBtn.setVisibility(View.VISIBLE);
+                nextBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        attempts = 3;
+                        correctAns = 0;
+                        styles.resetAnswer();
+                        populateData.setImagesTaskFour();
+                        attemptsView.setText(String.format("%02d", attempts));
+                    }
+                });
             }
 
             attemptsView.setText(String.format("%02d", attempts));
             scoreView.setText(String.format("%02d", score));
 
-            if (validatedAnswerOne == 0 & validatedAnswerTwo == 1 & validatedAnswerThree == 2) {
-                Log.d(LOG_TAG, "all correct");
-                styles.correctAnswer(String.format("%02d", attempts) + "/03");
-            } else {
-                Log.d(LOG_TAG, "at least one incorrect");
-                styles.wrongAnswer(String.format("%02d", attempts) + "/03");
-            }
-
-//                validateImages.validation(userInputs, populateData, styles);
-
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
 
             Snackbar snackbar = Snackbar.make(view, "Enter all car makes to Proceed!", Snackbar.LENGTH_LONG);
             snackbar.setDuration(2500);
@@ -194,7 +231,4 @@ public class AdvancedActivity extends AppCompatActivity {
         }
     }
 
-    public void getInput() {
-
-    }
 }

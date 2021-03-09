@@ -60,11 +60,11 @@
 
         <ImageView
             android:id="@+id/car_img1"
-            android:onClick="validateAnswer"
             style="@style/carImageHolder"
             android:layout_width="475dp"
             android:layout_height="115dp"
             android:contentDescription="@string/imageView_random_car_image_des"
+            android:onClick="validateAnswer"
             app:srcCompat="@drawable/car_audi_1" />
 
         <EditText
@@ -86,18 +86,15 @@
 
         <TextView
             android:id="@+id/img1_index"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="119dp"
+            android:layout_height="38dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="62dp"
-            android:background="@drawable/rounded_textview"
-            android:paddingLeft="45dp"
-            android:paddingTop="3dp"
-            android:paddingRight="45dp"
-            android:paddingBottom="3dp"
+            android:background="@drawable/mark_correct_answer"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/textView_img1_index"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
+            android:textColor="#232C32"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -142,18 +139,15 @@
 
         <TextView
             android:id="@+id/img2_index"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="119dp"
+            android:layout_height="38dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="62dp"
-            android:background="@drawable/rounded_textview"
-            android:paddingLeft="45dp"
-            android:paddingTop="3dp"
-            android:paddingRight="45dp"
-            android:paddingBottom="3dp"
+            android:background="@drawable/mark_correct_answer"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/textView_img2_index"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
+            android:textColor="#232C32"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
@@ -198,34 +192,18 @@
 
         <TextView
             android:id="@+id/img3_index"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="119dp"
+            android:layout_height="38dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="62dp"
-            android:background="@drawable/rounded_textview"
-            android:paddingLeft="45dp"
-            android:paddingTop="3dp"
-            android:paddingRight="45dp"
-            android:paddingBottom="3dp"
+            android:background="@drawable/mark_correct_answer"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/textView_img3_index"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
+            android:textColor="#232C32"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/next_btn"
-        style="@style/submitButton"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/button_identify_text_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="232dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/card_view_3"
-        />
 
     <Button
         android:id="@+id/submit_btn"
@@ -235,6 +213,19 @@
         android:layout_marginEnd="16dp"
         android:onClick="validateAnswer"
         android:text="@string/button_submit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="232dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_3"
+        />
+
+    <Button
+        android:id="@+id/next_btn"
+        style="@style/submitButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/button_identify_text_2"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="232dp"
         android:layout_marginTop="16dp"
