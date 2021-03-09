@@ -191,4 +191,14 @@ public class ValidateImages {
         }
         return null;
     }
+
+    public void validation(List<String> answers, PopulateData populateData) {
+        List<Integer> randomImgArr = populateData.getRandomImgArr();
+
+        for (int i = 0; i < randomImgArr.size(); i++) {
+            Log.d(LOG_TAG, "Random Arr [" + i + "] -> " + randomImgArr.get(i));
+            Log.d(LOG_TAG, "userInputs [" + i + "] -> " + answers.get(i));
+        }
+
+    }
 }

@@ -14,6 +14,8 @@ import androidx.cardview.widget.CardView;
 
 import com.example.nimendra.R;
 
+import org.w3c.dom.Text;
+
 public class Styles {
 
     private static final String LOG_TAG = Styles.class.getSimpleName();
@@ -27,6 +29,11 @@ public class Styles {
     private ImageView randomImageTwo;
     private ImageView randomImageThree;
     private TextView randomCarMake;
+
+    // AdvancedActivity
+    private TextView imageOneAns;
+    private TextView imageTwoAns;
+    private TextView imageThreeAns;
 
     private TextView carMake;
     private TextView answer;
@@ -70,6 +77,7 @@ public class Styles {
             this.context = context;
 
             nextBtn = activity.findViewById(R.id.next_btn);
+
             randomImageOne = activity.findViewById(R.id.car_img1);
             randomImageTwo = activity.findViewById(R.id.car_img2);
             randomImageThree = activity.findViewById(R.id.car_img3);
@@ -90,9 +98,14 @@ public class Styles {
             this.context = context;
 
             nextBtn = activity.findViewById(R.id.next_btn);
+
             randomImageOne = activity.findViewById(R.id.car_img1);
             randomImageTwo = activity.findViewById(R.id.car_img2);
             randomImageThree = activity.findViewById(R.id.car_img3);
+
+            imageOneAns = activity.findViewById(R.id.img1_index);
+            imageTwoAns = activity.findViewById(R.id.img2_index);
+            imageThreeAns = activity.findViewById(R.id.img3_index);
         }
     }
 
@@ -159,16 +172,29 @@ public class Styles {
     public void resetAnswer() {
         if (activityName.equals("CarMakeActivity") |
                 activityName.equals("CarHintActivity")) {
-            answerPrompter.setVisibility(View.INVISIBLE);
 
             nextBtn.setVisibility(View.INVISIBLE);
+            answerPrompter.setVisibility(View.INVISIBLE);
         }
 
-        if (activityName.equals("CarImageActivity") |
-                activityName.equals("AdvancedActivity")) {
-            answerPrompter.setVisibility(View.INVISIBLE);
+        if (activityName.equals("CarImageActivity")) {
 
             nextBtn.setVisibility(View.INVISIBLE);
+            answerPrompter.setVisibility(View.INVISIBLE);
+
+            randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
+            randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));
+            randomImageThree.setBackgroundColor(Color.parseColor("#289995"));
+        }
+
+        if (activityName.equals("AdvancedActivity")) {
+
+            nextBtn.setVisibility(View.INVISIBLE);
+            answerPrompter.setVisibility(View.INVISIBLE);
+
+            imageOneAns.setVisibility(View.INVISIBLE);
+            imageTwoAns.setVisibility(View.INVISIBLE);
+            imageThreeAns.setVisibility(View.INVISIBLE);
 
             randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
             randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));

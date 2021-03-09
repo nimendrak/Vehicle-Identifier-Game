@@ -75,7 +75,6 @@ public class CarHintActivity extends AppCompatActivity {
         TextView attemptCount = findViewById(R.id.car_id);
         Button nextBtn = findViewById(R.id.next_btn);
 
-
         try {
             if (attempts > 0) {
                 if (!validateImages.validation(inputCharStr)) {
