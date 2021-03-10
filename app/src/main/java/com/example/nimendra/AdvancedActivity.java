@@ -37,11 +37,13 @@ public class AdvancedActivity extends AppCompatActivity {
     private EditText answerTwoHolder;
     private EditText answerThreeHolder;
 
-    private Editable answerOne;
-    private Editable answerTwo;
-    private Editable answerThree;
+    private Editable[] answerOne;
+    private Editable[] answerTwo;
+    private Editable[] answerThree;
 
-    private TextView attemptsView;
+    private TextView attemptsCount;
+
+    private InputMethodManager imm;
 
     private int correctAns = 0;
     private int attempts = 3;
@@ -57,66 +59,21 @@ public class AdvancedActivity extends AppCompatActivity {
         styles = new Styles(AdvancedActivity.this, this);
         populateData = new PopulateData(this, imageLoader, styles);
 
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 
         answerOneHolder = findViewById(R.id.answer1_input);
-        if (answerOneHolder != null) {
-            answerOneHolder.setOnEditorActionListener
-                    (new TextView.OnEditorActionListener() {
-                        @Override
-                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                            boolean handled = false;
-                            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                                answerOne = answerOneHolder.getText();
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                handled = true;
-                            }
-                            return handled;
-                        }
-                    });
-
-        }
+        answerOne = getInput(answerOneHolder);
 
         answerTwoHolder = findViewById(R.id.answer2_input);
-        if (answerTwoHolder != null) {
-            answerTwoHolder.setOnEditorActionListener
-                    (new TextView.OnEditorActionListener() {
-                        @Override
-                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                            boolean handled = false;
-                            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                                answerTwo = answerTwoHolder.getText();
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                handled = true;
-                            }
-                            return handled;
-                        }
-                    });
-
-        }
+        answerTwo = getInput(answerTwoHolder);
 
         answerThreeHolder = findViewById(R.id.answer3_input);
-        if (answerThreeHolder != null) {
-            answerThreeHolder.setOnEditorActionListener
-                    (new TextView.OnEditorActionListener() {
-                        @Override
-                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                            boolean handled = false;
-                            if (actionId == EditorInfo.IME_ACTION_SEND) {
-                                answerThree = answerThreeHolder.getText();
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                                handled = true;
-                            }
-                            return handled;
-                        }
-                    });
-
-        }
+        answerThree = getInput(answerThreeHolder);
     }
 
     @SuppressLint({"UseCompatLoadingForDrawables", "DefaultLocale"})
     public void validateAnswer(View view) {
-        attemptsView = findViewById(R.id.car_id);
+        attemptsCount = findViewById(R.id.car_id);
         TextView scoreView = findViewById(R.id.score);
 
         // delete
@@ -125,9 +82,13 @@ public class AdvancedActivity extends AppCompatActivity {
         View separatorImgThree = findViewById(R.id.separator_img3);
 
         try {
-            int validatedAnswerOne = validateImages.validation(answerOne.toString(), populateData);
-            int validatedAnswerTwo = validateImages.validation(answerTwo.toString(), populateData);
-            int validatedAnswerThree = validateImages.validation(answerThree.toString(), populateData);
+            Log.d(LOG_TAG, "input 1 -> " + answerOne[0].toString());
+            Log.d(LOG_TAG, "input 2 -> " + answerOne[0].toString());
+            Log.d(LOG_TAG, "input 3 -> " + answerOne[0].toString());
+
+            int validatedAnswerOne = validateImages.validation(answerOne[0].toString(), populateData);
+            int validatedAnswerTwo = validateImages.validation(answerTwo[0].toString(), populateData);
+            int validatedAnswerThree = validateImages.validation(answerThree[0].toString(), populateData);
 
             if (attempts > 0) {
                 if (answerOneHolder.isEnabled()) {
@@ -173,24 +134,18 @@ public class AdvancedActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "2 -> " + validatedAnswerThree);
 
                 if (validatedAnswerOne != 0) {
-                    styles.getImageOneAns().setVisibility(View.VISIBLE);
-                    styles.getImageOneAns().setBackgroundResource(R.drawable.mark_correct_answer);
-                    styles.getImageOneAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 0));
+                    styles.setCorrectAnswerImgOne(validateImages, populateData);
                 }
                 if (validatedAnswerTwo != 1) {
-                    styles.getImageTwoAns().setVisibility(View.VISIBLE);
-                    styles.getImageTwoAns().setBackgroundResource(R.drawable.mark_correct_answer);
-                    styles.getImageTwoAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 1));
+                    styles.setCorrectAnswerImgTwo(validateImages, populateData);
                 }
                 if (validatedAnswerThree != 2) {
-                    styles.getImageThreeAns().setVisibility(View.VISIBLE);
-                    styles.getImageThreeAns().setBackgroundResource(R.drawable.mark_correct_answer);
-                    styles.getImageThreeAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, 2));
+                    styles.setCorrectAnswerImgThree(validateImages, populateData);
                 }
                 nextAction();
             }
 
-            attemptsView.setText(String.format("%02d", attempts));
+            attemptsCount.setText(String.format("%02d", attempts));
             scoreView.setText(String.format("%02d", score));
 
         } catch (Exception e) {
@@ -206,12 +161,6 @@ public class AdvancedActivity extends AppCompatActivity {
             });
             snackbar.show();
         }
-    }
-
-    public void setCorrectAnswer(int index) {
-        styles.getImageOneAns().setVisibility(View.VISIBLE);
-        styles.getImageOneAns().setBackgroundResource(R.drawable.mark_correct_answer);
-        styles.getImageOneAns().setText(validateImages.getCorrectCarMakeTaskFour(populateData, index));
     }
 
     public void correctAnswer(EditText holder, View separator) {
@@ -236,17 +185,39 @@ public class AdvancedActivity extends AppCompatActivity {
             @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
-                answerOne.clear();
-                answerTwo.clear();
-                answerThree.clear();
+                answerOne[0].clear();
+                answerTwo[0].clear();
+                answerThree[0].clear();
 
                 attempts = 3;
                 correctAns = 0;
                 styles.resetAnswer();
                 populateData.setImagesTaskFour();
-                attemptsView.setText(String.format("%02d", attempts));
+                attemptsCount.setText(String.format("%02d", attempts));
             }
         });
+    }
+
+    public Editable[] getInput(final EditText holder) {
+        final Editable[] answer = new Editable[1];
+
+        if (holder != null) {
+            holder.setOnEditorActionListener
+                    (new TextView.OnEditorActionListener() {
+                        @Override
+                        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                            boolean handled = false;
+                            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                                answer[0] = holder.getText();
+                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                                handled = true;
+                            }
+                            return handled;
+                        }
+                    });
+
+        }
+        return answer;
     }
 
 }

@@ -284,15 +284,21 @@ public class Styles {
         return carId;
     }
 
-    public TextView getImageOneAns() {
-        return imageOneAns;
+    public void setCorrectAnswerImgOne(ValidateImages validateImages, PopulateData populateData) {
+        imageOneAns.setVisibility(View.VISIBLE);
+        imageOneAns.setBackgroundResource(R.drawable.mark_correct_answer);
+        imageOneAns.setText(validateImages.getCorrectCarMakeTaskFour(populateData, 0));
     }
 
-    public TextView getImageTwoAns() {
-        return imageTwoAns;
+    public void setCorrectAnswerImgTwo(ValidateImages validateImages, PopulateData populateData) {
+        imageTwoAns.setVisibility(View.VISIBLE);
+        imageTwoAns.setBackgroundResource(R.drawable.mark_correct_answer);
+        imageTwoAns.setText(validateImages.getCorrectCarMakeTaskFour(populateData, 1));
     }
 
-    public TextView getImageThreeAns() {
-        return imageThreeAns;
+    public void setCorrectAnswerImgThree(ValidateImages validateImages, PopulateData populateData) {
+        imageThreeAns.setVisibility(View.VISIBLE);
+        imageThreeAns.setBackgroundResource(R.drawable.mark_correct_answer);
+        imageThreeAns.setText(validateImages.getCorrectCarMakeTaskFour(populateData, 2));
     }
 }
