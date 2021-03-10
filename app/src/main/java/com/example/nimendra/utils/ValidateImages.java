@@ -206,18 +206,21 @@ public class ValidateImages {
         words = r1.split("[_]");
         r1CarMake = words[1];
         if (r1CarMake.equals(answer)) {
+            Log.d(LOG_TAG, "0 -> " + answer);
             return 0;
         }
 
         words = r2.split("[_]");
         r2CarMake = words[1];
         if (r2CarMake.equals(answer)) {
+            Log.d(LOG_TAG, "1 -> " + answer);
             return 1;
         }
 
         words = r3.split("[_]");
         r3CarMake = words[1];
         if (r3CarMake.equals(answer)) {
+            Log.d(LOG_TAG, "2 -> " + answer);
             return 2;
         }
         return -1;
@@ -236,15 +239,15 @@ public class ValidateImages {
         String correctCarMake;
 
         switch (index) {
-            case 1:
+            case 0:
                 words = r1.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
                 return correctCarMake;
-            case 2:
+            case 1:
                 words = r2.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
                 return correctCarMake;
-            case 3:
+            case 2:
                 words = r3.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
                 return correctCarMake;

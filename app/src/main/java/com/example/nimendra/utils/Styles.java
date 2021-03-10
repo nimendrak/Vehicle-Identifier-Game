@@ -15,8 +15,6 @@ import androidx.cardview.widget.CardView;
 
 import com.example.nimendra.R;
 
-import org.w3c.dom.Text;
-
 public class Styles {
 
     private static final String LOG_TAG = Styles.class.getSimpleName();
@@ -48,7 +46,11 @@ public class Styles {
     private EditText answerThreeHolder;
 
     private ImageView gif;
+
     private View separator;
+    private View separatorImgOne;
+    private View separatorImgTwo;
+    private View separatorImgThree;
 
     private Button nextBtn;
 
@@ -109,6 +111,10 @@ public class Styles {
             correctAnswerCount = activity.findViewById(R.id.correct_answers_count);
 
             nextBtn = activity.findViewById(R.id.next_btn);
+
+            separatorImgOne = activity.findViewById(R.id.separator_img1);
+            separatorImgTwo = activity.findViewById(R.id.separator_img2);
+            separatorImgThree = activity.findViewById(R.id.separator_img3);
 
             randomImageOne = activity.findViewById(R.id.car_img1);
             randomImageTwo = activity.findViewById(R.id.car_img2);
@@ -224,6 +230,14 @@ public class Styles {
             imageTwoAns.setVisibility(View.INVISIBLE);
             imageThreeAns.setVisibility(View.INVISIBLE);
 
+            separatorImgOne.setVisibility(View.VISIBLE);
+            separatorImgTwo.setVisibility(View.VISIBLE);
+            separatorImgThree.setVisibility(View.VISIBLE);
+
+            separatorImgOne.setBackgroundColor(Color.parseColor("#232C32"));
+            separatorImgTwo.setBackgroundColor(Color.parseColor("#232C32"));
+            separatorImgThree.setBackgroundColor(Color.parseColor("#232C32"));
+
             answerOneHolder.setText("");
             answerTwoHolder.setText("");
             answerThreeHolder.setText("");
@@ -232,9 +246,9 @@ public class Styles {
             answerTwoHolder.setEnabled(true);
             answerThreeHolder.setEnabled(true);
 
-//            answerOneHolder.setBackgroundResource(0);
-//            answerTwoHolder.setBackgroundResource(0);
-//            answerThreeHolder.setBackgroundResource(0);
+            answerOneHolder.setBackgroundResource(0);
+            answerTwoHolder.setBackgroundResource(0);
+            answerThreeHolder.setBackgroundResource(0);
 
             randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
             randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));

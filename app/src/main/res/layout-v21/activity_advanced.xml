@@ -75,14 +75,22 @@
             android:layout_marginTop="18dp"
             android:autofillHints=""
             android:ems="10"
-            android:textColor="#ffffff"
             android:hint="@string/editext_01_car_make_hint"
             android:imeOptions="actionSend"
             android:inputType="textPersonName"
             android:maxLength="10"
             android:padding="8dp"
-            android:text=""
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
             android:textSize="16sp" />
+
+        <View
+            android:id="@+id/separator_img1"
+            android:layout_width="102dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:background="#232C32" />
 
         <TextView
             android:id="@+id/img1_index"
@@ -96,6 +104,7 @@
             android:textColor="#232C32"
             android:textSize="20sp"
             android:textStyle="bold" />
+
 
     </androidx.cardview.widget.CardView>
 
@@ -136,6 +145,14 @@
             android:padding="8dp"
             android:text=""
             android:textSize="16sp" />
+
+        <View
+            android:id="@+id/separator_img2"
+            android:layout_width="102dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:background="#232C32" />
 
         <TextView
             android:id="@+id/img2_index"
@@ -189,6 +206,14 @@
             android:padding="8dp"
             android:text=""
             android:textSize="16sp" />
+
+        <View
+            android:id="@+id/separator_img3"
+            android:layout_width="102dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:background="#232C32" />
 
         <TextView
             android:id="@+id/img3_index"
