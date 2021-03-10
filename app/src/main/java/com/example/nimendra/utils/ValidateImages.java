@@ -35,8 +35,9 @@ public class ValidateImages {
         String currentImgResourceName = (String) currentImg.getTag();
 
         int correctCarMakeIndex = 0;
-        if (imageLoader.getCarImagesArray().size() > 0) {
-            try {
+        try {
+            if (imageLoader.getCarImagesArray().size() > 0) {
+
                 for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
                     if (currentImgResourceName.contains(selectedCar.toLowerCase())) {
                         correctCarMakeIndex = i;
@@ -44,9 +45,9 @@ public class ValidateImages {
                         return true;
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
         return false;
@@ -235,7 +236,7 @@ public class ValidateImages {
         String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
         String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
 
-        String [] words;
+        String[] words;
         String correctCarMake;
 
         switch (index) {

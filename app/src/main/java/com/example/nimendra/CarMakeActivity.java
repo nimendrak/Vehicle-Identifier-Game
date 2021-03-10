@@ -1,6 +1,8 @@
 package com.example.nimendra;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,7 +33,10 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private Timer timer;
 
     private Button nextBtn;
+    private boolean switchStats;
     private Spinner spinner = null;
+
+    private String[] item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         populateData = new PopulateData(this, imageLoader, styles);
 
         // Get the switch_stats from MainActivity
-        boolean switchStats = getIntent().getExtras().getBoolean("switch_stats");
+        switchStats = getIntent().getExtras().getBoolean("switch_stats");
         Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
@@ -57,6 +62,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         spinner = findViewById(R.id.car_make_spinner);
         if (spinner != null) {
             spinner.setOnItemSelectedListener(this);
+            spinner.setSelection(0);
         }
 
         // Create ArrayAdapter using the string array and default spinner layout.
@@ -70,19 +76,14 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             spinner.setAdapter(adapter);
         }
 
-        if (switchStats) {
-            timer.startTimer();
-            if (timer.isTimerRunning()) {
-                Log.d(LOG_TAG, "Timer Running..");
-            }
-        }
+        item = new String[1];
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (spinner != null) {
-                    String item = spinner.getSelectedItem().toString();
+                    item[0] = spinner.getSelectedItem().toString();
 
-                    if (item.equals("Select a Manufacturer")) {
+                    if (item[0].equals("Select a Manufacturer")) {
                         // item returns array_car_makes[0] answer prompter will stay in its reset state
                         styles.resetAnswer();
 
@@ -98,7 +99,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                         snackbar.show();
                     } else {
                         if (imageLoader.getCarImagesArray().size() > 0) {
-                            switch (item) {
+                            switch (item[0]) {
                                 case "Audi":
                                 case "Bugatti":
                                 case "BMW":
@@ -107,7 +108,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                                 case "Mercedes":
                                 case "Porsche":
                                 case "Tesla":
-                                    validateAnswer(item);
+                                    validateAnswer(item[0]);
                                     spinner.setEnabled(false);
                                     spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
                                     break;
@@ -117,6 +118,19 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
+
+        if (switchStats) {
+            timer.startTimer();
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    validateAnswer(item[0]);
+                }
+            }, 20000);
+        } else {
+            timerTextView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -130,11 +144,22 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void validateAnswer(String selectedCar) {
+        Log.d(LOG_TAG, "selectedCar -> " + selectedCar);
+        Log.d(LOG_TAG, "switchStats -> " + switchStats);
+
         if (validateImages.validation(selectedCar)) {
             styles.correctAnswer(validateImages.getCorrectCarMakeTaskTwo());
+            if (switchStats) {
+                timer.getCountDownTimer().cancel();
+                timer.resetTimer();
+            }
             Log.d(LOG_TAG, "in validate() -> correct");
         } else {
             styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
+            if (switchStats) {
+                timer.getCountDownTimer().cancel();
+                timer.resetTimer();
+            }
             Log.d(LOG_TAG, "in validate() -> wrong");
         }
 
@@ -142,13 +167,24 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                styles.resetAnswer();
+
                 spinner.setSelection(0);
                 spinner.setEnabled(true);
 
                 populateData.setImagesTaskOne();
-
                 spinner.setBackgroundResource(R.drawable.spinner_color_layout);
-                styles.resetAnswer();
+
+                if (switchStats) {
+                    timer.startTimer();
+
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            validateAnswer(item[0]);
+                        }
+                    }, 20000);
+                }
             }
         });
     }

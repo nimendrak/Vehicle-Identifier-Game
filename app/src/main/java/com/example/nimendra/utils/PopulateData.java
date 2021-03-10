@@ -181,7 +181,6 @@ public class PopulateData {
         Random random = new Random();
         if (imageArr.size() > 0) {
             if (!context.getClass().getSimpleName().equals("CarImageActivity")) {
-                Log.d(LOG_TAG, "! shuffling ! ");
                 Collections.shuffle(imageArr);
             }
             return random.nextInt(imageArr.size());
