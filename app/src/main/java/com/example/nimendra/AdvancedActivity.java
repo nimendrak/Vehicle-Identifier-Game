@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.Styles;
+import com.example.nimendra.utils.Timer;
 import com.example.nimendra.utils.ValidateImages;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,6 +33,7 @@ public class AdvancedActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
+    private Timer timer;
 
     private EditText answerOneHolder;
     private EditText answerTwoHolder;
@@ -54,9 +56,12 @@ public class AdvancedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced);
 
+        TextView timerTextView = findViewById(R.id.timer);
+
+        timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(AdvancedActivity.this, this, imageLoader);
-        styles = new Styles(AdvancedActivity.this, this);
+        styles = new Styles(AdvancedActivity.this, this, timer);
         populateData = new PopulateData(this, imageLoader, styles);
 
         imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);

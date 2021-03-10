@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nimendra.utils.Timer;
 import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
@@ -32,6 +33,7 @@ public class CarHintActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
+    private Timer timer;
 
     private EditText inputChar;
     private Editable inputCharStr;
@@ -43,12 +45,23 @@ public class CarHintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hint);
 
+        TextView timerTextView = findViewById(R.id.timer);
+
+        timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarHintActivity.this, this, imageLoader);
-        styles = new Styles(CarHintActivity.this, this);
+        styles = new Styles(CarHintActivity.this, this, timer);
         populateData = new PopulateData(this, imageLoader, styles);
 
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        // Get the switch_stats from MainActivity
+        boolean switchStats = getIntent().getExtras().getBoolean("switch_stats");
+        Log.d(LOG_TAG, "switch stats -> " + switchStats);
+
+        if (switchStats) {
+            timer.startTimer();
+        }
+
+        final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 
         inputChar = findViewById(R.id.input_char);
         if (inputChar != null) {
@@ -59,7 +72,7 @@ public class CarHintActivity extends AppCompatActivity {
                             boolean handled = false;
                             if (actionId == EditorInfo.IME_ACTION_SEND) {
                                 inputCharStr = inputChar.getText();
-                                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                                inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                                 handled = true;
                             }
                             return handled;

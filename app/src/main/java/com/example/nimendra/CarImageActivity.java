@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nimendra.utils.Timer;
 import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
@@ -23,16 +24,28 @@ public class CarImageActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_image);
 
+        TextView timerTextView = findViewById(R.id.timer);
+
+        timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarImageActivity.this, this, imageLoader);
-        styles = new Styles(CarImageActivity.this, this);
-        populateData = new PopulateData( this, imageLoader, styles);
+        styles = new Styles(CarImageActivity.this, this, timer);
+        populateData = new PopulateData(this, imageLoader, styles);
+
+        // Get the switch_stats from MainActivity
+        boolean switchStats = getIntent().getExtras().getBoolean("switch_stats");
+        Log.d(LOG_TAG, "switch stats -> " + switchStats);
+
+        if (switchStats) {
+            timer.startTimer();
+        }
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         identifyBtn.setOnClickListener(new View.OnClickListener() {

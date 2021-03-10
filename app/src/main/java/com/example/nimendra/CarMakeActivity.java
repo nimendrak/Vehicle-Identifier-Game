@@ -7,9 +7,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nimendra.utils.Timer;
 import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
@@ -26,6 +28,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
+    private Timer timer;
 
     private Button nextBtn;
     private Spinner spinner = null;
@@ -35,10 +38,17 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_make);
 
+        TextView timerTextView = findViewById(R.id.timer);
+
+        timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarMakeActivity.this, this, imageLoader);
-        styles = new Styles(CarMakeActivity.this, this);
+        styles = new Styles(CarMakeActivity.this, this, timer);
         populateData = new PopulateData(this, imageLoader, styles);
+
+        // Get the switch_stats from MainActivity
+        boolean switchStats = getIntent().getExtras().getBoolean("switch_stats");
+        Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         Button identifyBtn = findViewById(R.id.identify_btn);
         nextBtn = findViewById(R.id.next_btn);
@@ -60,6 +70,12 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             spinner.setAdapter(adapter);
         }
 
+        if (switchStats) {
+            timer.startTimer();
+            if (timer.isTimerRunning()) {
+                Log.d(LOG_TAG, "Timer Running..");
+            }
+        }
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
