@@ -160,7 +160,7 @@ public class Styles {
 
     @SuppressLint("NonConstantResourceId")
     public void wrongAnswer(String selectedCar, Integer imageHolder) {
-        Log.d(LOG_TAG, "Wrong Answer -> " + imageHolder);
+        Log.d(LOG_TAG, "Wrong Answer -> " + context.getResources().getResourceEntryName(imageHolder));
         wrongAnswer(selectedCar);
 
         switch (imageHolder) {
@@ -182,6 +182,10 @@ public class Styles {
     @SuppressLint("NonConstantResourceId")
     public void markCorrectAnswer(Integer imageHolder) {
         Log.d(LOG_TAG, "Mrk Correct Answer -> " + imageHolder);
+
+        randomImageOne.setEnabled(false);
+        randomImageTwo.setEnabled(false);
+        randomImageThree.setEnabled(false);
 
         switch (imageHolder) {
             case R.id.car_img1:
@@ -213,6 +217,10 @@ public class Styles {
 
             nextBtn.setVisibility(View.INVISIBLE);
             answerPrompter.setVisibility(View.INVISIBLE);
+
+            randomImageOne.setEnabled(true);
+            randomImageTwo.setEnabled(true);
+            randomImageThree.setEnabled(true);
 
             randomImageOne.setBackgroundColor(Color.parseColor("#289995"));
             randomImageTwo.setBackgroundColor(Color.parseColor("#289995"));

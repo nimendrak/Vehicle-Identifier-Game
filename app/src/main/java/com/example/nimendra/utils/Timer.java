@@ -5,12 +5,9 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.nimendra.CarMakeActivity;
-
 import java.util.Locale;
 
 public class Timer {
-
 
     // Class name for Log tag
     private static final String LOG_TAG = Timer.class.getSimpleName();

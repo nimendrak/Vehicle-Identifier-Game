@@ -102,16 +102,40 @@ public class ValidateImages {
             switch (clickedImageId) {
                 case R.id.car_img1:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
+                        for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
+                            String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
+                            // Check selected answer is correct
+                            if (r1.equals(nameFromArr)) {
+                                imageLoader.getCarImagesArray().remove(i);
+                                Log.d(LOG_TAG, "correct --> currentImgTag -> " + r1 + " | CarMakeFromArr -> " + nameFromArr);
+                            }
+                        }
                         return true;
                     }
                     break;
                 case R.id.car_img2:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r2)) {
+                        for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
+                            String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
+                            // Check selected answer is correct
+                            if (r2.equals(nameFromArr)) {
+                                imageLoader.getCarImagesArray().remove(i);
+                                Log.d(LOG_TAG, "correct --> currentImgTag -> " + r1 + " | CarMakeFromArr -> " + nameFromArr);
+                            }
+                        }
                         return true;
                     }
                     break;
                 case R.id.car_img3:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r3)) {
+                        for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
+                            String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
+                            // Check selected answer is correct
+                            if (r3.equals(nameFromArr)) {
+                                imageLoader.getCarImagesArray().remove(i);
+                                Log.d(LOG_TAG, "correct --> currentImgTag -> " + r1 + " | CarMakeFromArr -> " + nameFromArr);
+                            }
+                        }
                         return true;
                     }
                     break;
