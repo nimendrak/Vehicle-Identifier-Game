@@ -2,12 +2,20 @@ package com.example.nimendra.utils;
 
 import android.graphics.Color;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.example.nimendra.CarMakeActivity;
 
 import java.util.Locale;
 
 public class Timer {
-    private static final long START_TIME_IN_MILLIS = 20000;
+
+
+    // Class name for Log tag
+    private static final String LOG_TAG = Timer.class.getSimpleName();
+
+    private static final long START_TIME_IN_MILLIS = 10000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
     private final TextView textViewCountDown;
     private CountDownTimer countDownTimer;
@@ -15,6 +23,7 @@ public class Timer {
 
     public Timer(TextView textView) {
         this.textViewCountDown = textView;
+        startTimer();
     }
 
     public void startTimer() {
@@ -38,23 +47,21 @@ public class Timer {
         updateCountDownText();
     }
 
+    public void pauseTimer() {
+        countDownTimer.cancel();
+        timerRunning = false;
+    }
+
     public void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        if (seconds <= 10) {
+        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
+        if (seconds <= 5) {
             textViewCountDown.setTextColor(Color.parseColor("#ff0024"));
         } else {
             textViewCountDown.setTextColor(Color.WHITE);
         }
         textViewCountDown.setText(timeLeftFormatted);
-    }
-
-    public boolean isTimerRunning() {
-        return timerRunning;
-    }
-
-    public CountDownTimer getCountDownTimer() {
-        return countDownTimer;
     }
 }

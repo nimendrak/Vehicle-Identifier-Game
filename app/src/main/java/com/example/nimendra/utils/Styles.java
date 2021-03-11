@@ -60,13 +60,8 @@ public class Styles {
 
     private String activityName;
 
-    private Activity activity;
-
-    private Timer timer;
-
-    public Styles(Activity activity, Context context, Timer timer) {
+    public Styles(Activity activity, Context context) {
         this.context = context;
-        this.timer = timer;
         activityName = context.getClass().getSimpleName();
 
         answerPrompter = activity.findViewById(R.id.answer_prompter);
@@ -207,8 +202,6 @@ public class Styles {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void resetAnswer() {
-        timer.resetTimer();
-
         if (activityName.equals("CarMakeActivity") |
                 activityName.equals("CarHintActivity")) {
 

@@ -32,24 +32,37 @@ public class ValidateImages {
     // CarMakeActivity image validations
     public boolean validation(String selectedCar) {
         ImageView currentImg = activity.findViewById(R.id.car_image);
-        String currentImgResourceName = (String) currentImg.getTag();
+        String currentImgTag = (String) currentImg.getTag();
 
-        int correctCarMakeIndex = 0;
         try {
-            if (imageLoader.getCarImagesArray().size() > 0) {
-
+            if (!selectedCar.equals("not selected")) {
                 for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
-                    if (currentImgResourceName.contains(selectedCar.toLowerCase())) {
-                        correctCarMakeIndex = i;
-                        imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
-                        return true;
+                    String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
+
+                    // Check selected answer is correct
+                    if (currentImgTag.contains(selectedCar.toLowerCase())) {
+                        if (currentImgTag.equals(nameFromArr)) {
+                            imageLoader.getCarImagesArray().remove(i);
+                            Log.d(LOG_TAG, "correct --> currentImgTag -> " + currentImgTag + " | CarMakeFromArr -> " + nameFromArr);
+                            return true;
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
+                    String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
+
+                    // If selected car is wrong or null, remove it from the image arr
+                    if (currentImgTag.equals(nameFromArr)) {
+                        imageLoader.getCarImagesArray().remove(i);
+                        Log.d(LOG_TAG, "wrong/null --> currentImgTag -> " + currentImgTag + "\n CarMakeFromArr -> " + nameFromArr);
+                        return false;
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        imageLoader.getCarImagesArray().remove(correctCarMakeIndex);
         return false;
     }
 
@@ -81,26 +94,30 @@ public class ValidateImages {
         String r2 = context.getResources().getResourceEntryName(randomImgArr.get(1));
         String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
 
-        // Get the clicked image tag which returns the resource name
-        ImageView clickedImage = activity.findViewById(clickedImageId);
-        String imageTag = (String) clickedImage.getTag();
+        try {
+            // Get the clicked image tag which returns the resource name
+            ImageView clickedImage = activity.findViewById(clickedImageId);
+            String imageTag = (String) clickedImage.getTag();
 
-        switch (clickedImageId) {
-            case R.id.car_img1:
-                if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
-                    return true;
-                }
-                break;
-            case R.id.car_img2:
-                if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r2)) {
-                    return true;
-                }
-                break;
-            case R.id.car_img3:
-                if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r3)) {
-                    return true;
-                }
-                break;
+            switch (clickedImageId) {
+                case R.id.car_img1:
+                    if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
+                        return true;
+                    }
+                    break;
+                case R.id.car_img2:
+                    if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r2)) {
+                        return true;
+                    }
+                    break;
+                case R.id.car_img3:
+                    if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r3)) {
+                        return true;
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return false;

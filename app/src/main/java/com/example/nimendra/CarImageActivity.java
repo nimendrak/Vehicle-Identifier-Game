@@ -2,6 +2,8 @@ package com.example.nimendra;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,28 +28,73 @@ public class CarImageActivity extends AppCompatActivity {
     private Styles styles;
     private Timer timer;
 
+    private int id;
+    private Button identifyBtn;
+    private String randomCarMakeStr;
+    private boolean switchStats;
+    private TextView timerTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_image);
 
-        TextView timerTextView = findViewById(R.id.timer);
+        timerTextView = findViewById(R.id.timer);
 
         timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarImageActivity.this, this, imageLoader);
-        styles = new Styles(CarImageActivity.this, this, timer);
+        styles = new Styles(CarImageActivity.this, this);
         populateData = new PopulateData(this, imageLoader, styles);
 
         // Get the switch_stats from MainActivity
-        boolean switchStats = getIntent().getExtras().getBoolean("switch_stats");
+        switchStats = getIntent().getExtras().getBoolean("switch_stats");
         Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
-        if (switchStats) {
-            timer.startTimer();
+        identifyBtn = findViewById(R.id.identify_btn);
+        onNextBtnClick();
+
+        handlerConfig(null);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    public void validateAnswer(View view) {
+        TextView randomCarMake = styles.getRandomCarMake();
+        randomCarMakeStr = (String) randomCarMake.getText();
+
+        handlerConfig(null);
+
+        Log.d(LOG_TAG, "in validate() -> " + validateImages.validation(id, randomCarMakeStr, populateData));
+
+        try {
+            id = view.getId();
+            switch (id) {
+                case R.id.car_img1:
+                case R.id.car_img2:
+                case R.id.car_img3:
+                    if (validateImages.validation(id, randomCarMakeStr, populateData)) {
+                        styles.correctAnswer(randomCarMakeStr);
+                        styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
+                        resetTimer();
+                        Log.d(LOG_TAG, "in validate() -> correct");
+                    } else {
+                        styles.wrongAnswer(randomCarMakeStr, id);
+                        styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
+                        Log.d(LOG_TAG, "in validate() -> wrong");
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            styles.wrongAnswer(randomCarMakeStr, id);
+            styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
+            Log.d(LOG_TAG, "null in validate() -> wrong");
+            resetTimer();
         }
 
-        Button identifyBtn = findViewById(R.id.identify_btn);
+        onNextBtnClick();
+    }
+
+    public void onNextBtnClick() {
         identifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,26 +104,30 @@ public class CarImageActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("NonConstantResourceId")
-    public void validateAnswer(View view) {
-        TextView randomCarMake = styles.getRandomCarMake();
-        String randomCarMakeStr = (String) randomCarMake.getText();
+    public void handlerConfig(final View view) {
+        if (switchStats) {
+            timer.startTimer();
 
-        int id = view.getId();
-        switch (id) {
-            case R.id.car_img1:
-            case R.id.car_img2:
-            case R.id.car_img3:
-                if (validateImages.validation(id, randomCarMakeStr, populateData)) {
-                    styles.correctAnswer(randomCarMakeStr);
-                    styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
-                    Log.d(LOG_TAG, "in validate() -> correct");
-                } else {
-                    styles.wrongAnswer(randomCarMakeStr, id);
-                    styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
-                    Log.d(LOG_TAG, "in validate() -> wrong");
-                }
-                break;
+            try {
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        validateAnswer(view);
+                    }
+                }, 10000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            timerTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void resetTimer() {
+        if (switchStats) {
+            timer.pauseTimer();
+            timer.resetTimer();
         }
     }
 }

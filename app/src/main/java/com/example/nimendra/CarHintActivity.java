@@ -50,7 +50,7 @@ public class CarHintActivity extends AppCompatActivity {
         timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(CarHintActivity.this, this, imageLoader);
-        styles = new Styles(CarHintActivity.this, this, timer);
+        styles = new Styles(CarHintActivity.this, this);
         populateData = new PopulateData(this, imageLoader, styles);
 
         // Get the switch_stats from MainActivity

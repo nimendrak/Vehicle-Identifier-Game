@@ -61,7 +61,7 @@ public class AdvancedActivity extends AppCompatActivity {
         timer = new Timer(timerTextView);
         imageLoader = new ImageLoader(this);
         validateImages = new ValidateImages(AdvancedActivity.this, this, imageLoader);
-        styles = new Styles(AdvancedActivity.this, this, timer);
+        styles = new Styles(AdvancedActivity.this, this);
         populateData = new PopulateData(this, imageLoader, styles);
 
         imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
