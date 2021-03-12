@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nimendra.utils.Timer;
+import com.example.nimendra.utils.CountDownTimer;
 import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
@@ -26,10 +26,9 @@ public class CarImageActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
-    private Timer timer;
+    private CountDownTimer timer;
 
     private int id;
-    private boolean isValidated;
     private Button identifyBtn;
     private String randomCarMakeStr;
     private boolean switchStats;
@@ -64,13 +63,13 @@ public class CarImageActivity extends AppCompatActivity {
         // Check whether switcher is on or off
         // And start the timer accordingly
         if (switchStats) {
-            timer = new Timer(timerTextView);
+            timer = new CountDownTimer(timerTextView);
         }
 
         identifyBtn = findViewById(R.id.identify_btn);
         onNextBtnClick();
 
-        handlerConfig(null);
+        handlerConfig();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -122,7 +121,7 @@ public class CarImageActivity extends AppCompatActivity {
                 populateData.setImagesTaskThree();
                 styles.resetAnswer();
 
-                handlerConfig(null);
+                handlerConfig();
             }
         });
     }
@@ -130,7 +129,7 @@ public class CarImageActivity extends AppCompatActivity {
     // If the switcher is on
     // handlerConfig lets countdown run for 20s
     // And automatically submit the current answer
-    public void handlerConfig(final View view) {
+    public void handlerConfig() {
         // Check whether switch is on or off
         if (switchStats) {
             Log.d(LOG_TAG, "handleConfig() running..");
@@ -144,7 +143,7 @@ public class CarImageActivity extends AppCompatActivity {
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    styles.correctAnswer(randomCarMakeStr);
+                    styles.wrongAnswer(randomCarMakeStr);
                     styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
 
                 }

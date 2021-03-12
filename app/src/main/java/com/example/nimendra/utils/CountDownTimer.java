@@ -1,30 +1,29 @@
 package com.example.nimendra.utils;
 
 import android.graphics.Color;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.TextView;
 
 import java.util.Locale;
 
-public class Timer {
+public class CountDownTimer {
 
     // Class name for Log tag
-    private static final String LOG_TAG = Timer.class.getSimpleName();
+    private static final String LOG_TAG = CountDownTimer.class.getSimpleName();
 
     private static final long START_TIME_IN_MILLIS = 10000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
     private final TextView textViewCountDown;
-    private CountDownTimer countDownTimer;
+    private android.os.CountDownTimer countDownTimer;
     private boolean timerRunning;
 
-    public Timer(TextView textView) {
+    public CountDownTimer(TextView textView) {
         this.textViewCountDown = textView;
         startTimer();
     }
 
     public void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+        countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;

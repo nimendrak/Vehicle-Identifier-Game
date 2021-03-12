@@ -1,8 +1,8 @@
 package com.example.nimendra;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,13 +13,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.nimendra.utils.Timer;
 import com.example.nimendra.utils.ValidateImages;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.Styles;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Locale;
 
 public class CarMakeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -30,12 +31,16 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
-    private Timer timer;
 
-    private boolean isValidated;
     private boolean switchStats;
     private Spinner spinner = null;
     private TextView timerTextView;
+
+    private static final long START_TIME_IN_MILLIS = 10000;
+    private long timeLeftInMillis = START_TIME_IN_MILLIS;
+    private CountDownTimer countDownTimer;
+
+    private String item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         // Check whether switcher is on or off
         // And start the timer accordingly
         if (switchStats) {
-            timer = new Timer(timerTextView);
+            startTimer();
+        } else {
+            timerTextView.setVisibility(View.INVISIBLE);
         }
 
         Button identifyBtn = findViewById(R.id.identify_btn);
@@ -93,7 +100,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             public void onClick(View v) {
                 if (spinner != null) {
                     // Item is the selected car make from the spinner
-                    String item = spinner.getSelectedItem().toString();
+                    item = spinner.getSelectedItem().toString();
 
                     if (item.equals("Select a Manufacturer")) {
                         // Item returns array_car_makes[0] answer prompter will stay in its reset state
@@ -128,12 +135,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
-
-        // If switchStats == true,
-        // User has 20s to submit an answer
-        // Otherwise it will automatically submit and,
-        // Remove the current image from the image array
-        handlerConfig("not selected");
     }
 
     @Override
@@ -155,7 +156,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             // With the correct answer
             // validateImages.getCorrectCarMakeTaskTwo() returns the correct answer of the task
             styles.correctAnswer(validateImages.getCorrectCarMakeTaskTwo());
-            isValidated = true;
             Log.d(LOG_TAG, "in validateAnswer() -> correct");
         } else {
             // If answer is wrong or null -> answer prompter change as follows
@@ -163,20 +163,18 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             // validateImages.getCorrectCarMakeTaskTwo() returns the correct answer of the task
             styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
             Log.d(LOG_TAG, "in validateAnswer() -> wrong");
-            isValidated = true;
+        }
+
+        // Also, if the switcher is on
+        // Countdown will freeze as well
+        if (switchStats) {
+            pauseTimer();
         }
 
         // Either answer is wrong or correct
         // spinner will disable and change it color
         spinner.setEnabled(false);
         spinner.setBackgroundResource(R.drawable.spinner_color_layout_disbaled);
-
-        // Also, if the switcher is on
-        // Countdown will freeze as well
-        if (switchStats) {
-            Log.d(LOG_TAG, "time paused");
-            timer.pauseTimer();
-        }
 
         Button nextBtn = findViewById(R.id.next_btn);
 
@@ -187,9 +185,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 // Once the next button is clicked,
                 // Answer prompter will disappear
                 styles.resetAnswer();
-
-                // Set flag to false, before next validation
-                isValidated = false;
 
                 // And set it value to the first index
                 spinner.setSelection(0);
@@ -204,36 +199,50 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
                 // If user does nothing for next 20s,
                 // Program will automatically submit an answer
-                handlerConfig("not selected");
+                if (switchStats) {
+                    resetTimer();
+                    startTimer();
+                }
             }
         });
     }
 
-    // If the switcher is on
-    // handlerConfig lets countdown run for 20s
-    // And automatically submit the current answer
-    public void handlerConfig(final String selectedCar) {
-        // Check whether switch is on or off
-        if (switchStats) {
-            Log.d(LOG_TAG, "handleConfig() running..");
-            // Reset the time and restart it
-            timer.pauseTimer();
-            timer.resetTimer();
-            timer.startTimer();
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
 
-            // After 20s, answer will automatically validated
-            // and prompter will be styled accordingly
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isValidated)
-                        validateAnswer(selectedCar);
-                        isValidated = true;
-                }
-            }, 10000);
-            // If switcher is off, countdown text view will stay hidden
+            @Override
+            public void onFinish() {
+                validateAnswer(item);
+            }
+        }.start();
+    }
+
+    public void resetTimer() {
+        Log.d(LOG_TAG, "time re setter! ");
+        timeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
+    }
+
+    public void pauseTimer() {
+        Log.d(LOG_TAG, "time paused! ");
+        countDownTimer.cancel();
+    }
+
+    public void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
+        if (seconds <= 5) {
+            timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {
-            timerTextView.setVisibility(View.INVISIBLE);
+            timerTextView.setTextColor(Color.WHITE);
         }
+        timerTextView.setText(timeLeftFormatted);
     }
 }
