@@ -1,12 +1,9 @@
 package com.example.nimendra;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,14 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.nimendra.utils.CountDownTimer;
-import com.example.nimendra.utils.ValidateImages;
-import com.example.nimendra.utils.PopulateData;
-import com.example.nimendra.utils.ImageLoader;
-import com.example.nimendra.utils.Styles;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.nimendra.utils.ImageLoader;
+import com.example.nimendra.utils.PopulateData;
+import com.example.nimendra.utils.Styles;
+import com.example.nimendra.utils.ValidateImages;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Locale;
 
 public class CarHintActivity extends AppCompatActivity {
 
@@ -35,17 +34,21 @@ public class CarHintActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
-    private CountDownTimer timer;
 
+    private TextView timerTextView;
     private TextView attemptCount;
+
     private Button nextBtn;
 
     private EditText inputChar;
     private Editable inputCharStr;
     private boolean switchStats;
-    private TextView timerTextView;
 
     private int attempts = 3;
+
+    private static final long START_TIME_IN_MILLIS = 10000;
+    private long timeLeftInMillis = START_TIME_IN_MILLIS;
+    private android.os.CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,9 @@ public class CarHintActivity extends AppCompatActivity {
         // Check whether switcher is on or off
         // And start the timer accordingly
         if (switchStats) {
-            timer = new CountDownTimer(timerTextView);
+            startTimer();
+        } else {
+            timerTextView.setVisibility(View.INVISIBLE);
         }
 
         final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -101,21 +106,40 @@ public class CarHintActivity extends AppCompatActivity {
 
         attemptCount = findViewById(R.id.car_id);
         nextBtn = findViewById(R.id.next_btn);
-
-        handlerConfig();
     }
+
+    View v;
 
     @SuppressLint("DefaultLocale")
     public void submitAnswer(View view) {
         try {
-            if (!inputCharStr.toString().equals("")) {
-                getInput();
+            String correctAnswer = validateImages.getCorrectCarMakeTaskThree();
+            Log.d(LOG_TAG, "attempts -> " + attempts);
+
+            if (attempts > 0) {
+                if (!validateImages.validation(inputCharStr, populateData)) {
+                    attempts = attempts - 1;
+                } else {
+                    Log.d(LOG_TAG, "correct answer -> " + correctAnswer);
+                    if (correctAnswer != null) {
+                        nextBtnAction(correctAnswer);
+                    }
+                }
+                if (switchStats) {
+                    resetTimer();
+                    startTimer();
+                }
+
             } else {
-                attempts = attempts - 1;
+                styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
+                nextBtnAction("");
             }
+            attemptCount.setText(String.format("%02d", attempts));
+            inputChar.setText("");
+
         } catch (Exception e) {
             e.printStackTrace();
-            Snackbar snackbar = Snackbar.make(view, "Please Prompt a Letter to Proceed!", Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.hint_activity), "Please Prompt a Letter to Proceed!", Snackbar.LENGTH_LONG);
             snackbar.setDuration(2500);
             snackbar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
             snackbar.setAction("OK", new View.OnClickListener() {
@@ -125,79 +149,67 @@ public class CarHintActivity extends AppCompatActivity {
             });
             snackbar.show();
         }
-        // Also, if the switcher is on
-        // Countdown will freeze as well
-        if (switchStats) {
-            Log.d(LOG_TAG, "time paused");
-            timer.pauseTimer();
-            timer.resetTimer();
-        }
     }
 
-    // If the switcher is on
-    // handlerConfig lets countdown run for 20s
-    // And automatically submit the current answer
-    public void handlerConfig() {
-        // Check whether switch is on or off
-        if (switchStats) {
-            Log.d(LOG_TAG, "handleConfig() running..");
-            // Reset the time and restart it
-            timer.pauseTimer();
-            timer.resetTimer();
-            timer.startTimer();
+    public void startTimer() {
+        countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
 
-            // After 20s, answer will automatically validated
-            // and prompter will be styled accordingly
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    getInput();
-                }
-            }, 10000);
-            // If switcher is off, countdown text view will stay hidden
-        } else {
-            timerTextView.setVisibility(View.INVISIBLE);
-        }
+            @Override
+            public void onFinish() {
+                submitAnswer(v);
+            }
+        }.start();
     }
 
-    @SuppressLint("DefaultLocale")
-    public void getInput() {
-        String correctAnswer = validateImages.getCorrectCarMakeTaskThree();
+    public void resetTimer() {
+        Log.d(LOG_TAG, "time reset!");
+        timeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
+    }
 
-        if (attempts > 0) {
-            if (!validateImages.validation(inputCharStr, populateData)) {
-                attempts = attempts - 1;
-            }
-            Log.d(LOG_TAG, "correct answer -> " + correctAnswer);
-            if (correctAnswer != null) {
-                styles.correctAnswer(correctAnswer);
-                nextBtn.setVisibility(View.VISIBLE);
-                nextBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        populateData.setImagesTaskTwo();
-                        styles.resetAnswer();
-                        attempts = 3;
-                        handlerConfig();
-                    }
-                });
-            }
+    public void pauseTimer() {
+        Log.d(LOG_TAG, "time paused!");
+        countDownTimer.cancel();
+    }
+
+    public void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
+        if (seconds <= 5) {
+            timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {
-            styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
-
-            nextBtn.setVisibility(View.VISIBLE);
-            nextBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    populateData.setImagesTaskTwo();
-                    styles.resetAnswer();
-                    attempts = 3;
-                    handlerConfig();
-                }
-            });
+            timerTextView.setTextColor(Color.WHITE);
         }
-        attemptCount.setText(String.format("%02d", attempts));
-        inputChar.setText("");
+        timerTextView.setText(timeLeftFormatted);
+    }
+
+    public void nextBtnAction(String currentImg) {
+        validateImages.removeImgArr(currentImg);
+
+        styles.correctAnswer(currentImg);
+        nextBtn.setVisibility(View.VISIBLE);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                populateData.setImagesTaskTwo();
+                styles.resetAnswer();
+                attempts = 3;
+                // If user does nothing for next 20s,
+                // Program will automatically submit an answer
+                if (switchStats) {
+                    pauseTimer();
+                    resetTimer();
+                    startTimer();
+                }
+            }
+        });
     }
 
 }

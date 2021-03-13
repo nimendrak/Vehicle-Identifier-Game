@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2B363C"
+    android:id="@+id/advanced_activity"
     tools:context=".AdvancedActivity">
 
     <TextView

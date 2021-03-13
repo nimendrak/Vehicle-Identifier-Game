@@ -1,6 +1,7 @@
 package com.example.nimendra;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +18,8 @@ import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.Styles;
 
+import java.util.Locale;
+
 public class CarImageActivity extends AppCompatActivity {
 
     // Class name for Log tag
@@ -26,13 +29,15 @@ public class CarImageActivity extends AppCompatActivity {
     private PopulateData populateData;
     private ImageLoader imageLoader;
     private Styles styles;
-    private CountDownTimer timer;
 
     private int id;
     private Button identifyBtn;
-    private String randomCarMakeStr;
     private boolean switchStats;
     private TextView timerTextView;
+
+    private static final long START_TIME_IN_MILLIS = 10000;
+    private long timeLeftInMillis = START_TIME_IN_MILLIS;
+    private android.os.CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,19 +68,20 @@ public class CarImageActivity extends AppCompatActivity {
         // Check whether switcher is on or off
         // And start the timer accordingly
         if (switchStats) {
-            timer = new CountDownTimer(timerTextView);
+            startTimer();
+        } else {
+            timerTextView.setVisibility(View.INVISIBLE);
         }
 
         identifyBtn = findViewById(R.id.identify_btn);
         onNextBtnClick();
-
-        handlerConfig();
     }
 
+    View view;
     @SuppressLint("NonConstantResourceId")
     public void validateAnswer(View view) {
         TextView randomCarMake = styles.getRandomCarMake();
-        randomCarMakeStr = (String) randomCarMake.getText();
+        String randomCarMakeStr = (String) randomCarMake.getText();
 
         try {
             id = view.getId();
@@ -108,7 +114,7 @@ public class CarImageActivity extends AppCompatActivity {
         // Countdown will freeze as well
         if (switchStats) {
             Log.d(LOG_TAG, "time paused");
-            timer.pauseTimer();
+            pauseTimer();
         }
 
         onNextBtnClick();
@@ -121,36 +127,52 @@ public class CarImageActivity extends AppCompatActivity {
                 populateData.setImagesTaskThree();
                 styles.resetAnswer();
 
-                handlerConfig();
+                // If user does nothing for next 20s,
+                // Program will automatically submit an answer
+                if (switchStats) {
+                    resetTimer();
+                    startTimer();
+                }
             }
         });
     }
 
-    // If the switcher is on
-    // handlerConfig lets countdown run for 20s
-    // And automatically submit the current answer
-    public void handlerConfig() {
-        // Check whether switch is on or off
-        if (switchStats) {
-            Log.d(LOG_TAG, "handleConfig() running..");
-            // Reset the time and restart it
-            timer.pauseTimer();
-            timer.resetTimer();
-            timer.startTimer();
+    public void startTimer() {
+        countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
 
-            // After 20s, answer will automatically validated
-            // and prompter will be styled accordingly
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    styles.wrongAnswer(randomCarMakeStr);
-                    styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
+            @Override
+            public void onFinish() {
+                validateAnswer(view);
+            }
+        }.start();
+    }
 
-                }
-            }, 10000);
-            // If switcher is off, countdown text view will stay hidden
+    public void resetTimer() {
+        Log.d(LOG_TAG, "time re setter! ");
+        timeLeftInMillis = START_TIME_IN_MILLIS;
+        updateCountDownText();
+    }
+
+    public void pauseTimer() {
+        Log.d(LOG_TAG, "time paused! ");
+        countDownTimer.cancel();
+    }
+
+    public void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
+        if (seconds <= 5) {
+            timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {
-            timerTextView.setVisibility(View.INVISIBLE);
+            timerTextView.setTextColor(Color.WHITE);
         }
+        timerTextView.setText(timeLeftFormatted);
     }
 }

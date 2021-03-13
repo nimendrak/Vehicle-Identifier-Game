@@ -182,6 +182,7 @@ public class ValidateImages {
             e.printStackTrace();
         }
 
+        Log.d(LOG_TAG, "validated hint -> " + isCorrect);
         return isCorrect;
     }
 
@@ -198,8 +199,6 @@ public class ValidateImages {
             if (imgTextStr.equalsIgnoreCase("bmw")) {
                 imgTextStr = imgTextStr.toUpperCase();
             }
-
-            removeImgArr(currentImgText);
 
             return imgTextStr;
         }
