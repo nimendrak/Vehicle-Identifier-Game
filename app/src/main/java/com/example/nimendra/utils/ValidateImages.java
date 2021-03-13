@@ -132,57 +132,49 @@ public class ValidateImages {
     }
 
     // CarHintActivity input validations
-    public boolean validation(Editable inputChar, PopulateData populateData) {
+    public boolean validation(Editable inputChar) {
         // Declare a boolean flag to indicate whether input is correct or wrong
         boolean isCorrect = false;
 
         String[] wordFrmImg, lettersFrmImg, lettersFrmText;
 
-        try {
-            // Get current image tag and put it to an arr -> lettersFrmImg
-            ImageView currentImg = activity.findViewById(R.id.car_image);
-            String currentImgText = (String) currentImg.getTag();
-            // Image tag is like -> car_audi_1
-            // So, it need to split by _
-            wordFrmImg = currentImgText.split("[_]");
-            // Then, put only the car make letters into another arr -> lettersFrmImg
-            // By splitting word by ""
-            lettersFrmImg = wordFrmImg[1].split("");
+        ImageView currentImg = activity.findViewById(R.id.car_image);
+        String currentImgText = (String) currentImg.getTag();
+        // Image tag is like -> car_audi_1
+        // So, it need to split by _
+        wordFrmImg = currentImgText.split("[_]");
+        // Then, put only the car make letters into another arr -> lettersFrmImg
+        // By splitting word by ""
+        lettersFrmImg = wordFrmImg[1].split("");
 
-            // Get current car make text and put it to an arr -> lettersFrmText
-            // Basically this contains "-" only!
-            TextView imgText = activity.findViewById(R.id.random_car_make);
-            String imgTextStr = (String) imgText.getText();
-            lettersFrmText = imgTextStr.split("");
+        // Get current car make text and put it to an arr -> lettersFrmText
+        // Basically this contains "-" only!
+        TextView imgText = activity.findViewById(R.id.random_car_make);
+        String imgTextStr = (String) imgText.getText();
+        lettersFrmText = imgTextStr.split("");
 
-            // Get user input -> single character
-            String inputStr = inputChar.toString().toLowerCase();
-            // Only the correct letter's index replaced with the specific letter
-            // And, rest of the letters stay as "-"
-            for (int i = 0; i < lettersFrmImg.length; i++) {
-                if (inputStr.equals(lettersFrmImg[i])) {
-                    lettersFrmText[i] = inputStr;
-                    isCorrect = true;
-                }
+        // Get user input -> single character
+        String inputStr = inputChar.toString().toLowerCase();
+        // Only the correct letter's index replaced with the specific letter
+        // And, rest of the letters stay as "-"
+        for (int i = 0; i < lettersFrmImg.length; i++) {
+            if (inputStr.equals(lettersFrmImg[i])) {
+                lettersFrmText[i] = inputStr;
+                isCorrect = true;
             }
-            StringBuilder builder = new StringBuilder();
-            // Build the current text of the car make with letters and "-"
-            for (String string : lettersFrmText) {
-                if (builder.length() > 0) {
-                    builder.append("");
-                }
-                builder.append(string);
-            }
-            String string = builder.toString().toUpperCase();
-            // Set the current string
-            imgText.setText(string);
-
-            Log.d(LOG_TAG, "set text -> " + string);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        StringBuilder builder = new StringBuilder();
+        // Build the current text of the car make with letters and "-"
+        for (String string : lettersFrmText) {
+            if (builder.length() > 0) {
+                builder.append("");
+            }
+            builder.append(string);
+        }
+        String string = builder.toString().toUpperCase();
+        // Set the current string
+        imgText.setText(string);
 
-        Log.d(LOG_TAG, "validated hint -> " + isCorrect);
         return isCorrect;
     }
 
@@ -193,13 +185,13 @@ public class ValidateImages {
         ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgText = (String) currentImg.getTag();
 
+        Log.d(LOG_TAG, "imgTextStr -> " + imgTextStr + ", currentImg -> " + currentImgText);
+
         if (currentImgText.contains(imgTextStr.toLowerCase())) {
             imgTextStr = imgTextStr.substring(0, 1).toUpperCase() + imgTextStr.substring(1).toLowerCase();
-
             if (imgTextStr.equalsIgnoreCase("bmw")) {
                 imgTextStr = imgTextStr.toUpperCase();
             }
-
             return imgTextStr;
         }
         return null;
@@ -250,23 +242,28 @@ public class ValidateImages {
         String r3 = context.getResources().getResourceEntryName(randomImgArr.get(2));
 
         String[] words;
-        String correctCarMake;
+        String correctCarMake = null;
 
         switch (index) {
             case 0:
                 words = r1.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
-                return correctCarMake;
+                break;
             case 1:
                 words = r2.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
-                return correctCarMake;
+                break;
             case 2:
                 words = r3.split("[_]");
                 correctCarMake = words[1].substring(0, 1).toUpperCase() + words[1].substring(1).toLowerCase();
-                return correctCarMake;
+                break;
         }
-        return null;
+
+        if (correctCarMake.equalsIgnoreCase("bmw")) {
+            correctCarMake = correctCarMake.toUpperCase();
+        }
+
+        return correctCarMake;
     }
 
     public void removeImgArr(String currentImgText) {
@@ -275,7 +272,7 @@ public class ValidateImages {
         for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
             String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
             // If selected car is wrong or null, remove it from the image arr
-            if (currentImgText.equals(nameFromArr)) {
+            if (currentImgText.toLowerCase().equals(nameFromArr)) {
                 imageLoader.getCarImagesArray().remove(i);
                 Log.d(LOG_TAG, "removed --> CarMakeFromArr -> " + nameFromArr);
                 break;

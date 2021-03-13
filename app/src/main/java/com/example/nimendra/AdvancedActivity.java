@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.nimendra.utils.CountDownTimer;
 import com.example.nimendra.utils.ImageLoader;
 import com.example.nimendra.utils.PopulateData;
 import com.example.nimendra.utils.Styles;
@@ -55,7 +55,7 @@ public class AdvancedActivity extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS = 20000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
-    private android.os.CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +95,15 @@ public class AdvancedActivity extends AppCompatActivity {
 
         answerOneHolder = findViewById(R.id.answer1_input);
         answerOne = getInput(answerOneHolder);
+        clearAndReset(answerOneHolder);
 
         answerTwoHolder = findViewById(R.id.answer2_input);
         answerTwo = getInput(answerTwoHolder);
+        clearAndReset(answerTwoHolder);
 
         answerThreeHolder = findViewById(R.id.answer3_input);
         answerThree = getInput(answerThreeHolder);
+        clearAndReset(answerThreeHolder);
     }
 
     View view;
@@ -210,6 +213,22 @@ public class AdvancedActivity extends AppCompatActivity {
         holder.setBackgroundResource(R.drawable.wrong_answer);
         separator.setBackgroundColor(Color.parseColor("#FFFF615B"));
         separator.setVisibility(View.VISIBLE);
+    }
+
+    public void clearAndReset(final EditText holder) {
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.getText().clear();
+                try {
+                    pauseTimer();
+                    resetTimer();
+                    startTimer();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public void nextAction() {
