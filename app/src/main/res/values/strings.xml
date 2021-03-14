@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vehicle Identifier</string>
+    <string name="app_name">CWK1</string>
 
     <!-- Main Activity -->
     <string name="button_identify_car_make_text">Identify the Car Make</string>
