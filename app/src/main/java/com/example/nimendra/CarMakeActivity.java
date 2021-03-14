@@ -63,7 +63,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
 
         // Get the switch_stats from MainActivity
         switchStats = getIntent().getExtras().getBoolean("switch_stats");
-        Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         // Countdown digits holder
         timerTextView = findViewById(R.id.timer);
@@ -157,13 +156,11 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
             // With the correct answer
             // validateImages.getCorrectCarMakeTaskTwo() returns the correct answer of the task
             styles.correctAnswer(validateImages.getCorrectCarMakeTaskTwo());
-            Log.d(LOG_TAG, "in validateAnswer() -> correct");
         } else {
             // If answer is wrong or null -> answer prompter change as follows
             // With the correct answer
             // validateImages.getCorrectCarMakeTaskTwo() returns the correct answer of the task
             styles.wrongAnswer(validateImages.getCorrectCarMakeTaskTwo());
-            Log.d(LOG_TAG, "in validateAnswer() -> wrong");
         }
 
         // Also, if the switcher is on
@@ -208,6 +205,8 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         });
     }
 
+    // CountDownTimer start when the switchStats == true
+    // onFinish() it automatically calls the validating method
     public void startTimer() {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -224,13 +223,11 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     }
 
     public void resetTimer() {
-        Log.d(LOG_TAG, "time re setter! ");
         timeLeftInMillis = START_TIME_IN_MILLIS;
         updateCountDownText();
     }
 
     public void pauseTimer() {
-        Log.d(LOG_TAG, "time paused! ");
         countDownTimer.cancel();
     }
 
@@ -238,7 +235,6 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
         if (seconds <= 5) {
             timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {

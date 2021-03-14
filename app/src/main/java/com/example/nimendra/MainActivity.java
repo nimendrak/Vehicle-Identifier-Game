@@ -28,13 +28,7 @@ public class MainActivity extends AppCompatActivity {
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Get boolean value from parameter
-                if (isChecked) {
-                    switchOn = true;
-                    Log.d(LOG_TAG, "switch checked");
-                } else {
-                    switchOn = false;
-                    Log.d(LOG_TAG, "switch not checked");
-                }
+                switchOn = isChecked;
             }
         });
     }

@@ -57,7 +57,6 @@ public class CarImageActivity extends AppCompatActivity {
 
         // Get the switch_stats from MainActivity
         switchStats = getIntent().getExtras().getBoolean("switch_stats");
-        Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         // Countdown digits holder
         timerTextView = findViewById(R.id.timer);
@@ -80,6 +79,8 @@ public class CarImageActivity extends AppCompatActivity {
         TextView randomCarMake = styles.getRandomCarMake();
         String randomCarMakeStr = (String) randomCarMake.getText();
 
+        // Based on the user input selected image will validate
+        // Either answer is correct or wrong, correct answer will marked
         try {
             id = view.getId();
             switch (id) {
@@ -89,28 +90,23 @@ public class CarImageActivity extends AppCompatActivity {
                     if (validateImages.validation(id, randomCarMakeStr, populateData)) {
                         styles.correctAnswer(randomCarMakeStr);
                         styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
-                        Log.d(LOG_TAG, "in validate() -> correct");
                     } else {
                         styles.wrongAnswer(randomCarMakeStr, id);
                         styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
-                        Log.d(LOG_TAG, "in validate() -> wrong");
                     }
                     break;
 
             }
+        // In case, user selects nothings correct answer will automatically show
         } catch (Exception e) {
             e.printStackTrace();
             styles.wrongAnswer(randomCarMakeStr, id);
             styles.markCorrectAnswer(validateImages.getCorrectCarMakeTaskTwo(populateData));
-            Log.d(LOG_TAG, "ex null in validate() -> wrong");
         }
-
-        Log.d(LOG_TAG, "car img arr size -> " + imageLoader.getCarImagesArray().size());
 
         // Also, if the switcher is on
         // Countdown will freeze as well
         if (switchStats) {
-            Log.d(LOG_TAG, "time paused");
             pauseTimer();
         }
 
@@ -134,6 +130,8 @@ public class CarImageActivity extends AppCompatActivity {
         });
     }
 
+    // CountDownTimer start when the switchStats == true
+    // onFinish() it automatically calls the validating method
     public void startTimer() {
         countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -150,13 +148,11 @@ public class CarImageActivity extends AppCompatActivity {
     }
 
     public void resetTimer() {
-        Log.d(LOG_TAG, "time re setter! ");
         timeLeftInMillis = START_TIME_IN_MILLIS;
         updateCountDownText();
     }
 
     public void pauseTimer() {
-        Log.d(LOG_TAG, "time paused! ");
         countDownTimer.cancel();
     }
 
@@ -164,7 +160,6 @@ public class CarImageActivity extends AppCompatActivity {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
         if (seconds <= 5) {
             timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {

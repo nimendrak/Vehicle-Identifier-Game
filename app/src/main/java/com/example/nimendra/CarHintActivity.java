@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,7 +50,7 @@ public class CarHintActivity extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS = 20000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
-    private android.os.CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,6 @@ public class CarHintActivity extends AppCompatActivity {
 
         // Get the switch_stats from MainActivity
         switchStats = getIntent().getExtras().getBoolean("switch_stats");
-        Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         // Countdown digits holder
         timerTextView = findViewById(R.id.timer);
@@ -87,6 +87,9 @@ public class CarHintActivity extends AppCompatActivity {
 
         final InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 
+        // Once the keyboard imOption click, program will get the current input
+        // And holds it in a variable named, inputCharStr
+        // Finally, soft keyboard will disappear
         inputChar = findViewById(R.id.input_char);
         if (inputChar != null) {
             inputChar.setOnEditorActionListener
@@ -115,9 +118,8 @@ public class CarHintActivity extends AppCompatActivity {
     public void submitAnswer(View view) {
         try {
             String correctAnswer = validateImages.getCorrectCarMakeTaskThree();
-            Log.d(LOG_TAG, "attempts -> " + attempts);
-            Log.d(LOG_TAG, "correct answer before vali -> " + correctAnswer);
 
+            // if switchStats is on countdown will run accordingly to the user actions
             if (attempts > 0) {
                 pauseTimer();
                 resetTimer();
@@ -126,7 +128,6 @@ public class CarHintActivity extends AppCompatActivity {
                 if (!validateImages.validation(inputCharStr)) {
                     attempts = attempts - 1;
                 }
-                Log.d(LOG_TAG, "correct answer -> " + correctAnswer);
                 if (correctAnswer != null) {
                     styles.correctAnswer(correctAnswer);
                     pauseTimer();
@@ -141,6 +142,8 @@ public class CarHintActivity extends AppCompatActivity {
             attemptCount.setText(String.format("%02d", attempts));
             inputChar.getText().clear();
 
+        // If user submit without entering any characters
+        // SnackBar will appear with a suitable error message
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -157,6 +160,8 @@ public class CarHintActivity extends AppCompatActivity {
         }
     }
 
+    // CountDownTimer start when the switchStats == true
+    // onFinish() it automatically calls the validating method
     public void startTimer() {
         if (switchStats)
             countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
@@ -175,7 +180,6 @@ public class CarHintActivity extends AppCompatActivity {
 
     public void resetTimer() {
         if (switchStats) {
-            Log.d(LOG_TAG, "time reset!");
             timeLeftInMillis = START_TIME_IN_MILLIS;
             updateCountDownText();
         }
@@ -183,7 +187,6 @@ public class CarHintActivity extends AppCompatActivity {
 
     public void pauseTimer() {
         if (switchStats) {
-            Log.d(LOG_TAG, "time paused!");
             countDownTimer.cancel();
         }
     }
@@ -193,7 +196,6 @@ public class CarHintActivity extends AppCompatActivity {
             int minutes = (int) (timeLeftInMillis / 1000) / 60;
             int seconds = (int) (timeLeftInMillis / 1000) % 60;
             String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-            Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
             if (seconds <= 10) {
                 timerTextView.setTextColor(Color.parseColor("#ff0024"));
             } else {

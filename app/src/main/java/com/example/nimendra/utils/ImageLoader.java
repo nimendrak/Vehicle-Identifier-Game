@@ -21,6 +21,8 @@ public class ImageLoader {
         loadData();
     }
 
+    // Load 5x9 car images to carImagesArray
+    // Load 5x1 car logo images to carLogosArray
     public void loadData() {
         try {
             for (int i = 0; i < 5; i++) {
@@ -81,8 +83,6 @@ public class ImageLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.d(LOG_TAG, "Logos arr size  - " + carImagesArray.size());
-        Log.d(LOG_TAG, "Images arr size - " + carLogosArray.size());
     }
 
     public List<Integer> getCarImagesArray() {

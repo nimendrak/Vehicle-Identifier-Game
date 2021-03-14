@@ -75,7 +75,7 @@ public class ValidateImages {
         // boolean flag
         boolean isCorrect = false;
 
-        // CarImageActivity holds a array of randomly selected 3 different car images
+        // randomImgArr holds a randomly selected 3 images from the loaded car images arr
         List<Integer> randomImgArr = populateData.getRandomImgArr();
 
         // r1, r2, r3 respectively placed in the UI image placeholders
@@ -91,6 +91,8 @@ public class ValidateImages {
             switch (clickedImageId) {
                 case R.id.car_img1:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
+                        // Either answer is correct or wrong
+                        // Remove current 3 images from the loaded arr
                         removeImgArr(r1);
                         removeImgArr(r2);
                         removeImgArr(r3);
@@ -123,7 +125,9 @@ public class ValidateImages {
 
     // CarImageActivity get correct car make
     public Integer getCorrectCarMakeTaskTwo(PopulateData populateData) {
+        // randomImgArr holds a randomly selected 3 images from the loaded car images arr
         List<Integer> randomImgArr = populateData.getRandomImgArr();
+        // populatedImgArr holds the current image holders IDs
         List<Integer> populatedImgArr = Arrays.asList(R.id.car_img1, R.id.car_img2, R.id.car_img3);
 
         TextView currentTextView = activity.findViewById(R.id.random_car_make);
@@ -187,14 +191,13 @@ public class ValidateImages {
         return isCorrect;
     }
 
+    // CarHintActivity get correct car make
     public String getCorrectCarMakeTaskThree() {
         TextView imgText = activity.findViewById(R.id.random_car_make);
         String imgTextStr = (String) imgText.getText();
 
         ImageView currentImg = activity.findViewById(R.id.car_image);
         String currentImgText = (String) currentImg.getTag();
-
-        Log.d(LOG_TAG, "imgTextStr -> " + imgTextStr + ", currentImg -> " + currentImgText);
 
         if (currentImgText.contains(imgTextStr.toLowerCase())) {
             imgTextStr = imgTextStr.substring(0, 1).toUpperCase() + imgTextStr.substring(1).toLowerCase();
@@ -206,6 +209,7 @@ public class ValidateImages {
         return null;
     }
 
+    // AdvancedActivity image validations
     public int validation(String answer, PopulateData populateData) {
         // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
@@ -221,26 +225,24 @@ public class ValidateImages {
         words = r1.split("[_]");
         r1CarMake = words[1];
         if (r1CarMake.equals(answer.toLowerCase())) {
-            Log.d(LOG_TAG, "0 -> " + answer);
             return 0;
         }
 
         words = r2.split("[_]");
         r2CarMake = words[1];
         if (r2CarMake.equals(answer.toLowerCase())) {
-            Log.d(LOG_TAG, "1 -> " + answer);
             return 1;
         }
 
         words = r3.split("[_]");
         r3CarMake = words[1];
         if (r3CarMake.equals(answer.toLowerCase())) {
-            Log.d(LOG_TAG, "2 -> " + answer);
             return 2;
         }
         return -1;
     }
 
+    // AdvancedActivity get correct car make
     public String getCorrectCarMakeTaskFour(PopulateData populateData, int index) {
        // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
@@ -275,22 +277,20 @@ public class ValidateImages {
         return correctCarMake;
     }
 
+    // Remove images from the loaded car images arr
     public void removeImgArr(String currentImgText) {
-        Log.d(LOG_TAG, "before delete arr size -> " + imageLoader.getCarImagesArray().size());
-
         for (int i = 0; i < imageLoader.getCarImagesArray().size(); i++) {
             String nameFromArr = context.getResources().getResourceEntryName(imageLoader.getCarImagesArray().get(i));
             // If selected car is wrong or null, remove it from the image arr
             if (currentImgText.toLowerCase().equals(nameFromArr)) {
                 imageLoader.getCarImagesArray().remove(i);
-                Log.d(LOG_TAG, "removed --> CarMakeFromArr -> " + nameFromArr);
                 break;
             }
         }
-
-        Log.d(LOG_TAG, "after delete arr size -> " + imageLoader.getCarImagesArray().size());
     }
 
+    // Overloaded method for remove images
+    // Used in Task -> Advanced Activity
     public void removeImgArr() {
         ImageView currentImgOne = activity.findViewById(R.id.car_img1);
         String currentImgTextOne = (String) currentImgOne.getTag();

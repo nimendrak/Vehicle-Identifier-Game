@@ -68,14 +68,18 @@ public class PopulateData {
 
     @SuppressLint("DefaultLocale")
     public void setImagesTaskOne() {
-        // car
+        // Pick a random image from the current loaded img arr
         Integer currentImageResource = imgArr.get(getRandomIndex(imgArr));
+        // And get it source name
         String currentImgResourceName = context.getResources().getResourceEntryName(currentImageResource);
 
+        // Set resource of the ImageView as the picked random img
         styles.getCarImage().setImageResource(currentImageResource);
+        // Set its name as the tag
         styles.getCarImage().setTag(currentImgResourceName);
 
-        // car logo
+        // Loop will picked the car makes logo and set it with car img
+        // Also, it sets the current ID of the img (ex: 01/45)
         try {
             for (int i = 0; i < logoArr.size(); i++) {
                 Integer currentLogoResource = logoArr.get(i);
@@ -97,6 +101,9 @@ public class PopulateData {
 
     @SuppressLint("DefaultLocale")
     public void setImagesTaskTwo() {
+        // Same as task one but needs one more attribute
+        // Which is the TextView of the current car
+        // All the characters set as dashes
         setImagesTaskOne();
 
         styles.getCarId().setText(String.format("%02d", 3));
@@ -114,6 +121,8 @@ public class PopulateData {
     public void setImagesTaskThree() {
         String correctCarMake;
 
+        // Get the Randomly picked 3 different car images from the TaskFour
+        // And holds it in a new arr randomImgArr
         randomImgArr = setImagesTaskFour();
 
         Integer randomCarMakeInt = randomImgArr.get(getRandomIndex(randomImgArr));
@@ -139,6 +148,9 @@ public class PopulateData {
 
         boolean isCorrect = true;
 
+        // Loop until it get 3 different car images
+        // And put them into a Integer arr and returns it
+        // Also, it randomized
         do {
             randomImgOneResource = imgArr.get(getRandomIndex(imgArr));
             randomImgOneResourceName = context.getResources().getResourceEntryName(randomImgOneResource);
@@ -181,6 +193,7 @@ public class PopulateData {
         Random random = new Random();
         if (imageArr.size() > 0) {
             if (!context.getClass().getSimpleName().equals("CarImageActivity")) {
+                // Shuffle the arr before picking the random index
                 Collections.shuffle(imageArr);
             }
             return random.nextInt(imageArr.size());

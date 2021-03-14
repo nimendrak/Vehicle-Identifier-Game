@@ -36,7 +36,6 @@ public class Styles {
 
     private TextView carMake;
     private TextView answer;
-    private TextView carMakeLabel;
     private TextView carId;
 
     private TextView correctAnswerCount;
@@ -47,7 +46,6 @@ public class Styles {
 
     private ImageView gif;
 
-    private View separator;
     private View separatorImgOne;
     private View separatorImgTwo;
     private View separatorImgThree;
@@ -56,25 +54,23 @@ public class Styles {
 
     private CardView answerPrompter;
 
-    private Context context;
-
     private String activityName;
 
     public Styles(Activity activity, Context context) {
-        this.context = context;
+        Context context1 = context;
         activityName = context.getClass().getSimpleName();
 
         answerPrompter = activity.findViewById(R.id.answer_prompter);
 
         answer = activity.findViewById(R.id.answer);
         gif = activity.findViewById(R.id.correct_answer_gif);
-        carMakeLabel = activity.findViewById(R.id.correct_car_label);
+        TextView carMakeLabel = activity.findViewById(R.id.correct_car_label);
 
-        separator = activity.findViewById(R.id.separator);
+        View separator = activity.findViewById(R.id.separator);
         carMake = activity.findViewById(R.id.correct_car);
 
         if (activityName.equals("CarMakeActivity")) {
-            this.context = context;
+            context1 = context;
 
             carMakeLogo = activity.findViewById(R.id.car_logo);
             carImage = activity.findViewById(R.id.car_image);
@@ -83,7 +79,7 @@ public class Styles {
 
         }
         if (activityName.equals("CarImageActivity")) {
-            this.context = context;
+            context1 = context;
 
             nextBtn = activity.findViewById(R.id.next_btn);
 
@@ -94,7 +90,7 @@ public class Styles {
             randomCarMake = activity.findViewById(R.id.random_car_make);
         }
         if (activityName.equals("CarHintActivity")) {
-            this.context = context;
+            context1 = context;
 
             carMakeLogo = activity.findViewById(R.id.car_logo);
             carImage = activity.findViewById(R.id.car_image);
@@ -104,7 +100,7 @@ public class Styles {
             randomCarMake = activity.findViewById(R.id.random_car_make);
         }
         if (activityName.equals("AdvancedActivity")) {
-            this.context = context;
+            context1 = context;
 
             correctAnswerCount = activity.findViewById(R.id.correct_answers_count);
 

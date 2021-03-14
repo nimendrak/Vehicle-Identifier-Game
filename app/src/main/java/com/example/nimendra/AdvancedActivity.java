@@ -78,7 +78,6 @@ public class AdvancedActivity extends AppCompatActivity {
 
         // Get the switch_stats from MainActivity
         switchStats = getIntent().getExtras().getBoolean("switch_stats");
-        Log.d(LOG_TAG, "switch stats -> " + switchStats);
 
         // Countdown digits holder
         timerTextView = findViewById(R.id.timer);
@@ -118,17 +117,24 @@ public class AdvancedActivity extends AppCompatActivity {
         View separatorImgThree = findViewById(R.id.separator_img3);
 
         try {
-            Log.d(LOG_TAG, "input 1 -> " + answerOne[0].toString() + ", input 2 -> " + answerTwo[0].toString() + ", input 3 -> " + answerThree[0].toString());
-
+            // Validate each inputs and hold them in unique variables
+            // Return values of the validating method as follows;
+            // 0 -> correct answer for 1st EditText
+            // 1 -> correct answer for 2nd EditText
+            // 2 -> correct answer for 3rd EditText
             int validatedAnswerOne = validateImages.validation(answerOne[0].toString(), populateData);
             int validatedAnswerTwo = validateImages.validation(answerTwo[0].toString(), populateData);
             int validatedAnswerThree = validateImages.validation(answerThree[0].toString(), populateData);
 
             if (attempts > 0) {
+                // After user inputs a correct answer
+                // That specific will be disable in the future attempts
                 if (answerOneHolder.isEnabled()) {
                     if (validatedAnswerOne == 0) {
+                        // Styling and disabling
                         correctAnswer(answerOneHolder, separatorImgOne);
                     } else {
+                        // Styling
                         wrongAnswer(answerOneHolder, separatorImgOne);
                     }
                 }
@@ -159,19 +165,18 @@ public class AdvancedActivity extends AppCompatActivity {
 
                 // at least one of the answer are incorrect, WrongAnswer gif will pop up
             } else {
-                Log.d(LOG_TAG, "attempts -> " + attempts);
-                Log.d(LOG_TAG, "correctAns -> " + correctAns);
                 styles.wrongAnswer(String.format("%02d", (3 - correctAns)) + "/03");
 
-                Log.d(LOG_TAG, "0 -> " + validatedAnswerOne + ", 1 -> " + validatedAnswerTwo + ", 2 -> " + validatedAnswerThree);
-
                 if (validatedAnswerOne != 0) {
+                    // Show correct answer for 1st EditText in the 1st TextView
                     styles.setCorrectAnswerImgOne(validateImages, populateData);
                 }
                 if (validatedAnswerTwo != 1) {
+                    // Show correct answer for 2nd EditText in the 2nd TextView
                     styles.setCorrectAnswerImgTwo(validateImages, populateData);
                 }
                 if (validatedAnswerThree != 2) {
+                    // Show correct answer for 3rd EditText in the 3rd TextView
                     styles.setCorrectAnswerImgThree(validateImages, populateData);
                 }
                 nextAction();
@@ -199,6 +204,9 @@ public class AdvancedActivity extends AppCompatActivity {
         }
     }
 
+    // If user prompted a correct answer,
+    // EditText will change as follows
+    // And score += 1 and correctAns += 1
     public void correctAnswer(EditText holder, View separator) {
         holder.setBackgroundResource(R.drawable.correct_answer);
         holder.setEnabled(false);
@@ -207,12 +215,15 @@ public class AdvancedActivity extends AppCompatActivity {
         separator.setVisibility(View.INVISIBLE);
     }
 
+    // If user prompted a wrong answer,
+    // EditText will change as follows
     public void wrongAnswer(EditText holder, View separator) {
         holder.setBackgroundResource(R.drawable.wrong_answer);
         separator.setBackgroundColor(Color.parseColor("#FFFF615B"));
         separator.setVisibility(View.VISIBLE);
     }
 
+    // Clear the clicking EditText and restart the timer
     public void clearAndReset(final EditText holder) {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,6 +236,9 @@ public class AdvancedActivity extends AppCompatActivity {
         });
     }
 
+    // Next button will remove the current 3 images
+    // Set the variables to null
+    // and reset the current activity for new turn
     public void nextAction() {
         validateImages.removeImgArr();
 
@@ -255,6 +269,8 @@ public class AdvancedActivity extends AppCompatActivity {
         });
     }
 
+    // Get input from the EditText and holds it on a array of 1 element
+    // Once user clicks the submit button, soft keyboard will disappear
     public Editable[] getInput(final EditText holder) {
         final Editable[] answer = new Editable[1];
 
@@ -277,6 +293,8 @@ public class AdvancedActivity extends AppCompatActivity {
         return answer;
     }
 
+    // CountDownTimer start when the switchStats == true
+    // onFinish() it automatically calls the validating method
     public void startTimer() {
         if (switchStats)
             countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
@@ -295,7 +313,6 @@ public class AdvancedActivity extends AppCompatActivity {
 
     public void resetTimer() {
         if (switchStats) {
-            Log.d(LOG_TAG, "time reset!");
             timeLeftInMillis = START_TIME_IN_MILLIS;
             updateCountDownText();
         }
@@ -303,7 +320,6 @@ public class AdvancedActivity extends AppCompatActivity {
 
     public void pauseTimer() {
         if (switchStats) {
-            Log.d(LOG_TAG, "time paused!");
             countDownTimer.cancel();
         }
     }
@@ -313,7 +329,6 @@ public class AdvancedActivity extends AppCompatActivity {
             int minutes = (int) (timeLeftInMillis / 1000) / 60;
             int seconds = (int) (timeLeftInMillis / 1000) % 60;
             String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-            Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
             if (seconds <= 10) {
                 timerTextView.setTextColor(Color.parseColor("#ff0024"));
             } else {
