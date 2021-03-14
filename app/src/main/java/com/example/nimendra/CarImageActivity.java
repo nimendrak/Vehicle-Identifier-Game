@@ -3,6 +3,7 @@ package com.example.nimendra;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,9 +33,9 @@ public class CarImageActivity extends AppCompatActivity {
     private boolean switchStats;
     private TextView timerTextView;
 
-    private static final long START_TIME_IN_MILLIS = 10000;
+    private static final long START_TIME_IN_MILLIS = 20000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
-    private android.os.CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +161,7 @@ public class CarImageActivity extends AppCompatActivity {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        if (seconds <= 5) {
+        if (seconds <= 10) {
             timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {
             timerTextView.setTextColor(Color.WHITE);

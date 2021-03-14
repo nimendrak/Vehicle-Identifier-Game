@@ -36,7 +36,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
     private Spinner spinner = null;
     private TextView timerTextView;
 
-    private static final long START_TIME_IN_MILLIS = 10000;
+    private static final long START_TIME_IN_MILLIS = 20000;
     private long timeLeftInMillis = START_TIME_IN_MILLIS;
     private CountDownTimer countDownTimer;
 
@@ -184,6 +184,9 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                 // Answer prompter will disappear
                 styles.resetAnswer();
 
+                // Clear the previously assigned item
+                item = null;
+
                 // And set it value to the first index
                 spinner.setSelection(0);
                 // Enable it again to select a car make
@@ -235,7 +238,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        if (seconds <= 5) {
+        if (seconds <= 10) {
             timerTextView.setTextColor(Color.parseColor("#ff0024"));
         } else {
             timerTextView.setTextColor(Color.WHITE);
