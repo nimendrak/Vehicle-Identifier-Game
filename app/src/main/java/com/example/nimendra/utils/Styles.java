@@ -160,7 +160,6 @@ public class Styles {
 
     @SuppressLint("NonConstantResourceId")
     public void wrongAnswer(String selectedCar, Integer imageHolder) {
-        Log.d(LOG_TAG, "Wrong Answer -> " + context.getResources().getResourceEntryName(imageHolder));
         wrongAnswer(selectedCar);
 
         switch (imageHolder) {
@@ -181,8 +180,6 @@ public class Styles {
 
     @SuppressLint("NonConstantResourceId")
     public void markCorrectAnswer(Integer imageHolder) {
-        Log.d(LOG_TAG, "Mrk Correct Answer -> " + imageHolder);
-
         randomImageOne.setEnabled(false);
         randomImageTwo.setEnabled(false);
         randomImageThree.setEnabled(false);

@@ -72,6 +72,9 @@ public class ValidateImages {
     // CarImageActivity image validations
     @SuppressLint("NonConstantResourceId")
     public boolean validation(Integer clickedImageId, String randomCarMakeStr, PopulateData populateData) {
+        // boolean flag
+        boolean isCorrect = false;
+
         // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
 
@@ -89,19 +92,25 @@ public class ValidateImages {
                 case R.id.car_img1:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r1)) {
                         removeImgArr(r1);
-                        return true;
+                        removeImgArr(r2);
+                        removeImgArr(r3);
+                        isCorrect = true;
                     }
                     break;
                 case R.id.car_img2:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r2)) {
+                        removeImgArr(r1);
                         removeImgArr(r2);
-                        return true;
+                        removeImgArr(r3);
+                        isCorrect = true;
                     }
                     break;
                 case R.id.car_img3:
                     if (imageTag.contains(randomCarMakeStr.toLowerCase()) & imageTag.contains(r3)) {
+                        removeImgArr(r1);
+                        removeImgArr(r2);
                         removeImgArr(r3);
-                        return true;
+                        isCorrect = true;
                     }
                     break;
             }
@@ -109,7 +118,7 @@ public class ValidateImages {
             e.printStackTrace();
         }
 
-        return false;
+        return isCorrect;
     }
 
     // CarImageActivity get correct car make
@@ -211,21 +220,21 @@ public class ValidateImages {
 
         words = r1.split("[_]");
         r1CarMake = words[1];
-        if (r1CarMake.equals(answer)) {
+        if (r1CarMake.equals(answer.toLowerCase())) {
             Log.d(LOG_TAG, "0 -> " + answer);
             return 0;
         }
 
         words = r2.split("[_]");
         r2CarMake = words[1];
-        if (r2CarMake.equals(answer)) {
+        if (r2CarMake.equals(answer.toLowerCase())) {
             Log.d(LOG_TAG, "1 -> " + answer);
             return 1;
         }
 
         words = r3.split("[_]");
         r3CarMake = words[1];
-        if (r3CarMake.equals(answer)) {
+        if (r3CarMake.equals(answer.toLowerCase())) {
             Log.d(LOG_TAG, "2 -> " + answer);
             return 2;
         }
@@ -233,7 +242,7 @@ public class ValidateImages {
     }
 
     public String getCorrectCarMakeTaskFour(PopulateData populateData, int index) {
-        // CarImageActivity holds a array of randomly selected 3 different car images
+       // CarImageActivity holds a array of randomly selected 3 different car images
         List<Integer> randomImgArr = populateData.getRandomImgArr();
 
         // r1, r2, r3 respectively placed in the UI image placeholders
@@ -280,6 +289,21 @@ public class ValidateImages {
         }
 
         Log.d(LOG_TAG, "after delete arr size -> " + imageLoader.getCarImagesArray().size());
+    }
+
+    public void removeImgArr() {
+        ImageView currentImgOne = activity.findViewById(R.id.car_img1);
+        String currentImgTextOne = (String) currentImgOne.getTag();
+        removeImgArr(currentImgTextOne);
+
+        ImageView currentImgTwo = activity.findViewById(R.id.car_img2);
+        String currentImgTextTwo = (String) currentImgTwo.getTag();
+        removeImgArr(currentImgTextTwo);
+
+        ImageView currentImgThree = activity.findViewById(R.id.car_img3);
+        String currentImgTextThree = (String) currentImgThree.getTag();
+        removeImgArr(currentImgTextThree);
+
     }
 
 }

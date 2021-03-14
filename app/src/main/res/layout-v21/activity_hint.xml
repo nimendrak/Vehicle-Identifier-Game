@@ -82,7 +82,7 @@
             android:id="@+id/car_logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="265dp"
             android:text="@string/car_make_emblem_text"
             android:textColor="#2B363C"
@@ -94,7 +94,7 @@
             android:layout_width="97dp"
             android:layout_height="69dp"
             android:layout_marginTop="245dp"
-            android:layout_marginStart="205dp"
+            android:layout_marginStart="215dp"
             android:contentDescription="@string/textView_car_logo_description"
             app:srcCompat="@drawable/car_bmw" />
 
@@ -146,8 +146,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/input_char"
-        app:layout_constraintTop_toBottomOf="@+id/image_holder"
-        tools:text="@tools:sample/first_names" />
+        app:layout_constraintTop_toBottomOf="@+id/image_holder" />
 
     <EditText
         android:id="@+id/input_char"

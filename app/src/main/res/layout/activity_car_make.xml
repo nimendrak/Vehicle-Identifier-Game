@@ -79,7 +79,7 @@
             android:id="@+id/car_logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="275dp"
             android:text="@string/car_make_emblem_text"
             android:textColor="#2B363C"
@@ -91,9 +91,9 @@
             android:layout_width="97dp"
             android:layout_height="69dp"
             android:layout_marginTop="250dp"
-            android:layout_marginStart="205dp"
+            android:layout_marginStart="215dp"
             android:contentDescription="@string/textView_car_logo_description"
-            app:srcCompat="@drawable/car_jaguar" />
+            app:srcCompat="@drawable/car_mercedes" />
 
     </androidx.cardview.widget.CardView>
 

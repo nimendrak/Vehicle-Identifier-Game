@@ -94,7 +94,7 @@
             android:hint="@string/editext_01_car_make_hint"
             android:imeOptions="actionSend"
             android:inputType="textPersonName"
-            android:maxLength="10"
+            android:maxLength="11"
             android:padding="8dp"
             android:textAllCaps="false"
             android:textColor="#ffffff"
@@ -157,7 +157,7 @@
             android:hint="@string/editext_02_car_make_hint"
             android:imeOptions="actionSend"
             android:inputType="textPersonName"
-            android:maxLength="10"
+            android:maxLength="11"
             android:padding="8dp"
             android:text=""
             android:textSize="16sp" />
@@ -218,7 +218,7 @@
             android:hint="@string/editext_03_car_make_hint"
             android:imeOptions="actionSend"
             android:inputType="textPersonName"
-            android:maxLength="10"
+            android:maxLength="11"
             android:padding="8dp"
             android:text=""
             android:textSize="16sp" />

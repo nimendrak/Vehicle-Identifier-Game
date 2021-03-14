@@ -118,7 +118,7 @@ public class AdvancedActivity extends AppCompatActivity {
         View separatorImgThree = findViewById(R.id.separator_img3);
 
         try {
-            Log.d(LOG_TAG, "input 1 -> " + answerOne[0].toString() + ", input 2 -> " + answerOne[0].toString() + ", input 3 -> " + answerOne[0].toString());
+            Log.d(LOG_TAG, "input 1 -> " + answerOne[0].toString() + ", input 2 -> " + answerTwo[0].toString() + ", input 3 -> " + answerThree[0].toString());
 
             int validatedAnswerOne = validateImages.validation(answerOne[0].toString(), populateData);
             int validatedAnswerTwo = validateImages.validation(answerTwo[0].toString(), populateData);
@@ -226,6 +226,8 @@ public class AdvancedActivity extends AppCompatActivity {
     }
 
     public void nextAction() {
+        validateImages.removeImgArr();
+
         Button nextBtn = findViewById(R.id.next_btn);
 
         nextBtn.setVisibility(View.VISIBLE);
