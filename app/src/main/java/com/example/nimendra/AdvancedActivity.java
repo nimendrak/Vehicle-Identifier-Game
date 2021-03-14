@@ -179,9 +179,7 @@ public class AdvancedActivity extends AppCompatActivity {
 
             // If user does nothing for next 20s,
             // Program will automatically submit an answer
-            if (switchStats) {
-                pauseTimer();
-            }
+            pauseTimer();
 
             attemptsCount.setText(String.format("%02d", attempts));
             scoreView.setText(String.format("%02d", score));
@@ -220,13 +218,9 @@ public class AdvancedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 holder.getText().clear();
-                try {
-                    pauseTimer();
-                    resetTimer();
-                    startTimer();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                pauseTimer();
+                resetTimer();
+                startTimer();
             }
         });
     }
@@ -239,9 +233,9 @@ public class AdvancedActivity extends AppCompatActivity {
             @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v) {
-                answerOne[0].clear();
-                answerTwo[0].clear();
-                answerThree[0].clear();
+                answerOne[0] = null;
+                answerTwo[0] = null;
+                answerThree[0] = null;
 
                 attempts = 3;
                 correctAns = 0;
@@ -251,11 +245,10 @@ public class AdvancedActivity extends AppCompatActivity {
 
                 // If user does nothing for next 20s,
                 // Program will automatically submit an answer
-                if (switchStats) {
-                    pauseTimer();
-                    resetTimer();
-                    startTimer();
-                }
+                pauseTimer();
+                resetTimer();
+                startTimer();
+
             }
         });
     }
@@ -283,42 +276,49 @@ public class AdvancedActivity extends AppCompatActivity {
     }
 
     public void startTimer() {
-        countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
+        if (switchStats)
+            countDownTimer = new android.os.CountDownTimer(timeLeftInMillis, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timeLeftInMillis = millisUntilFinished;
+                    updateCountDownText();
+                }
 
-            @Override
-            public void onFinish() {
-                validateAnswer(view);
-            }
-        }.start();
+                @Override
+                public void onFinish() {
+                    validateAnswer(view);
+                }
+            }.start();
     }
 
     public void resetTimer() {
-        Log.d(LOG_TAG, "time reset!");
-        timeLeftInMillis = START_TIME_IN_MILLIS;
-        updateCountDownText();
+        if (switchStats) {
+            Log.d(LOG_TAG, "time reset!");
+            timeLeftInMillis = START_TIME_IN_MILLIS;
+            updateCountDownText();
+        }
     }
 
     public void pauseTimer() {
-        Log.d(LOG_TAG, "time paused!");
-        countDownTimer.cancel();
+        if (switchStats) {
+            Log.d(LOG_TAG, "time paused!");
+            countDownTimer.cancel();
+        }
     }
 
     public void updateCountDownText() {
-        int minutes = (int) (timeLeftInMillis / 1000) / 60;
-        int seconds = (int) (timeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
-        if (seconds <= 10) {
-            timerTextView.setTextColor(Color.parseColor("#ff0024"));
-        } else {
-            timerTextView.setTextColor(Color.WHITE);
+        if (switchStats) {
+            int minutes = (int) (timeLeftInMillis / 1000) / 60;
+            int seconds = (int) (timeLeftInMillis / 1000) % 60;
+            String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+            Log.d(LOG_TAG, "time left -> " + timeLeftFormatted);
+            if (seconds <= 10) {
+                timerTextView.setTextColor(Color.parseColor("#ff0024"));
+            } else {
+                timerTextView.setTextColor(Color.WHITE);
+            }
+            timerTextView.setText(timeLeftFormatted);
         }
-        timerTextView.setText(timeLeftFormatted);
     }
 
 }

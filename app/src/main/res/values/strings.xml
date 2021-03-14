@@ -14,8 +14,8 @@
     <string name="button_identify_text_1">Identify</string>
     <string name="button_identify_text_2">Next</string>
 
-    <string name="textView_car_id_1">20</string>
-    <string name="textView_car_id_2">/20</string>
+    <string name="textView_car_id_1">45</string>
+    <string name="textView_car_id_2">/45</string>
     <string name="textView_car_logo_description">Car logo</string>
     <string name="textView_correct_text">CORRECT!</string>
     <string name="textView_wrong_text">WRONG!</string>
@@ -25,11 +25,12 @@
     <string-array name="array_car_makes">
         <item>Select a Manufacturer</item>
         <item>Audi</item>
-        <item>Bugatti</item>
         <item>BMW</item>
+        <item>Jaguar</item>
         <item>Ferrari</item>
-        <item>Koenigsegg</item>
+        <item>Lamborghini</item>
         <item>Mercedes</item>
+        <item>Mitsubishi</item>
         <item>Porsche</item>
         <item>Tesla</item>
     </string-array>
@@ -49,7 +50,6 @@
     <string name="editText_input_char_text">Input char</string>
     <string name="textview_attempts_left_text">Attempt(s) Left</string>
     <string name="textview_attempts">03</string>
-
 
     <string name="textview_advanced_level_title">Advanced Level</string>
     <string name="textview_answers_label">answer(s) are</string>

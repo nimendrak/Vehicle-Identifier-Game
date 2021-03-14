@@ -93,7 +93,7 @@
             android:layout_marginTop="250dp"
             android:layout_marginStart="205dp"
             android:contentDescription="@string/textView_car_logo_description"
-            app:srcCompat="@drawable/car_mercedes" />
+            app:srcCompat="@drawable/car_porsche" />
 
     </androidx.cardview.widget.CardView>
 

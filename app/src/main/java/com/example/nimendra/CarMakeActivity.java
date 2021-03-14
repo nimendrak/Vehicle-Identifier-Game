@@ -121,10 +121,11 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                             switch (item) {
                                 case "Audi":
                                 case "Bugatti":
-                                case "BMW":
+                                case "Jaguar":
                                 case "Ferrari":
-                                case "Koenigsegg":
+                                case "Lamborghini":
                                 case "Mercedes":
+                                case "Mitsubishi":
                                 case "Porsche":
                                 case "Tesla":
                                     validateAnswer(item);
