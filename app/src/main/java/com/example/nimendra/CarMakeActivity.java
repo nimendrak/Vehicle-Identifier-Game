@@ -120,7 +120,7 @@ public class CarMakeActivity extends AppCompatActivity implements AdapterView.On
                         if (imageLoader.getCarImagesArray().size() > 0) {
                             switch (item) {
                                 case "Audi":
-                                case "Bugatti":
+                                case "BMW":
                                 case "Jaguar":
                                 case "Ferrari":
                                 case "Lamborghini":
