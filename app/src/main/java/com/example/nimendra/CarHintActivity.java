@@ -130,6 +130,7 @@ public class CarHintActivity extends AppCompatActivity {
                 }
                 if (correctAnswer != null) {
                     styles.correctAnswer(correctAnswer);
+                    attempts = 3;
                     pauseTimer();
                     nextBtnAction();
                 }
@@ -142,8 +143,8 @@ public class CarHintActivity extends AppCompatActivity {
             attemptCount.setText(String.format("%02d", attempts));
             inputChar.getText().clear();
 
-        // If user submit without entering any characters
-        // SnackBar will appear with a suitable error message
+            // If user submit without entering any characters
+            // SnackBar will appear with a suitable error message
         } catch (Exception e) {
             e.printStackTrace();
 
