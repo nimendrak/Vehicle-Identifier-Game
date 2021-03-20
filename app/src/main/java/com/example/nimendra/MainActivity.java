@@ -1,10 +1,13 @@
 package com.example.nimendra;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.widget.CompoundButton;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.CompoundButton;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -28,5 +31,29 @@ public class MainActivity extends AppCompatActivity {
                 switchOn = isChecked;
             }
         });
+    }
+
+    public void launchCarMakeActivity(View view) {
+        Intent intent = new Intent(this, CarMakeActivity.class);
+        intent.putExtra("switch_stats", switchOn);
+        startActivity(intent);
+    }
+
+    public void launchCarImageActivity(View view) {
+        Intent intent = new Intent(this, CarImageActivity.class);
+        intent.putExtra("switch_stats", switchOn);
+        startActivity(intent);
+    }
+
+    public void launchHintsActivity(View view) {
+        Intent intent = new Intent(this, CarHintActivity.class);
+        intent.putExtra("switch_stats", switchOn);
+        startActivity(intent);
+    }
+
+    public void launchAdvancedLevelActivity(View view) {
+        Intent intent = new Intent(this, AdvancedActivity.class);
+        intent.putExtra("switch_stats", switchOn);
+        startActivity(intent);
     }
 }

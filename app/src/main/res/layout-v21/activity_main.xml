@@ -16,6 +16,7 @@
         android:text="@string/button_identify_car_make_text"
         android:textColor="#ffffff"
         android:textSize="16sp"
+        android:onClick="launchCarMakeActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,7 @@
         android:text="@string/button_hint_text"
         android:textColor="#ffffff"
         android:textSize="16sp"
+        android:onClick="launchHintsActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +39,7 @@
 
     <Button
         android:id="@+id/car_image_btn"
+        android:onClick="launchCarImageActivity"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -56,6 +59,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/button_ripple_effect"
         android:text="@string/button_advanced_level_text"
+        android:onClick="launchAdvancedLevelActivity"
         android:textColor="#ffffff"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +80,30 @@
         app:srcCompat="@drawable/main_icon" />
 
     <TextView
+        android:id="@+id/car_id_rest2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/textview_switch_label"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/switch1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separator" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hint_btn" />
+
+    <TextView
         android:id="@+id/activity_main_title"
         android:layout_width="310dp"
         android:layout_height="58dp"
@@ -89,5 +117,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/car_id_rest3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/textview_switch_label"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/switch1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separator" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch1"
+        android:layout_width="46dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="52dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hint_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
